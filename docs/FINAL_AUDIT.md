@@ -24,7 +24,7 @@ The explorer builds, the tests pass, the numbers reconcile with the IA, and the 
 | Contrast | 6.57:1 to 15.23:1, all AA |
 | Reduced motion | honoured in CSS and in the Three.js code |
 | Keyboard reach | all controls, except globe rotation |
-| Screenshots | desktop hero, desktop bowl, six story sections, mobile hero and full page |
+| Screenshots | desktop hero, desktop bowl, seven story sections, mobile hero and full page |
 | Documentation | README, decisions, worklog, research log and 16 reference docs |
 
 ## Numbers

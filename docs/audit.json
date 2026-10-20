@@ -1,0 +1,192 @@
+{
+  "desktop": {
+    "viewport": 1440,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "interactive": 99,
+    "unnamed": [],
+    "svgs": 8,
+    "svgUnlabelled": 0,
+    "imgs": 0,
+    "imgNoAlt": 0,
+    "h1": 1,
+    "headingSkips": 0,
+    "smallTargets": [
+      {
+        "tag": "INPUT",
+        "text": "Burundi",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Chad",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Ethiopia",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Madagascar",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Malawi",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Mali",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Mozambique",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Niger",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Sierra Leone",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Uganda",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Bangladesh",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Cambodia",
+        "w": 16,
+        "h": 16
+      }
+    ]
+  },
+  "desktopReducedMotion": {
+    "duration": "1e-05s",
+    "scrollBehaviour": "auto"
+  },
+  "mobile": {
+    "viewport": 375,
+    "scrollWidth": 375,
+    "overflow": false,
+    "interactive": 99,
+    "unnamed": [],
+    "svgs": 8,
+    "svgUnlabelled": 0,
+    "imgs": 0,
+    "imgNoAlt": 0,
+    "h1": 1,
+    "headingSkips": 0,
+    "smallTargets": [
+      {
+        "tag": "INPUT",
+        "text": "Burundi",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Chad",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Ethiopia",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Madagascar",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Malawi",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Mali",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Mozambique",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Niger",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Sierra Leone",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Uganda",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Bangladesh",
+        "w": 16,
+        "h": 16
+      },
+      {
+        "tag": "INPUT",
+        "text": "Cambodia",
+        "w": 16,
+        "h": 16
+      }
+    ]
+  },
+  "mobileReducedMotion": {
+    "duration": "1e-05s",
+    "scrollBehaviour": "auto"
+  },
+  "contrast": {
+    "paper-0 on ink-1": 15.23,
+    "paper-1 on ink-1": 10.07,
+    "paper-2 on ink-1": 6.57,
+    "thread-text on ink-1": 6.68,
+    "model-log on ink-1": 9.73,
+    "model-linear on ink-1": 7.55
+  }
+}

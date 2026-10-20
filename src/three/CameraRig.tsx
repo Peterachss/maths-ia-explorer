@@ -1,0 +1,51 @@
+import { useEffect, useRef } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { Vector3 } from 'three';
+import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
+import { angleBetween, latLon, slerp } from '../geo/project';
+import { prefersReducedMotion } from '../reducedMotion';
+import type { Country } from '../data/schema';
+import { useStore } from '../store';
+
+const ease = (t: number) => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
+
+interface Flight { t0: number; dur: number; fromDir: Vector3; toDir: Vector3; fromDist: number; toDist: number; }
+
+/** Flies the camera along a great circle to frame one or two countries. */
+export function CameraRig({ countries, controls }: { countries: Country[]; controls: React.RefObject<OrbitControlsImpl> }) {
+  const camera = useThree((s) => s.camera);
+  const focus = useStore((s) => s.focus);
+  const flight = useRef<Flight | null>(null);
+
+  useEffect(() => {
+    const pts = focus.iso3
+      .map((i) => countries.find((c) => c.iso3 === i))
+      .filter((c): c is Country => !!c)
+      .map((c) => latLon(c.lat, c.lon));
+    if (!pts.length) return;
+    const first = pts[0]!;
+    const toDir = (pts.length > 1 ? slerp(first, pts[1]!, 0.5) : first).clone().normalize();
+    const spread = pts.length > 1 ? angleBetween(first, pts[1]!) : 0;
+    const portrait = typeof window !== 'undefined' && window.innerWidth < 860;
+    const toDist = Math.min(6.2, 4.2 + spread * 1.5) * (portrait ? 0.86 : 1);
+    const fromDir = camera.position.clone().normalize();
+    if (prefersReducedMotion() || focus.key === 0) {
+      camera.position.copy(toDir.clone().multiplyScalar(toDist));
+      return;
+    }
+    flight.current = { t0: performance.now(), dur: 1100, fromDir, toDir, fromDist: camera.position.length(), toDist };
+  }, [focus, countries, camera]);
+
+  useFrame(() => {
+    const f = flight.current;
+    if (!f) return;
+    const p = ease((performance.now() - f.t0) / f.dur);
+    const dir = slerp(f.fromDir, f.toDir, p);
+    const dist = f.fromDist + (f.toDist - f.fromDist) * p;
+    camera.position.copy(dir.multiplyScalar(dist));
+    camera.lookAt(0, 0, 0);
+    if (p >= 1) flight.current = null;
+    controls.current?.update();
+  });
+  return null;
+}

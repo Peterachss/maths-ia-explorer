@@ -1,0 +1,18 @@
+{
+  "dataset": "IA Appendix A, 42 countries, 2019",
+  "rows": 42,
+  "year": 2019,
+  "indicators": {
+    "gdp_pc_ppp": "NY.GDP.PCAP.PP.KD",
+    "life_exp": "SP.DYN.LE00.IN"
+  },
+  "gdp_definition": "GDP per capita, PPP, constant 2021 international dollars",
+  "life_definition": "Life expectancy at birth, total, years",
+  "retrieved_on": "2026-10-06",
+  "live_pull_on": "2026-10-20",
+  "live_pull_result": "All 42 rows present. GDP max relative difference 0.00 percent. Life expectancy max absolute difference 0.000 years.",
+  "authority": "Appendix A values are authoritative. The live pull is a check and does not replace them.",
+  "income_groups": "Current World Bank classification at the time of writing; may differ from the 2019 classification.",
+  "coordinates": "Capital city latitude and longitude from the World Bank country endpoint.",
+  "notes": "No placeholders. No missing values. No invented numbers."
+}

@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState, lazy, Suspense } from 'react';
+import { useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
+import { Box, ChevronDown, Earth as EarthIcon, Globe2 } from 'lucide-react';
 import type { Country } from './data/schema';
 import { loadCountries } from './data/load';
 import { analyse, dollars, num, percent, type Point } from './math';
@@ -17,26 +18,102 @@ import { PreviewCard } from './ui/PreviewCard';
 import { AccessibleData, FitTable, SummaryTable } from './ui/Tables';
 import { BowlControls, ChangeTool, SensitivityPanel } from './ui/Tools';
 import { Working } from './ui/Working';
+import { MapChrome } from './ui/MapChrome';
+import { prefersReducedMotion } from './reducedMotion';
+import type { ViewCommand } from './three/view';
 
 const Stage = lazy(() => import('./three/Stage').then((m) => ({ default: m.Stage })));
 const ModelStage = lazy(() => import('./three/ModelStage').then((m) => ({ default: m.ModelStage })));
 
 /** When a section scrolls into view, fly the camera to the countries it is about. */
-function useStoryFocus() {
+function useStoryFocus(ready: boolean) {
   const flyTo = useStore((s) => s.flyTo);
+  const setActiveSection = useStore((s) => s.setActiveSection);
   useEffect(() => {
+    if (!ready) return;
     const els = document.querySelectorAll<HTMLElement>('[data-focus]');
+    // On a phone the map owns the top half, so read the section band below it.
+    const mobile = window.matchMedia('(max-width: 860px)').matches;
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
-          if (e.isIntersecting) flyTo((e.target as HTMLElement).dataset.focus!.split(',').filter(Boolean));
+          if (!e.isIntersecting) continue;
+          const section = e.target as HTMLElement;
+          flyTo((section.dataset.focus ?? '').split(',').filter(Boolean));
         }
       },
-      { rootMargin: '-45% 0px -45% 0px' }
+      { rootMargin: mobile ? '-52% 0px -10% 0px' : '-45% 0px -45% 0px' }
     );
     els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, [flyTo]);
+
+    // The section index follows the heading nearest the top of the reading area,
+    // not the last section that happens to enter the observer band. Short
+    // sections such as Gap were otherwise overtaken by the next heading.
+    const panel = document.querySelector<HTMLElement>('.panel');
+    const navSections = [...els].filter((el) =>
+      copy.nav.some((item) => item.id === el.getAttribute('aria-labelledby'))
+    );
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const isMobile = window.matchMedia('(max-width: 860px)').matches;
+      const panelTop = panel?.getBoundingClientRect().top ?? 0;
+      const cutoff = isMobile
+        ? window.innerHeight * 0.52 + 40
+        : panelTop + (panel?.clientHeight ?? window.innerHeight) * 0.2;
+      let current: HTMLElement | null = null;
+      for (const section of navSections) {
+        if (section.getBoundingClientRect().top <= cutoff) current = section;
+      }
+      const id = current?.getAttribute('aria-labelledby') ?? copy.nav[0]?.id;
+      if (id) setActiveSection(id);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    panel?.addEventListener('scroll', onScroll, { passive: true });
+    update();
+    return () => {
+      io.disconnect();
+      window.removeEventListener('scroll', onScroll);
+      panel?.removeEventListener('scroll', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [ready, flyTo, setActiveSection]);
+}
+
+/** A slim report index. It sits under the header, then sticks while the analysis scrolls. */
+function SectionNav() {
+  const active = useStore((s) => s.activeSection);
+  const setActiveSection = useStore((s) => s.setActiveSection);
+  const go = (id: string) => {
+    setActiveSection(id);
+    const el = document.getElementById(id);
+    el?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+  };
+  return (
+    <>
+      <nav className="section-nav" aria-label="Report sections">
+        {copy.nav.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            aria-current={active === item.id ? 'true' : undefined}
+            onClick={() => go(item.id)}
+          >{item.label}</button>
+        ))}
+      </nav>
+      <div className="section-jump">
+        <label htmlFor="section-jump">Section</label>
+        <select id="section-jump" value={active} onChange={(e) => go(e.target.value)}>
+          {copy.nav.map((item) => (
+            <option key={item.id} value={item.id}>{item.label}</option>
+          ))}
+        </select>
+      </div>
+    </>
+  );
 }
 
 function Live() {
@@ -49,6 +126,7 @@ export function App() {
   const [error, setError] = useState<string | null>(null);
   const [gl] = useState(webglAvailable);
   const [working, setWorking] = useState(false);
+  const view = useRef<ViewCommand>({ zoom: null });
   const { stage, setStage, excluded } = useStore();
 
   useEffect(() => {
@@ -71,10 +149,19 @@ export function App() {
   const a = bowlA ?? bowl?.a0 ?? 0;
   const c = bowlC ?? bowl?.c0 ?? 0;
 
-  useStoryFocus();
+  useStoryFocus(Boolean(countries && analysis && bowl));
 
-  if (error) return <p role="alert" className="fatal">{error}</p>;
-  if (!countries || !analysis || !bowl) return <p className="fatal" role="status">Loading the data</p>;
+  if (error) return <div className="boot" role="alert"><p className="fatal">{error}</p></div>;
+  if (!countries || !analysis || !bowl) {
+    return (
+      <div className="boot" role="status">
+        <span className="brand-mark"><EarthIcon size={18} strokeWidth={1.6} aria-hidden="true" /></span>
+        <p className="boot-title">{copy.title}</p>
+        <i className="load-line" aria-hidden="true" />
+        <p className="note">Loading the 2019 data</p>
+      </div>
+    );
+  }
   const g = analysis.gap;
   const fit = analysis.better === 'log' ? analysis.log : analysis.linear;
   const user = stage === 'model' ? { a, b: c - a * bowl.ubar, kind: bowlKind } : undefined;
@@ -84,24 +171,42 @@ export function App() {
       <Live />
       <div className="stage" aria-label="3D view">
         <div className="stage-tabs" role="tablist" aria-label="3D view">
-          <button role="tab" aria-selected={stage === 'globe'} onClick={() => setStage('globe')}>{copy.controls.globe}</button>
-          <button role="tab" aria-selected={stage === 'model'} onClick={() => setStage('model')}>{copy.controls.bowl}</button>
+          <button role="tab" aria-selected={stage === 'globe'} onClick={() => setStage('globe')}>
+            <Globe2 size={15} strokeWidth={1.8} aria-hidden="true" />
+            {copy.controls.globe}
+          </button>
+          <button role="tab" aria-selected={stage === 'model'} onClick={() => setStage('model')}>
+            <Box size={15} strokeWidth={1.8} aria-hidden="true" />
+            {copy.controls.bowl}
+          </button>
+        </div>
+        <div className="stage-meta" aria-hidden="true">
+          <span>2019</span><i /><span>42 countries</span>
         </div>
         {gl ? (
-          <Suspense fallback={<p className="fatal" role="status">Loading 3D view</p>}>
-            {stage === 'globe' ? <Stage countries={countries} analysis={analysis} /> : <ModelStage bowl={bowl} a={a} c={c} />}
+          <Suspense fallback={<div className="stage-loading" role="status"><span>{stage === 'globe' ? 'Loading the globe' : 'Loading the bowl'}</span><i className="load-line" aria-hidden="true" /></div>}>
+            {stage === 'globe' ? <Stage countries={countries} analysis={analysis} view={view} /> : <ModelStage bowl={bowl} a={a} c={c} />}
           </Suspense>
         ) : (
-          <p className="fatal" role="alert">{copy.errors.webgl}</p>
+          <div className="stage-fallback" role="alert"><p>{copy.errors.webgl}</p></div>
+        )}
+        {stage === 'globe' && gl && (
+          <MapChrome view={view} onReset={() => useStore.getState().flyTo(['ZWE', 'SGP'])} />
         )}
         {stage === 'model' && <BowlControls bowl={bowl} a={a} c={c} setA={setBowlA} setC={setBowlC} kind={bowlKind} />}
       </div>
 
       <aside className="panel">
         <header>
+          <div className="brand">
+            <span className="brand-mark"><EarthIcon size={18} strokeWidth={1.6} aria-hidden="true" /></span>
+            <p className="eyebrow">{copy.brand}</p>
+          </div>
           <h1>{copy.title}</h1>
-          <p>{copy.subtitle}</p>
+          <p className="lede">{copy.subtitle}</p>
         </header>
+
+        <SectionNav />
 
         <section data-focus="ZWE,SGP" aria-labelledby="h-two">
           <h2 id="h-two">Two places</h2>
@@ -156,20 +261,22 @@ export function App() {
           <SensitivityPanel countries={countries} points={points} />
         </section>
 
-        <section aria-labelledby="h-limits">
+        <section data-focus="" aria-labelledby="h-limits">
           <h2 id="h-limits">{copy.limits.heading}</h2>
           <ul className="plain">{copy.limits.items.map((t) => <li key={t}>{t}</li>)}</ul>
           <h3>Sources</h3>
           <ul className="plain">{copy.sources.map((t) => <li key={t}>{t}</li>)}</ul>
+          <p className="note">{copy.imagery}</p>
           <p className="note">This explorer was built with AI assistance as a companion to the IA. The data, the IA and its argument are the student's own work.</p>
         </section>
 
-        <section aria-labelledby="h-work">
+        <section data-focus="" aria-labelledby="h-work">
           <h2 id="h-work">Working</h2>
-          <button type="button" className="btn" aria-expanded={working} onClick={() => setWorking(!working)}>
-            {working ? copy.controls.hideWorking : copy.controls.showWorking}
+          <button type="button" className="btn disclosure" aria-expanded={working} aria-controls="working" onClick={() => setWorking(!working)}>
+            <span>{working ? copy.controls.hideWorking : copy.controls.showWorking}</span>
+            <ChevronDown size={16} strokeWidth={1.8} aria-hidden="true" />
           </button>
-          {working && <Working analysis={analysis} />}
+          <div id="working" hidden={!working}>{working && <Working analysis={analysis} />}</div>
         </section>
       </aside>
       <AccessibleData countries={countries} analysis={analysis} />

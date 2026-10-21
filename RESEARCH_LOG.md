@@ -11,7 +11,7 @@ Grades follow the brief: A is a primary or official statistical source, B is rep
 **Source:** `IA (1).pdf`, 17 pages, the student's complete draft.
 **Grade:** A (primary, the object the app serves).
 **Used for:** every anchor, both model equations, the gap, the inverse, the sensitivity result, the bibliography and the intended structure.
-**What it changed:** the app's copy follows the IA's framing and numbers rather than a generic "GDP and health" story. It also exposed the gaps recorded in `docs/IA_RECONCILIATION.md`, including the missing Appendix A and B in the PDF and the repeated "113.1 percent" defensive sentence.
+**What it changed:** the app's copy follows the IA's framing and numbers rather than a generic "GDP and health" story. It also exposed the gaps recorded in `docs/IA_RECONCILIATION.md`, including the missing Appendix A and B in the original PDF and the repeated "113.1 percent" defensive sentence. Both were fixed in the revised PDF kept outside this repository.
 
 ## R2. The build brief
 
@@ -59,15 +59,15 @@ Grades follow the brief: A is a primary or official statistical source, B is rep
 
 **Source:** `world-atlas` npm package, derived from Natural Earth 1:110m cultural vectors. Natural Earth is public domain.
 **Grade:** A for geometry, not for statistics.
-**Used for:** the land mask that is drawn to a canvas texture and wrapped on the globe.
-**What it changed:** the first globe attempt used a flat dark sphere with no land. The texture makes the planet readable without turning it into a satellite image.
+**Used for:** the land mask and coastlines that are drawn over the blue marble texture on the globe.
+**What it changed:** the first globe attempt used a flat dark sphere with no land. The final stage combines Natural Earth coastlines with NASA Blue Marble imagery, which gives place recognition while keeping the data as the foreground.
 
 ## R9. WCAG 2.2, success criterion 2.5.8 Target Size (Minimum)
 
 **Source:** W3C, WCAG 2.2. The Understanding page returned HTTP 403 to the fetcher, so the criterion used is the published 24 by 24 CSS pixel minimum from the specification.
 **Grade:** A (standard).
 **Used for:** the mechanical target size audit in `scripts/audit.mjs`.
-**What it changed:** every interactive control is at least 24 by 24 CSS pixels. The buttons are 36 pixels tall. The brief's 44 pixel comfort target is not met and is recorded as a known deviation.
+**What it changed:** every interactive control is at least 24 by 24 CSS pixels, and the country checkboxes were enlarged to 24 pixels. The section index, map tools, mobile section select and primary buttons are 44 pixels. The compact stage tabs remain 36 pixels and are recorded as a known deviation from the 44 pixel comfort target.
 
 ## R10. Preston, "The Changing Relation between Mortality and Level of Economic Development"
 
@@ -88,7 +88,7 @@ Grades follow the brief: A is a primary or official statistical source, B is rep
 **Source:** the Works Cited page of `IA (1).pdf`.
 **Grade:** A for the fact of disclosure.
 **Used for:** the integrity note.
-**What it changed:** both `DECISIONS.md` and the app's own note say that AI assistance was used, rather than hiding it. This also flags a risk for the student: the current wording ("this practice draft") reads like a disclaimer and should be rewritten before submission.
+**What it changed:** both `DECISIONS.md` and the app's own note say that AI assistance was used, rather than hiding it. The original Works Cited wording ("this practice draft") read like a disclaimer and was rewritten in the revised PDF; confirm the school's exact AI wording before submission.
 
 ---
 

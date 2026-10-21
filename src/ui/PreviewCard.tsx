@@ -16,7 +16,7 @@ export function PreviewCard({ countries, analysis }: { countries: Country[]; ana
   const rank = [...countries].sort((a, b) => b.life - a.life).findIndex((k) => k.iso3 === c.iso3) + 1;
   return (
     <section className="preview" aria-label={`Preview: ${c.name}`}>
-      <div className="preview-3d"><Suspense fallback={null}><PreviewPillar life={c.life} /></Suspense></div>
+      <div className="preview-3d"><Suspense fallback={null}><PreviewPillar life={c.life} lat={c.lat} lon={c.lon} /></Suspense></div>
       <div className="preview-text">
         <h3>{c.name}</h3>
         <dl>

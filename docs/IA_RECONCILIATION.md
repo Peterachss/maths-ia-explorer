@@ -84,37 +84,53 @@ The inverse has a small spread because the answer depends on which target is use
 | Upper middle (n = 12) | 74.4 | 74.37 | 0.03 |
 | High (n = 11) | 82.3 | 82.30 | 0.00 |
 
-## Issues in the written IA
+## Issues in the original IA (resolved in the revised PDF)
 
-These are editorial or structural, not arithmetic. They do not affect the explorer, but they matter before submission.
+These are editorial or structural, not arithmetic. They did not affect the explorer, but they mattered before submission. A revised PDF, kept outside this public repository, addresses all seven. The descriptions below record the original problem; each is followed by the revision.
+
+**Revision status:** Appendix A and B added, with both listed in the contents. The 113.1 percent explanation tightened. The Claude entry rewritten. The introduction shortened. The Figure 6 caption corrected. The 22.5/22.54 distinction clarified at first use. The assessed body remains 14 pages. The revised PDF is not published to the site.
 
 ### 1. Appendix A and Appendix B are missing from the PDF
 
-The IA refers to Appendix A for the raw data and Appendix B for the group summary, but the 17 page PDF ends without either. The data are said to be in a Google Sheets tab called Data (2019). A moderator reading only the PDF cannot check a single row. Either add both appendices to the PDF or make the sheet available with the submission. This is the largest risk in the current draft.
+The IA refers to Appendix A for the raw data and Appendix B for the group summary, but the 17 page PDF ends without either. The data are said to be in a Google Sheets tab called Data (2019). A moderator reading only the PDF cannot check a single row. Either add both appendices to the PDF or make the sheet available with the submission. This was the largest risk in the original draft.
+
+**Resolved:** the revised PDF adds Appendix A (42 raw rows) and Appendix B (income group summary) after Works Cited, and lists both on the contents page.
 
 ### 2. The 113.1 percent is explained more than once
 
 The linear model's predicted gap is 25.48 years, which is 113.1 percent of the observed 22.54. The IA explains, correctly, that this is not invalid: it means the line overestimates the difference. The explanation is repeated in several places, which reads as defensive. State it once, next to the number, and let the later sections move on.
 
+**Resolved:** the revised page 10 states the overestimate once and removes the "not invalid" defence. The phrase appears once in the PDF.
+
 ### 3. The Works Cited wording needs rewriting
 
 The entry for Claude says "drafting support ... this practice draft". That phrasing sounds like a disclaimer and draws attention to the tool rather than to the work. A short, factual disclosure is better: what the tool was used for and what it was not used for. The school's academic honesty policy should decide the exact wording, and the student should confirm it before submission.
+
+**Resolved:** the entry now says the tool checked calculations, suggested revisions and prepared the Google Sheets figures, and that all output was reviewed and verified. The school's exact wording should still be confirmed.
 
 ### 4. The introduction runs long
 
 The opening spends space on the importance of the topic that is not used by the later mathematics. With a page limit, that space is better spent on the residual analysis and the evaluation. This is a judgement call, not an error.
 
+**Resolved:** the personal paragraph is shortened and the essay-prize detail is removed. The motivation, sample and method remain.
+
 ### 5. Figure 6 units
 
 The derivative chart's caption says "years per $1,000", but the expression plotted is `a / x`, which is years per dollar. The values in the text are multiplied by 1,000. Either label the axis "years per $1,000" and say the values are scaled, or plot per dollar. The explorer uses per $1,000 and says so.
+
+**Resolved:** the caption now says the derivative is converted to years per $1,000 by multiplying by 1,000.
 
 ### 6. 22.5 against 22.54
 
 The headline gap is 22.5 years, the calculation uses 22.54. That is fine, but be consistent about which one is being quoted. The explorer prints 22.5 in prose and uses the unrounded value in every calculation.
 
+**Resolved:** the introduction now says "22.5 years (22.54 before rounding, the value I use in calculations)". The conclusion uses 22.54 in the 83.8 percent calculation.
+
 ### 7. Page count
 
 The PDF is 17 pages including the cover and the works cited. Check the current school limit for the body of the IA. If the limit is 14 pages, the body is close and the appendices should not count toward it, which is another reason to make sure they are actually attached.
+
+**Resolved:** the assessed body remains 14 pages (pages 3 to 16). The cover, contents, Works Cited and the two appendices sit outside it. Confirm the school's current limit before submission.
 
 ## How this file was produced
 

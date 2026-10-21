@@ -5,8 +5,8 @@ import { useStore } from '../store';
 
 export function FitTable({ analysis }: { analysis: Analysis }) {
   const rows = [
-    { name: 'Straight line', f: analysis.linear, eq: `y = ${analysis.linear.a.toFixed(6)} x + ${analysis.linear.b.toFixed(2)}` },
-    { name: 'Logarithmic', f: analysis.log, eq: `y = ${analysis.log.a.toFixed(3)} ln x + ${analysis.log.b.toFixed(2)}` }
+    { name: 'Straight line', f: analysis.linear },
+    { name: 'Logarithmic', f: analysis.log }
   ];
   return (
     <div className="table-scroll">
@@ -15,7 +15,6 @@ export function FitTable({ analysis }: { analysis: Analysis }) {
         <thead>
           <tr>
             <th scope="col">Model</th>
-            <th scope="col">Equation</th>
             <th scope="col">r</th>
             <th scope="col">r squared</th>
             <th scope="col">Residual SE (years)</th>
@@ -26,7 +25,6 @@ export function FitTable({ analysis }: { analysis: Analysis }) {
           {rows.map((r) => (
             <tr key={r.name} className={analysis.better === r.f.kind ? 'best' : ''}>
               <th scope="row">{r.name}{analysis.better === r.f.kind ? ' (better fit)' : ''}</th>
-              <td>{r.eq}</td>
               <td>{num(r.f.r, 3)}</td>
               <td>{num(r.f.r2, 3)}</td>
               <td>{num(r.f.se, 2)}</td>

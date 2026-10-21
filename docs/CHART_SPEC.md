@@ -1,12 +1,12 @@
 # Chart specification
 
-There are seven SVG chart figures, plus the globe and the bowl. All seven share a 520 by 340 viewBox, a left margin of 58, a right margin of 18, a top margin of 30 and a bottom margin of 50, except the income group box plot, which has its own 520 by 210 frame so the group labels fit.
+There are seven SVG chart figures, plus the globe and the bowl. All seven share a 520 wide viewBox. The scatter, residuals, derivative and inverse figures are 520 by 340 with a left margin of 58, a right margin of 18, a top margin of 30 and a bottom margin of 50. The gap figure is 520 by 150 and the income group box plot is 520 by 210 so the group labels fit.
 
 ## 1. Scatter with both fits
 
 - **File:** `src/charts/Scatter.tsx`
 - **Encoding:** x is GDP per capita, y is life expectancy in years. One dot per country.
-- **Scales:** x is linear from 0 to 130,000 or log from 800 to 160,000, controlled by the axis toggle. y is linear from 45 to 90.
+- **Scales:** x is linear from 0 to 130,000 or log from 800 to 160,000, controlled by the axis toggle. y is linear from 45 to 96; the headroom keeps the straight line's 92.7-year prediction for Singapore visible instead of clipped.
 - **Models:** the straight line is dashed blue, the log curve is solid gold. Both are drawn over the observed range, not across the whole frame.
 - **Labels:** Zimbabwe, Singapore and Vietnam are always labelled; the selected or hovered country is labelled too. Labels flip to the left of the point near the right edge.
 - **Annotation:** none beyond the labels. The fit table below carries the statistics.
@@ -23,7 +23,7 @@ There are seven SVG chart figures, plus the globe and the bowl. All seven share 
 ## 4. Observed and predicted gap
 
 - **File:** `src/charts/GapChart.tsx`
-- **Encoding:** two horizontal bars, observed gap and model gap, in years. The observed bar is cream; the model bar is gold. The difference is the part the model does not reproduce.
+- **Encoding:** two horizontal bars, observed gap and model gap, in years. The observed bar is coral; the model bar uses the current model colour, blue for the straight line and gold for the logarithm. The difference is the part the model does not reproduce.
 - **Annotation:** the share of the gap reproduced, as a percentage, and the two values in years.
 - **Why bars:** the gap is a difference between two countries, and a bar comparison is the clearest way to show how much of the 22.5 years the model accounts for.
 - **Accessible name:** "Observed and predicted life expectancy gap, Zimbabwe and Singapore".

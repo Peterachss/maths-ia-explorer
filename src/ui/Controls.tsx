@@ -39,7 +39,7 @@ export function SelectionBar({ countries }: { countries: Country[] }) {
   return (
     <div className="selection">
       <div className="button-row">
-        <button type="button" className="btn" onClick={presetAnchors}>{copy.controls.anchors}</button>
+        <button type="button" className="btn primary" onClick={presetAnchors}>{copy.controls.anchors}</button>
         <button type="button" className="btn ghost" onClick={clear} disabled={!selected.length}>{copy.controls.clear}</button>
       </div>
       {selected.length === 0 ? (
@@ -62,13 +62,35 @@ export function SelectionBar({ countries }: { countries: Country[] }) {
 
 export function ModelToggles() {
   const { modelShow, setModelShow, xAxis, setXAxis } = useStore();
-  const Seg = <T extends string>({ value, set, options, label }: { value: T; set: (v: T) => void; options: [T, string][]; label: string }) => (
-    <div role="radiogroup" aria-label={label} className="segmented">
-      {options.map(([v, text]) => (
-        <button key={v} type="button" role="radio" aria-checked={value === v} className={value === v ? 'on' : ''} onClick={() => set(v)}>{text}</button>
-      ))}
-    </div>
-  );
+  const Seg = <T extends string>({ value, set, options, label }: { value: T; set: (v: T) => void; options: [T, string][]; label: string }) => {
+    const move = (step: number) => {
+      const i = options.findIndex(([k]) => k === value);
+      set(options[(i + step + options.length) % options.length]![0]);
+    };
+    return (
+      <div
+        role="radiogroup"
+        aria-label={label}
+        className="segmented"
+        onKeyDown={(e) => {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+          if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+        }}
+      >
+        {options.map(([v, text]) => (
+          <button
+            key={v}
+            type="button"
+            role="radio"
+            aria-checked={value === v}
+            tabIndex={value === v ? 0 : -1}
+            className={value === v ? 'on' : ''}
+            onClick={() => set(v)}
+          >{text}</button>
+        ))}
+      </div>
+    );
+  };
   return (
     <div className="toggles">
       <Seg label="Models shown" value={modelShow} set={setModelShow}

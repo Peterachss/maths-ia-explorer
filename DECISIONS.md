@@ -2,9 +2,9 @@
 
 Short records of the choices that shaped the explorer. Each one names the alternative that was rejected and why.
 
-## 1. Visual world: the star chart
+## 1. Visual world: a photoreal instrument panel
 
-Three directions were considered: a data dashboard, a satellite view, and a printed star chart. The dashboard was rejected because it would make the 42 countries feel like a business report. The satellite view was rejected because photographic Earth would compete with the data and make the page feel like a product demo. The star chart won: matte black paper, warm cream type, one vermilion thread, thin rules, and a globe that reads as a drawn instrument rather than a planet. The palette is in `src/styles/tokens.css` and `src/theme.ts`, and every screen follows it.
+Four directions were considered: a business dashboard, a printed star chart, a dark data map, and a photographic Earth with instrument chrome. The dashboard was rejected because it would make the 42 countries feel like a report. The star chart was rejected because it made the planet feel like a diagram rather than a place. The final direction keeps the precision of an instrument but uses a photoreal NASA Blue Marble globe, graphite surfaces and one blue accent, with Instrument Sans throughout. The palette is in `src/styles/tokens.css` and `src/theme.ts`; the imagery is explicitly illustrative, not a 2019 data layer.
 
 ## 2. Appendix A is authoritative
 
@@ -22,9 +22,9 @@ The IA compares the models with r, r squared, the residual standard error and th
 
 Reading the curve backwards gives the income at which the model predicts Singapore's life expectancy. The app solves the fitted curve, reports whether the answer is interpolation or extrapolation, and also shows the reverse regression of `ln x` on `y` as a different calculation. The two answers differ, and hiding that would be dishonest.
 
-## 6. A drawn globe, not a photographic one
+## 6. A photographic globe, labelled as illustrative
 
-The sphere uses an equirectangular land mask drawn from Natural Earth geometry and mapped as a texture. Country pillars stand at capital city coordinates from the World Bank country list. The globe is deliberately sparse: no borders as bright lines, no atmospheric glow, no city lights. The pillars carry the data, and the arc carries the comparison.
+The stage uses NASA Blue Marble Next Generation (December 2004) as a colour basemap, a three.js terrain normal map, an ocean specular map and a cloud layer, with Natural Earth coastlines. This gives the place-recognition of Google Earth without pretending the imagery is a 2019 data layer. The map attribution and the Sources note both say the imagery is illustrative. The data remain the pillars and the arc, not the texture.
 
 ## 7. Pillar height is scaled, not proportional
 
@@ -36,11 +36,11 @@ The specification imagined a full page scrollytelling site. A split view was cho
 
 ## 9. SVG charts, no chart library
 
-Every chart is hand built with `d3-scale` and `d3-shape`. A chart library would have brought default styles, tooltips and legends that fight the star chart world, and the charts here are simple enough that the drawing code is shorter than the configuration would be. It also keeps the accessible names and the exact number formatting under our control.
+Every chart is hand built with `d3-scale` and `d3-shape`. A chart library would have brought default styles, tooltips and legends that fight the instrument-panel world, and the charts here are simple enough that the drawing code is shorter than the configuration would be. It also keeps the accessible names and the exact number formatting under our control.
 
-## 10. Controls are 36 pixels tall
+## 10. Controls meet the minimum, primary controls are comfortable
 
-The specification asked for 44 pixel touch targets. The stage tabs and model toggles are 36 pixels tall. That passes WCAG 2.2 AA, whose minimum is 24 by 24 CSS pixels, but it is below the 44 pixel comfort target. Raising every control to 44 pixels would have added roughly 80 pixels of vertical chrome to a panel that is already dense. The deviation is recorded here and in `docs/A11Y_PLAN.md` rather than hidden.
+The stage tabs and some compact model toggles are 36 pixels tall. The section index, map tools, mobile section select and bowl controls are 44 pixels. Every target is at least 24 by 24 CSS pixels, and the country checkboxes are now 24 pixels inside 28 pixel labels. Raising every compact control to 44 would have added roughly 80 pixels of chrome to a dense panel; the remaining 36 pixel tabs are recorded in `docs/A11Y_PLAN.md` rather than hidden.
 
 ## 11. Research was logged honestly, not padded
 
@@ -52,4 +52,24 @@ The app is built, tested, screenshotted and pushed to GitHub. It is also publish
 
 ## 13. AI assistance is disclosed
 
-The IA's own Works Cited already records that Claude was used for planning, checking calculations, drafting support and setting up the sheets. This explorer was built with AI assistance as well. It is a companion to the IA, not a substitute for the student's own analysis, and the interface does not claim otherwise. The student should describe the tool the same way in any submission.
+The IA's Works Cited records that Claude was used to check calculations, suggest revisions and prepare the Google Sheets figures, and that all output was reviewed and verified by the author. This explorer was built with AI assistance as well. It is a companion to the IA, not a substitute for the student's own analysis, and the interface does not claim otherwise. The student should check the school's exact AI disclosure wording.
+
+## 14. Solid dark chrome, not frosted glass
+
+The map chrome (tabs, zoom, legend and attribution) uses solid graphite surfaces and one-pixel rules. Frosted glass was rejected because it smeared the globe behind the controls and made the instrument panel feel like a generic dashboard. Solid chrome keeps text contrast stable over bright oceans and clouds.
+
+## 15. A mobile section select, not a wrapped index
+
+At 375 pixels the eight-item section index could not fit without either a two-row strip or a single orphaned item. The mobile layout uses a native select in one 44 pixel row with a visible Section label. The desktop index stays sticky and fits in one line at 1440. A select also gives the platform's own touch and keyboard behaviour, which is more reliable than a custom scroll strip.
+
+## 16. One primary blue, chosen for contrast
+
+The primary button uses `#1a73e8` with white text. The earlier `#2f7cf6` gave a 3.9:1 ratio, below AA for small text. The chosen blue is 4.51:1, which passes AA and still reads as the familiar Google blue. The accent is used for focus, the active section rule and the primary action, not for decoration.
+
+## 17. Remove the redundant equation column
+
+The fit table originally included a fitted-value column beside the slope and intercept. The same value was already in the equation row and the scatter tooltip, and the extra column squeezed the numbers. Removing it gave the remaining columns room to breathe and made the table easier to scan. No information was lost.
+
+## 18. Show the linear overprediction, and calm the bowl
+
+The scatter y-domain now runs to 96 years so the linear fit's 92.7-year prediction for Singapore is visible instead of clipped. The least-squares bowl uses a restrained blue to sand ramp; the earlier rainbow mapped error to hue in a way that suggested categories. The bowl still shows the minimum clearly, but it no longer competes with the data colours.

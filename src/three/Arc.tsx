@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
-import { CatmullRomCurve3, TubeGeometry, type Mesh } from 'three';
+import { AdditiveBlending, CatmullRomCurve3, TubeGeometry, type Mesh } from 'three';
 import { arcPoints, angleBetween, latLon } from '../geo/project';
 import { theme } from '../theme';
 import { prefersReducedMotion } from '../reducedMotion';
@@ -17,8 +17,20 @@ interface Props {
 
 const easeOutExpo = (t: number) => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
 
-function Tube({ pts, radius, colour, dashed = false }: { pts: ReturnType<typeof arcPoints>; radius: number; colour: string; dashed?: boolean }) {
-  const geo = useMemo(() => new TubeGeometry(new CatmullRomCurve3(pts), 160, radius, 6, false), [pts, radius]);
+function Tube({
+  pts,
+  radius,
+  colour,
+  dashed = false,
+  glow = false
+}: {
+  pts: ReturnType<typeof arcPoints>;
+  radius: number;
+  colour: string;
+  dashed?: boolean;
+  glow?: boolean;
+}) {
+  const geo = useMemo(() => new TubeGeometry(new CatmullRomCurve3(pts), 160, radius, 8, false), [pts, radius]);
   const mesh = useRef<Mesh>(null);
   const t0 = useRef(performance.now());
   useEffect(() => { t0.current = performance.now(); }, [pts]);
@@ -28,8 +40,15 @@ function Tube({ pts, radius, colour, dashed = false }: { pts: ReturnType<typeof 
     geo.setDrawRange(0, Math.floor((total * Math.max(0, p)) / 3) * 3);
   });
   return (
-    <mesh ref={mesh} geometry={geo}>
-      <meshBasicMaterial color={colour} transparent opacity={dashed ? 0.85 : 1} />
+    <mesh ref={mesh} geometry={geo} renderOrder={glow ? 3 : 4}>
+      <meshBasicMaterial
+        color={colour}
+        transparent
+        opacity={glow ? 0.1 : dashed ? 0.88 : 0.96}
+        blending={glow ? AdditiveBlending : undefined}
+        depthWrite={false}
+        toneMapped={false}
+      />
     </mesh>
   );
 }
@@ -44,10 +63,15 @@ export function Arc({ from, to, observedGap, modelFraction, modelColour }: Props
   const apex = outer[Math.floor(outer.length / 2)]!;
   return (
     <group>
-      <Tube pts={outer} radius={0.0045} colour={theme.thread} />
-      <Tube pts={inner} radius={0.0035} colour={modelColour} dashed />
+      <Tube pts={outer} radius={0.01} colour={theme.thread} glow />
+      <Tube pts={outer} radius={0.0038} colour={theme.thread} />
+      <Tube pts={inner} radius={0.008} colour={modelColour} glow />
+      <Tube pts={inner} radius={0.0032} colour={modelColour} dashed />
       <Html position={apex} center style={{ pointerEvents: 'none' }}>
-        <span className="arc-label">{observedGap.toFixed(1)} years apart</span>
+        <span className="arc-label">
+          <strong>{observedGap.toFixed(1)} years apart</strong>
+          <span>observed gap</span>
+        </span>
       </Html>
     </group>
   );

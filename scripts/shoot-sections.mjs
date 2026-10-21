@@ -26,7 +26,7 @@ for (const [name, heading] of sections) {
   await page.evaluate((h) => {
     const panel = document.querySelector('.panel');
     const el = [...document.querySelectorAll('.panel h2')].find((n) => n.textContent?.includes(h));
-    if (panel && el) panel.scrollTop = el.getBoundingClientRect().top - panel.getBoundingClientRect().top + panel.scrollTop - 16;
+    if (panel && el) panel.scrollTop = el.getBoundingClientRect().top - panel.getBoundingClientRect().top + panel.scrollTop - 60;
   }, heading);
   await page.waitForTimeout(1100);
   await page.screenshot({ path: `docs/screens/section-${name}.png` });

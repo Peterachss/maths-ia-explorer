@@ -37,7 +37,7 @@ The pillar base sits exactly on the sphere at radius 1. The cylinder is oriented
 
 The Singapore to Zimbabwe arc is a great circle interpolation, lifted above the surface by `0.12 + angle * 0.1`, where the angle is the central angle between the two capitals. The lift is shaped by `sin(pi t)`, so the arc leaves and meets the surface smoothly.
 
-The outer arc is the observed gap in vermilion. The inner, thinner, gold arc is the share of the gap the model reproduces; it stops early because 18.88 is 83.8 percent of 22.5. That is the one animated moment in the scene: the arc draws itself over about 1.6 seconds when the selection changes, and draws instantly under reduced motion.
+The outer arc is the observed gap in coral. The inner, thinner, gold arc is the share of the gap the model reproduces; it stops early because 18.88 is 83.8 percent of 22.54 (22.5 rounded). That is the one animated moment in the scene: the arc draws itself over about 1.6 seconds when the selection changes, and draws instantly under reduced motion.
 
 ## What the globe does not show
 

@@ -87,12 +87,14 @@ function ratio(a, b) {
   return Number(((l1 + 0.05) / (l2 + 0.05)).toFixed(2));
 }
 results.contrast = {
-  'paper-0 on ink-1': ratio('#f1e9d7', '#16140f'),
-  'paper-1 on ink-1': ratio('#c9bfa6', '#16140f'),
-  'paper-2 on ink-1': ratio('#a39a82', '#16140f'),
-  'thread-text on ink-1': ratio('#f07a56', '#16140f'),
-  'model-log on ink-1': ratio('#e9b44c', '#16140f'),
-  'model-linear on ink-1': ratio('#86a9d1', '#16140f')
+  'paper-0 on ink-1': ratio('#f4f7fb', '#0f141b'),
+  'paper-1 on ink-1': ratio('#c2ccd8', '#0f141b'),
+  'paper-2 on ink-1': ratio('#8b98a8', '#0f141b'),
+  'paper-2 on ink-2': ratio('#8b98a8', '#171f28'),
+  'thread-text on ink-1': ratio('#ff8a70', '#0f141b'),
+  'model-log on ink-1': ratio('#ffc247', '#0f141b'),
+  'model-linear on ink-1': ratio('#5aa7ff', '#0f141b'),
+  'white on primary': ratio('#ffffff', '#1a73e8')
 };
 
 await writeFile('docs/audit.json', JSON.stringify(results, null, 2) + '\n', 'utf8');

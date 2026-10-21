@@ -1,12 +1,13 @@
-// src/geo/texture.ts : draws real Natural Earth geometry onto an equirectangular canvas.
+// Country borders drawn onto a transparent equirectangular texture. The
+// satellite image supplies the land; this layer adds the map lines that make
+// the globe readable without covering the imagery.
 import { CanvasTexture, SRGBColorSpace } from 'three';
-import { geoEquirectangular, geoGraticule10, geoPath } from 'd3-geo';
-import { feature, mesh } from 'topojson-client';
+import { geoEquirectangular, geoPath } from 'd3-geo';
+import { mesh } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
 import world from 'world-atlas/countries-110m.json';
-import { theme } from '../theme';
 
-export function makeEarthTexture(width = 2048): CanvasTexture {
+export function makeBorderTexture(width = 4096): CanvasTexture {
   const height = width / 2;
   const canvas = document.createElement('canvas');
   canvas.width = width;
@@ -15,36 +16,23 @@ export function makeEarthTexture(width = 2048): CanvasTexture {
   const projection = geoEquirectangular().fitSize([width, height], { type: 'Sphere' });
   const path = geoPath(projection, ctx);
   const topo = world as unknown as Topology<{ countries: GeometryCollection }>;
+  const scale = width / 4096;
 
-  ctx.fillStyle = theme.sea;
-  ctx.fillRect(0, 0, width, height);
+  ctx.clearRect(0, 0, width, height);
 
-  ctx.beginPath();
-  path(geoGraticule10());
-  ctx.strokeStyle = theme.grat;
-  ctx.globalAlpha = 0.55;
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  ctx.globalAlpha = 1;
-
-  ctx.beginPath();
-  path(feature(topo, topo.objects.countries) as never);
-  ctx.fillStyle = theme.land;
-  ctx.fill();
-
+  // Internal borders: quiet, so the satellite image stays the subject.
   ctx.beginPath();
   path(mesh(topo, topo.objects.countries, (a, b) => a !== b) as never);
-  ctx.strokeStyle = theme.rule;
-  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(235, 244, 255, 0.42)';
+  ctx.lineWidth = 2.2 * scale;
   ctx.stroke();
 
+  // Coastlines: slightly stronger, like a map layer over imagery.
   ctx.beginPath();
   path(mesh(topo, topo.objects.countries, (a, b) => a === b) as never);
-  ctx.strokeStyle = theme.paper1;
-  ctx.globalAlpha = 0.5;
-  ctx.lineWidth = 1.2;
+  ctx.strokeStyle = 'rgba(245, 250, 255, 0.72)';
+  ctx.lineWidth = 3.2 * scale;
   ctx.stroke();
-  ctx.globalAlpha = 1;
 
   const tex = new CanvasTexture(canvas);
   tex.colorSpace = SRGBColorSpace;

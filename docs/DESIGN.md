@@ -2,66 +2,62 @@
 
 ## The world
 
-The point of view sentence is the one from the brief:
+The explorer is a photoreal Earth held inside a graphite instrument panel. The globe supplies place and atmosphere; the panel supplies the argument. The interface should feel like a map someone uses, not a dashboard someone presents.
 
-> It feels like a printed star chart of the Earth, held under a desk lamp at night: matte, precise, quiet, with one thread of colour that connects two places.
+The visual direction is deliberately narrow. The stage is a NASA Blue Marble globe with a terrain normal map, ocean specular, a thin cloud layer, an atmospheric rim and a quiet star field. The chrome is solid graphite, separated by one-pixel rules, with a single blue accent and a coral thread for the observed gap. There is no frosted glass, no neon, no rainbow bowl and no decorative statistic.
 
-That sentence decides almost everything. The background is not pure black, it is warm ink. The type is a serif with a slightly old instrument feel, paired with a neutral grotesque for numbers and controls. There is one saturated colour, vermilion, and it is reserved for the thread between Zimbabwe and Singapore. Gold is the model. Blue is the line. Nothing else is allowed to be loud.
+The imagery is illustrative. It is a visual basemap, not a 2019 data layer, and the map attribution and the Sources note both say so.
 
 ## Palette
 
 | Token | Hex | Use |
 |---|---|---|
-| ink-0 | `#0d0c0a` | page and stage background |
-| ink-1 | `#16140f` | panel background |
-| ink-2 | `#211e17` | raised controls and cards |
-| rule | `#3a3529` | hairlines, borders |
-| paper-0 | `#f1e9d7` | headings and primary text |
-| paper-1 | `#c9bfa6` | body text |
-| paper-2 | `#a39a82` | secondary text |
-| thread | `#e4572e` | the Singapore to Zimbabwe arc, selection |
-| thread-text | `#f07a56` | vermilion text, lightened for contrast |
-| model-linear | `#86a9d1` | straight line |
-| model-log | `#e9b44c` | logarithmic curve |
-| land | `#1b1912` | land on the globe |
-| sea | `#0a0907` | ocean on the globe |
-| grat | `#4a4435` | graticule and grid lines |
+| ink-0 | `#05080d` | page and stage background |
+| ink-1 | `#0f141b` | panel background |
+| ink-2 | `#171f28` | raised controls and cards |
+| rule | `#26303c` | hairlines and borders |
+| rule-soft | `#1d2631` | quiet separators |
+| paper-0 | `#f4f7fb` | headings and primary text |
+| paper-1 | `#c2ccd8` | body text |
+| paper-2 | `#8b98a8` | secondary text |
+| thread | `#ff6b4a` | the Singapore to Zimbabwe arc and selection |
+| thread-text | `#ff8a70` | coral text, lightened for contrast |
+| model-linear | `#5aa7ff` | straight line |
+| model-log | `#ffc247` | logarithmic curve |
+| land | `#1b2634` | globe land tint |
+| sea | `#08111c` | globe ocean tint |
+| accent | `#4c9aff` | links and active highlights |
+| accent-2 | `#1a73e8` | primary button, white text |
+| focus | `#6cb2ff` | focus ring |
 
-The land is only one step above the sea. That is deliberate: the continents are a frame for the pillars, not the subject. The graticule is fainter still.
+The palette lives in `src/styles/tokens.css` and `src/theme.ts`. The audit reads the real values, not a separate copy.
 
 ## Type
 
-- Display: **Fraunces Variable**, a serif with a slightly worn, printed quality. Used for h1, h2 and h3 only.
-- Text and UI: **Instrument Sans Variable**, a neutral grotesque with a tall x-height. Used for body, tables, controls, axis labels and numbers.
-- Numbers use tabular figures throughout, so a column of GDP values lines up.
-- Sizes follow a 1.25 modular scale from 0.875rem to 2.441rem. The h1 is the only thing above 2rem.
-- Line height is 1.55 for body, 1.15 for display.
-
-Both fonts are self-hosted through Fontsource, so there is no request to a font CDN and no layout shift from a late font.
+Instrument Sans Variable is the only typeface. It is a neutral grotesque with a tall x-height, open apertures and tabular figures. Headings gain weight and size, not a second family. Body text is 1rem at 1.55 line height; small labels use uppercase and tracking; numbers use tabular figures so columns line up. The full reasoning is in `docs/TYPE_DECISION.md`.
 
 ## Layout
 
-Desktop is a two column grid: a flexible stage and a 30rem panel. The stage is sticky by virtue of the grid's fixed height; the panel scrolls inside itself. The split keeps the globe visible while the argument unfolds. At 860 pixels and below the grid becomes one column, the stage becomes 48dvh and sticky, and the panel scrolls with the page.
+The desktop view is a split view: a stage on the left and a scrolling panel on the right. The stage stays in view while the argument moves. A sticky section index sits under the panel header and fits in one line at 1440. On mobile the stage becomes a 52dvh sticky band and the section index becomes a native select in one 44 pixel row. The panel is the reading surface, not a second dashboard.
 
-The panel is a single column of sections with a 3rem gap. There are no cards inside cards. The only raised surfaces are the search field, the preview card, the bowl controls and the model toggles. Rules, not shadows, do most of the separations.
+The split view was chosen over a full page scrollytelling site because it keeps the globe available at every step and avoids scroll hijacking. The trade-off is that a full page screenshot only captures one panel position, which is why the screenshots are taken section by section.
 
-## Motion
+## Map chrome
 
-- Camera flights ease with an exponential curve over about 0.9 seconds.
-- The globe drifts at a slow constant rate until the reader touches it.
-- Section entry uses an IntersectionObserver with a narrow middle band, so the camera does not fly on every small scroll.
-- All motion collapses to zero duration under `prefers-reduced-motion`, and the Three.js drift and flight are skipped in code as well as in CSS.
+The stage tabs, zoom buttons, reset, legend and attribution use solid graphite surfaces. Frosted glass was rejected because it smeared the globe behind the controls and made the panel feel like a generic dashboard. The attribution is always visible and says the basemap is illustrative.
 
 ## Charts
 
-Charts are drawn as SVG in a 520 by 340 viewBox with a 58 pixel left margin, a 30 pixel top margin and a 50 pixel bottom margin. Axis lines are hairlines in `rule`. Tick labels are `paper-2`. The model colour is the only strong colour in a chart, apart from the vermilion used for the observed gap and the selected country.
+Seven hand-built SVG figures: scatter with both fits, residuals for each model, the gap, the derivative, the inverse and box plots by income group. The straight line is blue, the logarithmic curve is gold, the observed gap is coral. The axes use thin rules and tabular numbers, and each figure has a `role="img"` and a sentence-length accessible name. The least squares bowl is a separate 3D view with a blue to sand error ramp, not a category rainbow.
 
-Point labels sit above the point and flip to the left of the point near the right edge. They have a 3 pixel ink stroke behind the text so they stay readable over the grid. There are no drop shadows, no rounded bars, no gradients behind data.
+## Motion
+
+Camera flights are slow and interruptible. The globe has a gentle idle rotation only when the user has not taken control. Reduced motion disables the flight, the idle rotation and CSS transitions. The boot screen is a quiet loading state, not a performance.
 
 ## What was rejected
 
-- **A dashboard with cards and KPI tiles.** It would make 42 countries feel like a quarterly report and would put the numbers above the argument.
-- **A photographic globe.** It would compete with the pillars, cost megabytes, and make the page feel like a product demo.
-- **A dark neon "data science" theme.** Purple gradients and glowing lines are the generic AI look the brief explicitly bans.
-- **Animating every element on scroll.** Motion is used for the camera, which carries meaning, and almost nowhere else.
-- **A separate colour per income group.** Income group is already encoded by position on the income axis. A second colour scale would add noise without adding information.
+- A business dashboard: it would make 42 countries feel like a quarterly report.
+- A printed star chart: it made the planet feel like a diagram, not a place.
+- Frosted glass chrome: it reduced contrast and looked like a generic product demo.
+- A rainbow error bowl: hue implied categories where the surface is continuous.
+- A second display typeface: it added a voice the instrument panel did not need.

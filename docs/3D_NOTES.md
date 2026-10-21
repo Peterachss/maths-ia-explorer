@@ -18,8 +18,8 @@
 | Shaft radius | 0.0065 |
 | Cap radius | 0.012 |
 | Hit target radius | 0.03, invisible, independent of the country's area |
-| Colour | five stop ramp from `#3b2a1e` through `#c0792f` to `#f6e3a8` |
-| Selected colour | vermilion `#e4572e` |
+| Colour | five stop ramp from `#ff5d5d` through `#ff9f43` and `#ffe066` to `#c9ecd8` and `#d9f1ff` |
+| Selected colour | cyan `#5ad1ff` |
 | Excluded | 25 percent opacity and wireframe |
 
 The height is scaled, not proportional. A proportional mapping from zero would make every pillar taller than the planet, because life expectancy is 53 to 84 while the globe radius is 1. The scaling is stated in the caption and in `DECISIONS.md`.

@@ -72,7 +72,7 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
   await step('search Singapore', async () => {
     await page.getByPlaceholder('Type a country name').fill('Sing');
     await page.waitForTimeout(200);
-    await page.getByRole('option').first().click();
+    await page.locator('.search-hits [role="option"] button').first().click();
     await page.waitForTimeout(600);
   });
 
@@ -135,6 +135,21 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
     await page.waitForTimeout(1200);
   });
 
+  await step('section index follows the gap', async () => {
+    await page.evaluate(() => document.querySelector('#h-gap').scrollIntoView());
+    await page.waitForTimeout(700);
+    const active = await page.evaluate(
+      () => document.querySelector('.section-nav [aria-current="true"]')?.textContent?.trim() ?? ''
+    );
+    if (active !== 'Gap') throw new Error(`expected Gap active, got "${active}"`);
+    await page.evaluate(() => document.querySelector('#h-work').scrollIntoView());
+    await page.waitForTimeout(700);
+    const atWork = await page.evaluate(
+      () => document.querySelector('.section-nav [aria-current="true"]')?.textContent?.trim() ?? ''
+    );
+    if (atWork !== 'Limits') throw new Error(`expected Limits beside Working, got "${atWork}"`);
+  });
+
   await step('scroll to the end', async () => {
     await page.evaluate(() => {
       const panel = document.querySelector('.panel');
@@ -157,7 +172,7 @@ await run('mobile', { width: 375, height: 812 }, async (page, step) => {
   await step('search and select', async () => {
     await page.getByPlaceholder('Type a country name').fill('Zimb');
     await page.waitForTimeout(200);
-    await page.getByRole('option').first().click();
+    await page.locator('.search-hits [role="option"] button').first().click();
     await page.waitForTimeout(500);
   });
   await step('scroll the page', async () => {
@@ -172,6 +187,16 @@ await run('mobile', { width: 375, height: 812 }, async (page, step) => {
   await step('open working', async () => {
     await page.getByRole('button', { name: 'Show working' }).click();
     await page.waitForTimeout(300);
+  });
+  await step('section select follows the gap', async () => {
+    await page.evaluate(() => document.querySelector('#h-gap').scrollIntoView());
+    await page.waitForTimeout(700);
+    const atGap = await page.evaluate(() => document.querySelector('#section-jump')?.value ?? '');
+    if (atGap !== 'h-gap') throw new Error(`expected h-gap in the section select, got "${atGap}"`);
+    await page.evaluate(() => document.querySelector('#h-work').scrollIntoView());
+    await page.waitForTimeout(700);
+    const atWork = await page.evaluate(() => document.querySelector('#section-jump')?.value ?? '');
+    if (atWork !== 'h-limits') throw new Error(`expected h-limits beside Working, got "${atWork}"`);
   });
   await step('resize to tablet and back', async () => {
     await page.setViewportSize({ width: 768, height: 900 });

@@ -3,7 +3,7 @@ import { line } from 'd3-shape';
 import type { Analysis } from '../math';
 import { theme } from '../theme';
 import { useStore } from '../store';
-import { H, M, W, innerH, sampleX, xScale } from './common';
+import { H, M, W, innerH, innerW, sampleX, xScale } from './common';
 import { XAxisView, YAxisView } from './Axes';
 
 export function DerivativeChart({ analysis }: { analysis: Analysis }) {
@@ -25,11 +25,17 @@ export function DerivativeChart({ analysis }: { analysis: Analysis }) {
           <path d={d} fill="none" stroke={theme.log} strokeWidth={2.2} />
           {marks.map((m) => {
             const v = fit.derivative(m.x) * 1000;
+            const end = sx(m.x) > innerW - 62;
             return (
               <g key={m.iso3}>
                 <line x1={sx(m.x)} x2={sx(m.x)} y1={sy(v)} y2={innerH} stroke={theme.thread} strokeDasharray="3 3" />
                 <circle cx={sx(m.x)} cy={sy(v)} r={5} fill={theme.thread} />
-                <text x={sx(m.x) + 8} y={sy(v) - 8} className="point-label">{m.name} {v.toFixed(2)}</text>
+                <text
+                  x={sx(m.x) + (end ? -8 : 8)}
+                  y={sy(v) - 8}
+                  textAnchor={end ? 'end' : 'start'}
+                  className="point-label"
+                >{m.name} {v.toFixed(2)}</text>
               </g>
             );
           })}

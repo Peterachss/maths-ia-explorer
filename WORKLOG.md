@@ -1,6 +1,6 @@
 # Worklog
 
-Times are local, 20 October 2026. The order is the order the work happened, not a tidy retrospective.
+Times are local, 20-21 October 2026. The order is the order the work happened, not a tidy retrospective.
 
 ## 22:30 Reading the brief and finding the starter
 
@@ -61,3 +61,23 @@ Wrote `scripts/interaction-test.mjs`. It clicks the search, both country presets
 ## 09:25 Deployment
 
 Added `base` support to `vite.config.ts`, made the CSV path follow `import.meta.env.BASE_URL`, made the URL subscription return an unsubscribe, and added `.github/workflows/deploy.yml`. Enabled GitHub Pages with the Actions build type, pushed, and watched the workflow pass. The live site is https://peterachss.github.io/maths-ia-explorer/. Re-ran the full interaction sweep against the live URL: 22 desktop steps, 5 mobile steps, 0 problems. Fresh desktop and mobile screenshots were taken from the live site.
+
+## 10:15 Taste audit
+
+Reviewed the live page against the Google Earth direction. The globe was cropped and the stage read as a dark diagram rather than a place. The map chrome was translucent, the primary button was below AA contrast, the fit table had a redundant column that squeezed the numbers, the scatter clipped the linear overprediction, and the bowl used a rainbow that implied categories. On mobile the brand and eyebrow clipped, the eight-item section nav wrapped into two rows with Limits orphaned, the bowl controls were three cramped columns, and the lower axis labels sat under the controls card. A stale section state also left the last index item active after the Working section.
+
+## 10:35 Taste pass
+
+Replaced the drawn globe with a photoreal NASA Blue Marble stage, a terrain normal map, ocean specular and a cloud layer, with a restrained atmosphere and star field. Rebuilt the chrome in solid graphite with one-pixel rules instead of frosted glass. Moved the primary action to `#1a73e8` with white text, raised it to 44 pixels, and kept the rest of the blue for focus and the active section rule. Removed the redundant fitted-value column, extended the scatter domain to 96 years, and changed the bowl to a blue to sand ramp with lower camera and labels. Raised the two lower bowl axis labels above the mobile controls card. Added a mobile native section select in one 44 pixel row and kept the desktop index sticky and on one line.
+
+## 10:50 Section index
+
+Replaced the observer-only active state with a scroll spy that chooses the heading nearest the top of the reading area. Short sections such as Gap were previously overtaken by the next heading as soon as it entered the observer band. The camera fly-through still uses the observer; the index now uses the scroll position. The Working section is excluded from the index candidates, so Limits stays active while Working is open. Added interaction assertions for Gap and Working on desktop and mobile.
+
+## 11:00 Verification
+
+Production build passes with no TypeScript errors. 39 tests pass in four files. All 11 IA anchors pass. The interaction sweep now covers 23 desktop steps and 6 mobile steps, including the section index, with no console, page, request or HTTP errors. The accessibility audit at 1440 and 375 reports no horizontal overflow, no unnamed controls, 16 labelled SVGs, one h1, no heading skips and no visible targets under 24 by 24. The country checkboxes were raised from 16 to 24 pixels. Contrast runs from 4.51:1 on the primary button to 17.2:1 for primary text; body text is 6.3:1 or better. The audit now reads the real palette rather than the first-palette constants. A separate Playwright check confirmed no overflow at 414 and 768 as well.
+
+## 11:20 IA revisions
+
+Treated the seven issues in `docs/IA_RECONCILIATION.md` as a separate editorial job. Added Appendix A (42 raw rows) and Appendix B (income-group summary) after Works Cited and added both to the contents page. Tightened the 113.1 percent sentence to remove the defensive "not invalid" framing. Rewrote the Claude Works Cited entry. Shortened the personal introduction and removed the essay-prize details while keeping the motivation and methods. Corrected the Figure 6 caption by stating the conversion to years per $1,000. Added the 22.54 rounding clarification at first use and changed the conclusion's 83.8 percent denominator to 22.54. Corrected "data is" to "data are". The assessed body remains 14 pages (pages 3 to 16); the cover, contents, Works Cited and the two appendices are outside it. The revised PDF is saved outside the public repository and is not published to the site.

@@ -1,20 +1,24 @@
 :root {
-  --ink-0: #0d0c0a;
-  --ink-1: #16140f;
-  --ink-2: #211e17;
-  --rule: #3a3529;
-  --paper-0: #f1e9d7;
-  --paper-1: #c9bfa6;
-  --paper-2: #a39a82;
-  --thread: #e4572e;
-  --thread-text: #f07a56;
-  --model-linear: #86a9d1;
-  --model-log: #e9b44c;
-  --land: #1b1912;
-  --sea: #0a0907;
-  --grat: #4a4435;
+  --ink-0: #05080d;
+  --ink-1: #0f141b;
+  --ink-2: #171f28;
+  --rule: #26303c;
+  --rule-soft: #1d2631;
+  --paper-0: #f4f7fb;
+  --paper-1: #c2ccd8;
+  --paper-2: #8b98a8;
+  --thread: #ff6b4a;
+  --thread-text: #ff8a70;
+  --model-linear: #5aa7ff;
+  --model-log: #ffc247;
+  --land: #1b2634;
+  --sea: #08111c;
+  --grat: #33404f;
+  --accent: #4c9aff;
+  --accent-2: #1a73e8;
+  --focus: #6cb2ff;
 
-  --font-display: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', serif;
+  --font-display: 'Instrument Sans Variable', 'Segoe UI', system-ui, sans-serif;
   --font-ui: 'Instrument Sans Variable', 'Segoe UI', system-ui, sans-serif;
   --step--1: 0.875rem;
   --step-0: 1rem;
@@ -23,7 +27,7 @@
   --step-3: 1.953rem;
   --step-4: 2.441rem;
   --leading-body: 1.55;
-  --leading-display: 1.15;
+  --leading-display: 1.1;
 
   --s-1: 0.25rem;
   --s-2: 0.5rem;
@@ -34,9 +38,11 @@
   --s-7: 3rem;
   --s-8: 4.5rem;
 
-  --radius-1: 2px;
-  --radius-2: 6px;
+  --radius-1: 4px;
+  --radius-2: 12px;
+  --radius-pill: 999px;
   --shadow-panel: 0 18px 40px -18px rgb(0 0 0 / 0.65), 0 2px 6px rgb(0 0 0 / 0.4);
+  --shadow-map: 0 8px 24px rgb(0 0 0 / 0.35), 0 1px 3px rgb(0 0 0 / 0.35);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 150ms;

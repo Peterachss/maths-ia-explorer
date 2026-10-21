@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
 import { BufferAttribute, Color, DoubleSide, PlaneGeometry } from 'three';
 import type { Bowl } from '../math/bowl';
-import { lifeColour, theme } from '../theme';
+import { bowlColour, theme } from '../theme';
 
 const N = 61;
 const SPAN = 2.5; // the surface spans plus and minus 2.5 standard errors on each axis
@@ -24,7 +24,7 @@ function Surface({ bowl }: { bowl: Bowl }) {
       const c = bowl.c0 + z * SPAN * bowl.sigmaC;
       const excess = Math.min(bowl.sse(a, c) - bowl.sse0, hMax * 1.4);
       pos.setY(i, Math.min(0.9, (excess / hMax) * 0.5));
-      tmp.set(lifeColour(1 - Math.min(1, excess / hMax)));
+      tmp.set(bowlColour(Math.min(1, excess / hMax)));
       col.set([tmp.r, tmp.g, tmp.b], i * 3);
     }
     g.setAttribute('color', new BufferAttribute(col, 3));
@@ -44,7 +44,7 @@ export function ModelStage({ bowl, a, c }: { bowl: Bowl; a: number; c: number })
   const z = (c - bowl.c0) / (SPAN * bowl.sigmaC);
   const y = Math.min(0.9, (Math.min(bowl.sse(a, c) - bowl.sse0, hMax * 1.4) / hMax) * 0.5);
   return (
-    <Canvas camera={{ fov: 38, position: [3.4, 3.1, 3.6] }} dpr={[1, 2]}>
+    <Canvas camera={{ fov: 38, position: [3.8, 3.3, 4.0] }} dpr={[1, 2]}>
       <color attach="background" args={[theme.ink0]} />
       <ambientLight intensity={0.7} />
       <directionalLight color="#ffd9a0" intensity={2} position={[2, 4, 3]} />
@@ -58,8 +58,8 @@ export function ModelStage({ bowl, a, c }: { bowl: Bowl; a: number; c: number })
         <sphereGeometry args={[0.045, 24, 16]} />
         <meshStandardMaterial color={theme.paper0} roughness={0.4} />
       </mesh>
-      <Html position={[1.05, 0, 0]} center style={{ pointerEvents: 'none' }}><span className="axis-label">slope a</span></Html>
-      <Html position={[0, 0, 1.05]} center style={{ pointerEvents: 'none' }}><span className="axis-label">level at the mean</span></Html>
+      <Html position={[1.05, 0, 0]} center style={{ pointerEvents: 'none' }}><span className="axis-label axis-label-low">slope a</span></Html>
+      <Html position={[0, 0, 1.05]} center style={{ pointerEvents: 'none' }}><span className="axis-label axis-label-low">level at the mean</span></Html>
       <Html position={[-1, 1.15, -1]} center style={{ pointerEvents: 'none' }}><span className="axis-label">sum of squared errors</span></Html>
       <OrbitControls enablePan={false} minDistance={2} maxDistance={7} />
     </Canvas>

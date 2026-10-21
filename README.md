@@ -4,7 +4,7 @@
 
 [![Deploy to GitHub Pages](https://github.com/Peterachss/maths-ia-explorer/actions/workflows/deploy.yml/badge.svg)](https://github.com/Peterachss/maths-ia-explorer/actions/workflows/deploy.yml)
 
-An interactive companion to a Mathematics AA SL Internal Assessment. It asks how well a straight line and a logarithmic curve describe the link between income and life expectancy across 42 countries in 2019.
+An interactive companion to a Mathematics AA SL Internal Assessment. It asks how well a straight line and a logarithmic curve describe the link between income and life expectancy across 42 countries in 2019. The interface is a photoreal globe and a graphite instrument panel: the map sets the scene, and the panel carries the argument.
 
 The app is built around the student's own 42 rows, not a demonstration dataset. Every number in the interface is recomputed in the browser from `data/sample42.csv` and checked against the values printed in the written IA.
 
@@ -12,7 +12,8 @@ The app is built around the student's own 42 rows, not a demonstration dataset. 
 
 ## What it does
 
-- **Globe stage.** Forty two pillars rise from capital city coordinates. Height is life expectancy and colour is the same value on a single ramp. Singapore and Zimbabwe are joined by an arc labelled 22.5 years, the observed gap.
+- **Globe stage.** A NASA Blue Marble globe carries forty two pillars at capital city coordinates. Height is life expectancy and colour is the same value on a single ramp. Singapore and Zimbabwe are joined by an arc labelled 22.5 years, the observed gap. The basemap is illustrative, not a 2019 data layer.
+- **Section index.** A sticky index on desktop and a native 44 pixel select on mobile follow the reading position through the eight report sections.
 - **Country selection.** Click a pillar, search by name, or use the country list in the panel. Selecting a country flies the camera to it and updates every view.
 - **Two models.** A straight line and a logarithmic curve can be shown on a linear or logarithmic income axis. The panel reports the equation, r, r squared, the residual standard error and the sum of squared errors for both.
 - **Seven SVG charts.** Scatter with both fits, residuals for each model, the gap, the derivative, the inverse and box plots by income group, plus the least squares bowl in 3D and the sensitivity table.
@@ -30,7 +31,7 @@ The app is built around the student's own 42 rows, not a demonstration dataset. 
 | Life expectancy indicator | `SP.DYN.LE00.IN`, years at birth |
 | Singapore | 83.6 years, $120,678 |
 | Zimbabwe | 61.1 years, $4,994 |
-| Observed gap | 22.5 years |
+| Observed gap | 22.5 years (22.54 unrounded) |
 
 ### Results the app reproduces
 
@@ -43,6 +44,8 @@ The app is built around the student's own 42 rows, not a demonstration dataset. 
 | Sum of squared errors | 1,454.1 | 755.7 |
 
 The logarithmic model predicts 85.38 years for Singapore and 66.50 for Zimbabwe, a gap of 18.88 years, which is 83.8 percent of the observed gap. Reading the model in reverse, Singapore's life expectancy corresponds to about $89,300 at the fitted curve. Excluding Nigeria and Chad raises r to 0.925 and leaves 79.3 percent of the gap.
+
+The written IA itself is not published in this repository. A revised PDF, with Appendix A and Appendix B and the editorial corrections, is kept separately and is not part of the public site.
 
 ## Data integrity
 
@@ -67,13 +70,14 @@ The app is a static site. The built output in `dist/` can be hosted anywhere. Th
 ## Accessibility and performance
 
 - One h1, no skipped heading levels, every SVG chart has a `role="img"` and an accessible name, and the whole 42 country table is available to screen readers.
-- Text contrast ranges from 6.57:1 to 15.23:1 on the panel background, above WCAG AA.
+- Text contrast ranges from 4.51:1 on the primary button to 17.2:1 for primary text on the panel; body text is 6.3:1 or better, and every pair is above WCAG AA.
 - No horizontal overflow at 375, 414, 768 or 1440 pixels.
+- The section index follows the heading nearest the top of the reading area. It keeps Limits active while the non-indexed Working section is open.
 - Reduced motion is respected in CSS and in the Three.js camera and rotation code.
 - The 3D stage is lazy loaded, so the charts and the text arrive before WebGL.
-- Measured bundle: about 45 kB of app code, 48 kB of d3 code, 300 kB of React Three Fiber and 667 kB of Three.js before gzip.
+- Measured bundle: about 54 kB of app code, 46 kB of d3 code, 304 kB of React Three Fiber and 667 kB of Three.js before gzip.
 
-The full audit is in `docs/audit.json`, and the test transcript is in `docs/TEST_RUN.txt`. `scripts/interaction-test.mjs` clicks every control on desktop and mobile and fails on any console error, page error, failed request or HTTP error. `docs/interaction-report.json` records the last run.
+The full audit is in `docs/audit.json`, and the test transcript is in `docs/TEST_RUN.txt`. `scripts/interaction-test.mjs` exercises every control on desktop and mobile, checks the section index and fails on any console error, page error, failed request or HTTP error. `docs/interaction-report.json` records the last run.
 
 ## Project layout
 
@@ -83,7 +87,7 @@ docs/            decisions, research, maths notes, audits, screenshots
 scripts/         World Bank pull, anchor check, cross check, screenshots, audit
 src/charts/      seven SVG charts
 src/data/        CSV loading and schema
-src/geo/         projection and globe texture
+src/geo/         projection and border texture
 src/math/        regression, gap, bowl, statistics, contract tests
 src/three/       globe, pillars, arc, camera, bowl, preview
 src/ui/          controls, tables, working panel, tools
@@ -98,4 +102,4 @@ src/ui/          controls, tables, working panel, tools
 
 ## Credits
 
-Data: World Bank, World Development Indicators, 2019. Country outlines: Natural Earth, through `world-atlas`. Typefaces: Fraunces and Instrument Sans, through Fontsource. Built with React, Vite, Three.js and React Three Fiber.
+Data: World Bank, World Development Indicators, 2019. Country outlines: Natural Earth, through `world-atlas`. Globe imagery: NASA Blue Marble Next Generation (December 2004) and the three.js Earth relief maps; the imagery is illustrative. Typeface: Instrument Sans, through Fontsource. Built with React, Vite, Three.js and React Three Fiber.

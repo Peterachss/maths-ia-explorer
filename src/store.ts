@@ -14,6 +14,7 @@ interface State {
   modelShow: ModelShow;
   xAxis: XAxis;
   focus: Focus;
+  activeSection: string;
   announce: string;
   select: (iso3: string) => void;
   toggle: (iso3: string) => void;
@@ -24,6 +25,7 @@ interface State {
   setStage: (s: StageView) => void;
   setModelShow: (m: ModelShow) => void;
   setXAxis: (x: XAxis) => void;
+  setActiveSection: (id: string) => void;
   flyTo: (iso3: string[]) => void;
   presetAnchors: () => void;
 }
@@ -44,6 +46,7 @@ export const useStore = create<State>((set, get) => ({
   modelShow: 'both',
   xAxis: 'log',
   focus: { key: 0, iso3: ['ZWE', 'SGP'] },
+  activeSection: 'h-two',
   announce: '',
   select: (iso3) => {
     const s = get().selected;
@@ -67,6 +70,7 @@ export const useStore = create<State>((set, get) => ({
   setStage: (stage) => set({ stage }),
   setModelShow: (modelShow) => set({ modelShow }),
   setXAxis: (xAxis) => set({ xAxis }),
+  setActiveSection: (activeSection) => set({ activeSection }),
   flyTo: (iso3) => set((st) => ({ focus: { key: st.focus.key + 1, iso3 } })),
   presetAnchors: () => {
     set({ selected: ['ZWE', 'SGP'], announce: 'Compared Zimbabwe and Singapore' });

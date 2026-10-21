@@ -10,30 +10,32 @@ The target is WCAG 2.2 level AA, with the brief's 44 pixel touch target treated 
 |---|---|---|
 | Horizontal overflow | none | none |
 | Document scroll width | 1440 | 375 |
-| Interactive controls | 99 | 99 |
+| Interactive controls | 111 | 111 |
 | Controls with no accessible name | 0 | 0 |
-| SVG charts | 8 | 8 |
-| SVGs with `role="img"` and a name | 8 | 8 |
+| SVG elements | 16 | 16 |
+| Unlabelled SVGs | 0 | 0 |
 | Images without alt text | 0 | 0 |
 | h1 count | 1 | 1 |
 | Skipped heading levels | 0 | 0 |
-| Visible targets under 24 by 24 | 0 effective | 0 effective |
+| Visible targets under 24 by 24 | 0 | 0 |
 | Reduced motion honoured | yes | yes |
 
-The 12 checkbox inputs that measure 16 by 16 are wrapped in labels with a minimum height of 24 pixels, and clicking the label toggles the box. The effective target is the label, not the square. The range inputs are 24 pixels high.
+The 12 country checkbox inputs are 24 by 24 inside labels with a minimum height of 28 pixels, so the square and the label both meet the target-size minimum. The range inputs are at least 24 pixels high. The section index, map tools, mobile section select and primary buttons are 44 pixels.
 
 ## Contrast
 
 | Pair | Ratio | AA normal text (4.5:1) |
 |---|---|---|
-| paper-0 on ink-1 | 15.23 | pass |
-| paper-1 on ink-1 | 10.07 | pass |
-| paper-2 on ink-1 | 6.57 | pass |
-| thread-text on ink-1 | 6.68 | pass |
-| model-log on ink-1 | 9.73 | pass |
-| model-linear on ink-1 | 7.55 | pass |
+| paper-0 on ink-1 | 17.2 | pass |
+| paper-1 on ink-1 | 11.37 | pass |
+| paper-2 on ink-1 | 6.3 | pass |
+| paper-2 on ink-2 | 5.66 | pass |
+| thread-text on ink-1 | 8.03 | pass |
+| model-log on ink-1 | 11.49 | pass |
+| model-linear on ink-1 | 7.4 | pass |
+| white on primary | 4.51 | pass |
 
-The pure thread colour `#e4572e` is used for the arc and for borders, not for small text. Text that needs vermilion uses `thread-text`, which is lighter.
+The primary button is just above the threshold at 4.51:1. The thread colour is used for the arc and for borders, not for small text; text that needs coral uses `thread-text`.
 
 ## Keyboard
 
@@ -41,7 +43,7 @@ The pure thread colour `#e4572e` is used for the arc and for borders, not for sm
 - The stage tabs use `role="tab"` and `aria-selected`. They do not implement arrow key roving, because they are two buttons rather than a full tab panel; this is a deliberate simplification and is recorded as a minor gap.
 - Escape clears the search field when it has focus.
 - The globe itself is canvas and is not keyboard navigable. Every country is reachable through the search field and through the hidden 42 row table, which is the accessible equivalent of the scene.
-- Focus is always visible: a 2 pixel vermilion outline with a 3 pixel offset.
+- Focus is always visible: a 2 pixel blue outline (`#6cb2ff`) with a 3 pixel offset.
 
 ## Screen readers
 
@@ -58,7 +60,7 @@ The pure thread colour `#e4572e` is used for the arc and for borders, not for sm
 
 ## Known gaps
 
-1. **36 pixel buttons.** The stage tabs and toggles are below the 44 pixel comfort target. They pass WCAG 2.2 AA, whose minimum is 24 by 24.
+1. **Stage tabs are 36 pixels.** The tabs and some compact toggles are below the 44 pixel comfort target; primary controls are 44. All pass WCAG 2.2 AA, whose minimum is 24 by 24.
 2. **No roving tab index on the model toggles.** They are grouped visually but each is a separate tab stop.
 3. **The globe has no keyboard rotation.** The search and the table are the accessible route to the same information.
 4. **Colour is not the only encoding for life expectancy.** Pillar height carries the same value, and the selected country also has a label and a ring. The income group boxes use position and labels, not colour.

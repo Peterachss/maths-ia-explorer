@@ -58,7 +58,7 @@ If a change moves one of these, the contract tests in `src/math/ia.contract.test
 
 - The IA PDF is missing Appendix A and B. The data exist in the sheet and in this repository, but a moderator reading only the PDF cannot see them.
 - The IA's Works Cited entry for AI assistance says "this practice draft" and should be rewritten.
-- The app has no deployment URL.
+- The app is live at https://peterachss.github.io/maths-ia-explorer/.
 - The 3D chunk is 312 kB gzip, which is within budget but close.
 - Buttons are 36 pixels tall, below the brief's 44 pixel comfort target.
 

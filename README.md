@@ -2,6 +2,8 @@
 
 **Live site: https://peterachss.github.io/maths-ia-explorer/**
 
+[![Deploy to GitHub Pages](https://github.com/Peterachss/maths-ia-explorer/actions/workflows/deploy.yml/badge.svg)](https://github.com/Peterachss/maths-ia-explorer/actions/workflows/deploy.yml)
+
 An interactive companion to a Mathematics AA SL Internal Assessment. It asks how well a straight line and a logarithmic curve describe the link between income and life expectancy across 42 countries in 2019.
 
 The app is built around the student's own 42 rows, not a demonstration dataset. Every number in the interface is recomputed in the browser from `data/sample42.csv` and checked against the values printed in the written IA.

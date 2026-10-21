@@ -46,9 +46,9 @@ The specification asked for 44 pixel touch targets. The stage tabs and model tog
 
 The specification asked for around 60 research entries. The log contains the sources that were actually read and used: the IA itself, the World Bank indicator pages and API, Natural Earth, the WCAG quick reference, Our World in Data, and the literature already cited by the IA. It does not contain invented searches. A shorter true log is worth more than a long false one.
 
-## 12. No deployment
+## 12. Deployed to GitHub Pages
 
-The app is built, tested, screenshotted and pushed to GitHub. It was not deployed to a public host, because the task ended at the repository and no host or domain was specified. `dist/` is a complete static build and can be dropped on any static host.
+The app is built, tested, screenshotted and pushed to GitHub. It is also published at https://peterachss.github.io/maths-ia-explorer/. GitHub Pages was chosen because the build is already a static site, the repository is public, and the deploy needs no server, secrets or paid account. `.github/workflows/deploy.yml` runs the tests, builds with `BASE_PATH=/maths-ia-explorer/`, and publishes `dist/` on every push to `main`. The local build keeps the root path so `npm run preview` still works.
 
 ## 13. AI assistance is disclosed
 

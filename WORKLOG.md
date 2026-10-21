@@ -53,3 +53,11 @@ Wrote the README, this worklog, the decisions record, the research log and the r
 ## 22:50 Repository
 
 Initialised git, committed the app, and pushed to GitHub. See the repository link in the final message.
+
+## 09:20 Interaction sweep
+
+Wrote `scripts/interaction-test.mjs`. It clicks the search, both country presets, every model and axis toggle, a scatter point, the working drawer, the exclusion presets, the country checklist, both bowl sliders, the snap button and the stage tabs. It reloads a share link and resizes between phone and tablet. It also blocks the CSV to check the data error message. The first run found six failures in the test itself, not the app: the model toggles are radios rather than buttons, and sharing uses a query string rather than a hash. After fixing the selectors, all 22 desktop steps and 5 mobile steps pass with no console, page, request or HTTP errors.
+
+## 09:25 Deployment
+
+Added `base` support to `vite.config.ts`, made the CSV path follow `import.meta.env.BASE_URL`, made the URL subscription return an unsubscribe, and added `.github/workflows/deploy.yml`. Enabled GitHub Pages with the Actions build type, pushed, and watched the workflow pass. The live site is https://peterachss.github.io/maths-ia-explorer/. Re-ran the full interaction sweep against the live URL: 22 desktop steps, 5 mobile steps, 0 problems. Fresh desktop and mobile screenshots were taken from the live site.

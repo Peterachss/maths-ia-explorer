@@ -23,7 +23,7 @@ The seven editorial issues in `docs/IA_RECONCILIATION.md` were fixed in a revise
 | Console errors on load | none |
 | Browser interaction sweep | desktop 23 steps, mobile 6 steps, 0 console, page, request or HTTP errors |
 | Section index | Gap and Working assertions pass on desktop and mobile |
-| Live site | deployed on GitHub Pages, 42 rows load, no console errors |
+| Live site | deployed on GitHub Pages; the CSV and all six textures return 200; no console errors |
 | Data error path | readable alert when the CSV is blocked |
 | Unnamed interactive controls | 0 |
 | Unlabelled SVG charts | 0 |

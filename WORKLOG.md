@@ -81,3 +81,7 @@ Production build passes with no TypeScript errors. 39 tests pass in four files. 
 ## 11:20 IA revisions
 
 Treated the seven issues in `docs/IA_RECONCILIATION.md` as a separate editorial job. Added Appendix A (42 raw rows) and Appendix B (income-group summary) after Works Cited and added both to the contents page. Tightened the 113.1 percent sentence to remove the defensive "not invalid" framing. Rewrote the Claude Works Cited entry. Shortened the personal introduction and removed the essay-prize details while keeping the motivation and methods. Corrected the Figure 6 caption by stating the conversion to years per $1,000. Added the 22.54 rounding clarification at first use and changed the conclusion's 83.8 percent denominator to 22.54. Corrected "data is" to "data are". The assessed body remains 14 pages (pages 3 to 16); the cover, contents, Works Cited and the two appendices are outside it. The revised PDF is saved outside the public repository and is not published to the site.
+
+## 12:05 Live deployment
+
+Pushed commit `74f3d4a` to `main`. The Pages workflow built and deployed in 41 seconds. Verified the live URL at desktop 1440 and mobile 390: the title and h1 load, the CSV returns 200, all six textures return 200 under `/maths-ia-explorer/textures/`, the map attribution reads "Basemap: NASA Blue Marble (illustrative), Natural Earth. Data: World Bank 2019.", Gap is active after scrolling to `#h-gap`, and the mobile select shows `h-gap` then `h-limits` beside Working. No console errors, failed requests or HTTP errors.

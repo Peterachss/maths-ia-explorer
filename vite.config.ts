@@ -5,7 +5,12 @@ import { viteSingleFile } from 'vite-plugin-singlefile';
 // Set SINGLE=1 to build one self contained HTML file (used for the offline preview).
 const single = process.env.SINGLE === '1';
 
+// GitHub Pages serves this repository from /maths-ia-explorer/. The deploy
+// workflow sets BASE_PATH; local builds keep the root path.
+const base = process.env.BASE_PATH ?? '/';
+
 export default defineConfig({
+  base,
   plugins: [react(), ...(single ? [viteSingleFile()] : [])],
   build: {
     target: 'es2022',

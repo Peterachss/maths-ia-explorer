@@ -1,5 +1,7 @@
 # Life Expectancy Explorer
 
+**Live site: https://peterachss.github.io/maths-ia-explorer/**
+
 An interactive companion to a Mathematics AA SL Internal Assessment. It asks how well a straight line and a logarithmic curve describe the link between income and life expectancy across 42 countries in 2019.
 
 The app is built around the student's own 42 rows, not a demonstration dataset. Every number in the interface is recomputed in the browser from `data/sample42.csv` and checked against the values printed in the written IA.
@@ -58,7 +60,7 @@ npm run data:fetch # live World Bank pull and comparison
 npm run data:anchor
 ```
 
-The app is a static site. The built output in `dist/` can be hosted anywhere.
+The app is a static site. The built output in `dist/` can be hosted anywhere. This repository deploys automatically to GitHub Pages: a push to `main` runs the tests, builds with `BASE_PATH=/maths-ia-explorer/`, and publishes `dist/` through `.github/workflows/deploy.yml`.
 
 ## Accessibility and performance
 
@@ -69,7 +71,7 @@ The app is a static site. The built output in `dist/` can be hosted anywhere.
 - The 3D stage is lazy loaded, so the charts and the text arrive before WebGL.
 - Measured bundle: about 45 kB of app code, 48 kB of d3 code, 300 kB of React Three Fiber and 667 kB of Three.js before gzip.
 
-The full audit is in `docs/audit.json`, and the test transcript is in `docs/TEST_RUN.txt`.
+The full audit is in `docs/audit.json`, and the test transcript is in `docs/TEST_RUN.txt`. `scripts/interaction-test.mjs` clicks every control on desktop and mobile and fails on any console error, page error, failed request or HTTP error. `docs/interaction-report.json` records the last run.
 
 ## Project layout
 
@@ -77,7 +79,7 @@ The full audit is in `docs/audit.json`, and the test transcript is in `docs/TEST
 data/            sample42.csv, the live pull, provenance
 docs/            decisions, research, maths notes, audits, screenshots
 scripts/         World Bank pull, anchor check, cross check, screenshots, audit
-src/charts/      nine SVG charts
+src/charts/      seven SVG charts
 src/data/        CSV loading and schema
 src/geo/         projection and globe texture
 src/math/        regression, gap, bowl, statistics, contract tests

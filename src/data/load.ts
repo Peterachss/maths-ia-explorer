@@ -48,7 +48,9 @@ export function parseCountries(text: string): Country[] {
 }
 
 export async function loadCountries(): Promise<Country[]> {
-  const res = await fetch('/data/sample42.csv');
+  // BASE_URL keeps the data path correct when the site is served from a
+  // subfolder, as it is on GitHub Pages.
+  const res = await fetch(`${import.meta.env.BASE_URL}data/sample42.csv`);
   if (!res.ok) throw new Error(`Could not load sample42.csv (HTTP ${res.status})`);
   return parseCountries(await res.text());
 }

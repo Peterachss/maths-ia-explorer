@@ -1,0 +1,145 @@
+{
+  "url": "http://localhost:4174/maths-ia-explorer/",
+  "runs": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "steps": [
+        {
+          "label": "search Singapore",
+          "ok": true
+        },
+        {
+          "label": "clear selection",
+          "ok": true
+        },
+        {
+          "label": "select both anchors",
+          "ok": true
+        },
+        {
+          "label": "straight line only",
+          "ok": true
+        },
+        {
+          "label": "log only",
+          "ok": true
+        },
+        {
+          "label": "both models",
+          "ok": true
+        },
+        {
+          "label": "linear axis",
+          "ok": true
+        },
+        {
+          "label": "log axis",
+          "ok": true
+        },
+        {
+          "label": "click a scatter point",
+          "ok": true
+        },
+        {
+          "label": "open working",
+          "ok": true
+        },
+        {
+          "label": "close working",
+          "ok": true
+        },
+        {
+          "label": "exclude the two outliers",
+          "ok": true
+        },
+        {
+          "label": "include everyone",
+          "ok": true
+        },
+        {
+          "label": "open country checklist",
+          "ok": true
+        },
+        {
+          "label": "toggle one country",
+          "ok": true
+        },
+        {
+          "label": "change tool sliders",
+          "ok": true
+        },
+        {
+          "label": "bowl tab",
+          "ok": true
+        },
+        {
+          "label": "bowl sliders",
+          "ok": true
+        },
+        {
+          "label": "snap to least squares",
+          "ok": true
+        },
+        {
+          "label": "back to globe",
+          "ok": true
+        },
+        {
+          "label": "scroll to the end",
+          "ok": true
+        },
+        {
+          "label": "deep link reload",
+          "ok": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "steps": [
+        {
+          "label": "search and select",
+          "ok": true
+        },
+        {
+          "label": "scroll the page",
+          "ok": true
+        },
+        {
+          "label": "toggle models",
+          "ok": true
+        },
+        {
+          "label": "open working",
+          "ok": true
+        },
+        {
+          "label": "resize to tablet and back",
+          "ok": true
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "dataError": {
+    "hasMessage": true,
+    "visible": true,
+    "errors": [
+      "requestfailed: http://localhost:4174/maths-ia-explorer/data/sample42.csv net::ERR_FAILED",
+      "console: Failed to load resource: net::ERR_FAILED"
+    ]
+  },
+  "webglFallback": {
+    "configured": true
+  }
+}

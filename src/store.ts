@@ -74,9 +74,9 @@ export const useStore = create<State>((set, get) => ({
   }
 }));
 
-/** Keep the URL in sync so any state can be shared. */
-export function syncUrl() {
-  useStore.subscribe((s) => {
+/** Keep the URL in sync so any state can be shared. Returns an unsubscribe. */
+export function syncUrl(): () => void {
+  return useStore.subscribe((s) => {
     const q = new URLSearchParams();
     if (s.selected.length) q.set('c', s.selected.join(','));
     if (s.excluded.length) q.set('x', s.excluded.join(','));

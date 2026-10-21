@@ -51,7 +51,11 @@ export function App() {
   const [working, setWorking] = useState(false);
   const { stage, setStage, excluded } = useStore();
 
-  useEffect(() => { syncUrl(); loadCountries().then(setCountries).catch(() => setError(copy.errors.data)); }, []);
+  useEffect(() => {
+    const stopUrlSync = syncUrl();
+    loadCountries().then(setCountries).catch(() => setError(copy.errors.data));
+    return stopUrlSync;
+  }, []);
   const points = useMemo<Point[]>(() => (countries ?? []).map((c) => ({ iso3: c.iso3, name: c.name, x: c.gdp, y: c.life })), [countries]);
   const analysis = useMemo(() => (points.length ? analyse(points, new Set(excluded)) : null), [points, excluded]);
 

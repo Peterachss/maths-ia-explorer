@@ -37,8 +37,8 @@ export const copy = {
     legend: 'Life expectancy',
     low: '61.1',
     high: '83.6 years',
-    hint: 'Drag to rotate · Scroll to zoom',
-    hintTouch: 'Drag to rotate · Pinch to zoom',
+    hint: 'Drag to rotate · Scroll to zoom · Click a country for its stats',
+    hintTouch: 'Drag to rotate · Pinch to zoom · Tap a country for its stats',
     imagery: 'Basemap: NASA Blue Marble (illustrative), Natural Earth. Data: World Bank 2019.'
   },
   empty: { selection: 'Select a country on the globe, in a chart, or in the list to compare it with the model.' },

@@ -7,6 +7,7 @@ import { latLon } from '../geo/project';
 import { lifeColour, lifeT, theme } from '../theme';
 import { useStore } from '../store';
 import { prefersReducedMotion } from '../reducedMotion';
+import { PICK_DRAG_PX } from './Earth';
 import { glowTexture } from './glow';
 
 const UP = new Vector3(0, 1, 0);
@@ -163,6 +164,7 @@ export function Pillars({ countries }: Props) {
                 document.body.style.cursor = '';
               }}
               onClick={(e) => {
+                if (e.delta > PICK_DRAG_PX) return;
                 e.stopPropagation();
                 select(c.iso3);
               }}

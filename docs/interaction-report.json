@@ -9,6 +9,10 @@
       },
       "steps": [
         {
+          "label": "map surface picks the nearest country",
+          "ok": true
+        },
+        {
           "label": "search Singapore",
           "ok": true
         },

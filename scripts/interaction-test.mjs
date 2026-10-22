@@ -82,6 +82,61 @@ const pickFromSearch = async (page, name) => {
 };
 
 await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
+  await step('map surface picks the nearest country', async () => {
+    // Spiral out from the globe centre to the most central facing pillar, then
+    // click a bare point just off its beam: outside the ~10px hit cylinder
+    // (no label under the cursor) but within the 7 degree surface pick radius.
+    const centre = await page.evaluate(() => {
+      const r = document.querySelector('.stage canvas')?.getBoundingClientRect();
+      return r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
+    });
+    if (!centre) throw new Error('no stage canvas');
+    const hovering = async () => {
+      const sel = (await page.locator('.chip').allInnerTexts()).map((s) => s.replace(/\s+/g, ' ').trim());
+      for (const raw of await page.locator('.pillar-label').allInnerTexts()) {
+        const name = raw.replace(/\s+/g, ' ').replace(/\s*\d.*$/, '').trim();
+        if (name && !sel.includes(name)) return name;
+      }
+      return null;
+    };
+    let beam = null;
+    for (let r = 0; r <= 300 && !beam; r += 12) {
+      for (let a = 0; a < 360; a += 10) {
+        const x = Math.round(centre.x + r * Math.cos((a * Math.PI) / 180));
+        const y = Math.round(centre.y + r * Math.sin((a * Math.PI) / 180));
+        if (x < 40 || x > 920 || y < 70 || y > 800) continue;
+        await page.mouse.move(x, y);
+        await page.waitForTimeout(26);
+        if (await hovering()) { beam = { x, y }; break; }
+      }
+    }
+    if (!beam) throw new Error('no facing pillar found near the globe centre');
+    let picked = false;
+    for (const d of [14, 17, 20, 24]) {
+      for (let a = 0; a < 360 && !picked; a += 30) {
+        const x = Math.round(beam.x + d * Math.cos((a * Math.PI) / 180));
+        const y = Math.round(beam.y + d * Math.sin((a * Math.PI) / 180));
+        const onCanvas = await page.evaluate(
+          ([x, y]) => document.elementFromPoint(x, y)?.tagName === 'CANVAS',
+          [x, y]
+        );
+        if (!onCanvas) continue;
+        await page.mouse.move(x, y);
+        await page.waitForTimeout(60);
+        if (await hovering()) continue; // a beam is under the cursor, not bare surface
+        const before = await page.locator('.chip').count();
+        await page.mouse.click(x, y);
+        await page.waitForTimeout(500);
+        picked = (await page.locator('.chip').count()) > before;
+      }
+    }
+    if (!picked) throw new Error('bare-surface click did not select the nearest country');
+    const search = await page.evaluate(() => location.search);
+    if (!/\?c=[A-Z]{3}/.test(search)) throw new Error(`expected a share link, got "${search}"`);
+    await page.getByRole('button', { name: 'Clear selection' }).click();
+    await page.waitForTimeout(1400);
+  });
+
   await step('search Singapore', async () => {
     await page.getByPlaceholder('Type a country name').fill('Sing');
     await page.waitForTimeout(200);

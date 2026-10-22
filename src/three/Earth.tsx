@@ -1,5 +1,5 @@
 import { useMemo, useRef } from 'react';
-import { useFrame, useLoader, useThree } from '@react-three/fiber';
+import { useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
 import {
   AdditiveBlending,
   BackSide,
@@ -9,21 +9,41 @@ import {
   Texture,
   TextureLoader,
   Vector2,
+  Vector3,
   type Group
 } from 'three';
 import { makeBorderTexture } from '../geo/borders';
+import { latLon } from '../geo/project';
 import { prefersReducedMotion } from '../reducedMotion';
+import { useStore } from '../store';
+import type { Country } from '../data/schema';
 
 const base = import.meta.env.BASE_URL;
+
+/**
+ * Clicking the map itself picks a country. The beams are only a few pixels
+ * wide, so a click on a country's territory must also work: any point within
+ * this angle of a marker selects the nearest country.
+ */
+const PICK_COS = Math.cos((7 * Math.PI) / 180);
+const pickDir = new Vector3();
+
+/** A drag orbits the globe, so only an almost-still click picks a country. */
+export const PICK_DRAG_PX = 8;
 
 /**
  * A photoreal Earth built from NASA Blue Marble imagery, a terrain normal map,
  * an ocean specular map and a separate cloud shell. The borders are a thin
  * transparent layer so the imagery stays in charge.
  */
-export function Earth() {
+export function Earth({ countries }: { countries: Country[] }) {
   const compact = useThree((s) => s.size.width < 900);
   const maxAniso = useThree((s) => s.gl.capabilities.getMaxAnisotropy());
+
+  const markers = useMemo(
+    () => countries.map((c) => ({ iso3: c.iso3, dir: latLon(c.lat, c.lon, 1).normalize() })),
+    [countries]
+  );
 
   const [day, normal, specular, clouds] = useLoader(TextureLoader, [
     `${base}textures/${compact ? 'earth-day-2k.jpg' : 'earth-day.jpg'}`,
@@ -44,6 +64,37 @@ export function Earth() {
   const borders = useMemo(() => makeBorderTexture(compact ? 2048 : 4096), [compact]);
   const cloudGroup = useRef<Group>(null);
 
+  /** Nearest marker to a point on the sphere, or null if none is close. */
+  const pick = (point: Vector3): string | null => {
+    pickDir.copy(point).normalize();
+    let iso3: string | null = null;
+    let best = PICK_COS;
+    for (const marker of markers) {
+      const dot = pickDir.dot(marker.dir);
+      if (dot > best) {
+        best = dot;
+        iso3 = marker.iso3;
+      }
+    }
+    return iso3;
+  };
+
+  const surfaceClick = (event: ThreeEvent<MouseEvent>) => {
+    if (event.delta > PICK_DRAG_PX) return;
+    // The sphere is the front-most surface: a beam in front already had its own
+    // turn (and stops propagation), so whatever is still behind this hit is
+    // occluded — a far-side beam must never claim the click.
+    event.stopPropagation();
+    const iso3 = pick(event.point);
+    if (!iso3) return;
+    useStore.getState().select(iso3);
+  };
+
+  /** Far-side beams lie behind the sphere; they must not respond to hover. */
+  const surfaceOver = (event: ThreeEvent<PointerEvent>) => {
+    event.stopPropagation();
+  };
+
   useFrame((_, dt) => {
     if (cloudGroup.current && !prefersReducedMotion()) {
       cloudGroup.current.rotation.y += dt * 0.0035;
@@ -52,7 +103,7 @@ export function Earth() {
 
   return (
     <group>
-      <mesh>
+      <mesh onClick={surfaceClick} onPointerOver={surfaceOver}>
         <sphereGeometry args={[1, 160, 96]} />
         <meshPhongMaterial
           map={day}

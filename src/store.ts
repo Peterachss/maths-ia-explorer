@@ -16,6 +16,7 @@ interface State {
   focus: Focus;
   activeSection: string;
   announce: string;
+  selectionEvent: number;
   select: (iso3: string) => void;
   toggle: (iso3: string) => void;
   clear: () => void;
@@ -48,11 +49,19 @@ export const useStore = create<State>((set, get) => ({
   focus: { key: 0, iso3: ['ZWE', 'SGP'] },
   activeSection: 'h-two',
   announce: '',
+  selectionEvent: 0,
   select: (iso3) => {
     const s = get().selected;
-    if (s.includes(iso3)) return set({ announce: `${iso3} is already selected` });
+    if (s.includes(iso3)) {
+      set({ announce: `${iso3} is already selected`, selectionEvent: get().selectionEvent + 1 });
+      return;
+    }
     const next = [...s, iso3].slice(-MAX_SELECTED);
-    set({ selected: next, announce: `Selected ${iso3}. ${next.length} selected.` });
+    set({
+      selected: next,
+      announce: `Selected ${iso3}. ${next.length} selected.`,
+      selectionEvent: get().selectionEvent + 1
+    });
     get().flyTo(next.slice(-2));
   },
   toggle: (iso3) => {

@@ -93,6 +93,10 @@
           "ok": true
         },
         {
+          "label": "country selection reveals the preview",
+          "ok": true
+        },
+        {
           "label": "scroll to the end",
           "ok": true
         },
@@ -128,6 +132,10 @@
         },
         {
           "label": "section select follows the gap",
+          "ok": true
+        },
+        {
+          "label": "country selection reveals the preview",
           "ok": true
         },
         {

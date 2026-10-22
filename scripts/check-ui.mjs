@@ -61,6 +61,8 @@ for (const [width, height] of sizes) {
     return {
       bodyWidth: document.body.scrollWidth,
       viewportWidth: document.documentElement.clientWidth,
+      docHeight: document.documentElement.scrollHeight,
+      viewportHeight: innerHeight,
       small,
       checkboxTargets,
       charts: document.querySelectorAll('.chart').length
@@ -68,6 +70,23 @@ for (const [width, height] of sizes) {
   });
   if (state.bodyWidth !== state.viewportWidth) fail(`${width}: horizontal overflow ${state.bodyWidth} > ${state.viewportWidth}`);
   else pass(`${width}: no horizontal overflow (${state.bodyWidth}px)`);
+  // The desktop app is a fixed 100dvh split view: only the reading panel may
+  // scroll. Stacked layouts must keep normal document scrolling.
+  const pageScroll = await page.evaluate(() => {
+    window.scrollTo(0, 500);
+    return scrollY;
+  });
+  state.pageScrollAfter500 = pageScroll;
+  if (width > 1200) {
+    if (pageScroll !== 0) fail(`${width}: page itself scrolled to y=${pageScroll}; only .panel-scroll should move`);
+    else if (state.docHeight > state.viewportHeight + 1) fail(`${width}: document is ${state.docHeight}px tall in a ${state.viewportHeight}px viewport`);
+    else pass(`${width}: document stays ${state.docHeight}px; page scroll locked at y=0`);
+  } else if (pageScroll !== 500) {
+    fail(`${width}: expected normal page scrolling on the stacked layout, got y=${pageScroll}`);
+  } else {
+    pass(`${width}: stacked page scrolls normally (y=${pageScroll})`);
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
   if (errors.length) fail(`${width}: ${errors.length} page errors`);
   else pass(`${width}: no page errors`);
   if (state.small.length) fail(`${width}: ${state.small.length} non-inline controls under 44px: ${JSON.stringify(state.small.slice(0, 4))}`);

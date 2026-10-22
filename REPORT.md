@@ -36,7 +36,7 @@ The one deliberately blocked item is KaTeX (B11). The one open owner decision is
 | `d22452a` | `B1-G4`: chapters, layout, tokens, 3D, charts, mobile chrome, accessibility and performance work. |
 | `6e9e110` | `G1-G4`: first screenshot, axe and Lighthouse evidence set. |
 | `fe27549` | `G1-G4`: final touch-target and UI checks, final screenshots, before captures. |
-| this docs commit | `H`: `REPORT.md`, `PROGRESS.md`, `DECISIONS.md`, `docs/DESIGN.md`. |
+| `9a9fa4b` | `H`: `REPORT.md`, `PROGRESS.md`, `DECISIONS.md`, `docs/DESIGN.md`. |
 
 No commit was made to `main`, nothing was deployed and no force-push was used.
 

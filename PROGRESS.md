@@ -67,8 +67,8 @@ Build status: `npm run build` passes; `npm test` passes 46/46; axe 16/16 clean; 
 | G2 | done | Skip link is first Tab target and moves focus to `#main-content`; reduced motion true, animation `1e-05s`, scroll behaviour `auto`. | `fe27549` |
 | G3 | done | Lighthouse desktop 100/100/100/100; mobile 98/100/100/100 (performance/accessibility/best-practices/SEO). | `fe27549` |
 | G4 | done | axe 0 violations across 16 width/chapter combinations; console clean; WebGL fallback clean. | `fe27549` |
-| H1 | done | `REPORT.md` with ID table, source status, data diffs, screenshot index, audits, timings, decisions. | this docs commit |
-| H2 | done | `docs/DESIGN.md` reconciled with shipped textures, panel widths, stage heights and type. | this docs commit |
+| H1 | done | `REPORT.md` with ID table, source status, data diffs, screenshot index, audits, timings, decisions. | `9a9fa4b` |
+| H2 | done | `docs/DESIGN.md` reconciled with shipped textures, panel widths, stage heights and type. | `9a9fa4b` |
 | H3 | done | Before/after screenshot index and final audit artefacts under `audit/`. | `fe27549` |
 
 ## Checkpoint

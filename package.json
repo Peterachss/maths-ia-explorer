@@ -15,6 +15,7 @@
     "data:verify-live": "vite-node scripts/verify-data.ts",
     "data:verify-stats": "vite-node scripts/verify-stats.ts",
     "data:all": "npm run data:fetch && npm run data:anchor && npm run data:cross && npm run data:verify && npm run data:verify-live && npm run data:verify-stats",
+    "check:ui": "node scripts/check-ui.mjs audit/after/ui-checks.json",
     "audit": "node scripts/audit.mjs",
     "shots": "node scripts/shoot.mjs && node scripts/shoot-sections.mjs"
   },

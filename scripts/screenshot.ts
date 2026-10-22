@@ -89,26 +89,27 @@ async function run() {
     page.on('pageerror', (e) => consoleLog.push({ width: size.name, type: 'pageerror', text: String(e) }));
 
     await page.goto(base, { waitUntil: 'networkidle' });
-    await settle(page, size.width < 800 ? 5000 : 3200);
+    await settle(page, 5200);
 
     await page.screenshot({ path: `${out}/${size.name}-landing.png` });
 
-    // Globe view.
+    // Globe view. Keep this canvas mounted for the chapter shots so the selected
+    // labels are already present when the panel scrolls.
     await page.getByRole('tab', { name: /Globe/i }).click().catch(() => undefined);
     await settle(page, 1200);
     await page.screenshot({ path: `${out}/${size.name}-globe.png` });
 
-    // Bowl view.
-    await page.getByRole('tab', { name: /least squares bowl/i }).click().catch(() => undefined);
-    await page.waitForTimeout(1800);
-    await page.screenshot({ path: `${out}/${size.name}-bowl.png` });
-
     // Chapter views.
-    await page.getByRole('tab', { name: /Globe/i }).click().catch(() => undefined);
     for (const chapter of chapters) {
       await scrollPanelTo(page, `[data-chapter-heading="${chapter}"]`);
       await page.screenshot({ path: `${out}/${size.name}-${chapter}.png` });
     }
+
+    // Bowl view, with the Models chapter in the reading panel.
+    await scrollPanelTo(page, '[data-chapter-heading="models"]');
+    await page.getByRole('tab', { name: /least squares bowl/i }).click().catch(() => undefined);
+    await page.waitForTimeout(1800);
+    await page.screenshot({ path: `${out}/${size.name}-bowl.png` });
 
     // Full page as a final reference (only the first two widths to keep the set manageable).
     if (size.name === '1440' || size.name === '375') {
@@ -116,7 +117,8 @@ async function run() {
         document.querySelector<HTMLElement>('.panel-scroll')?.scrollTo({ top: 0 });
         window.scrollTo({ top: 0 });
       });
-      await page.waitForTimeout(300);
+      await page.getByRole('tab', { name: /Globe/i }).click().catch(() => undefined);
+      await page.waitForTimeout(1800);
       await page.screenshot({ path: `${out}/${size.name}-full.png`, fullPage: true });
     }
 

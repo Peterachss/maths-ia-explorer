@@ -2,7 +2,7 @@
 
 ## Verdict
 
-The explorer builds, the tests pass, the numbers reconcile with the IA, and the layout holds at four widths. The stage is now a photoreal Blue Marble globe with solid graphite chrome, the mobile section index is a native select, and every visible target is at least 24 by 24 CSS pixels. It is not a perfect implementation of the brief: seven SVG charts instead of nine, a shorter research log, and compact stage tabs at 36 pixels rather than the 44 pixel comfort target. Those deviations are listed at the bottom rather than hidden. The app is live at https://maths-ia-explorer.surge.sh/.
+The explorer builds, the tests pass, the numbers reconcile with the IA, and the layout holds at four widths. The stage is now a photoreal Blue Marble globe with solid graphite chrome, the mobile section index is a native select, and every visible target is at least 24 by 24 CSS pixels. It is not a perfect implementation of the brief: seven SVG charts instead of nine, a shorter research log, and compact stage tabs at 36 pixels rather than the 44 pixel comfort target. Those deviations are listed at the bottom rather than hidden. The app is live at https://peterachss.github.io/maths-ia-explorer/; https://maths-ia-explorer.surge.sh/ is a mirror.
 
 ## IA revision
 

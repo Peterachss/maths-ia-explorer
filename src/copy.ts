@@ -227,7 +227,7 @@ export const copy = {
     imagery:
       'The globe uses NASA Earth Observatory / Reto Stöckli, Blue Marble Next Generation (December 2004, topography and bathymetry), with Natural Earth Admin 0 boundaries at 1:110m. It is a visual basemap, not a 2019 data layer. The pillars carry the data.',
     cite:
-      'Life Expectancy Explorer. (2026). Life expectancy and GDP per capita, 2019 [Interactive data visualisation]. https://maths-ia-explorer.surge.sh/'
+      'Life Expectancy Explorer. (2026). Life expectancy and GDP per capita, 2019 [Interactive data visualisation]. https://peterachss.github.io/maths-ia-explorer/'
   },
   credits: [
     { name: 'three.js', licence: 'MIT', url: 'https://threejs.org/' },

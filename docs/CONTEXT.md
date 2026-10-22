@@ -59,7 +59,7 @@ If a change moves one of these, the contract tests in `src/math/ia.contract.test
 ## Known issues
 
 - The revised IA PDF is outside the repository. The public site does not publish the IA, and the revised PDF should stay private.
-- The app is live at https://maths-ia-explorer.surge.sh/.
+- The app is live at https://peterachss.github.io/maths-ia-explorer/; https://maths-ia-explorer.surge.sh/ is a mirror.
 - The 3D chunks total about 271 kB gzip (r3f 98 kB, three 172 kB) and are lazy loaded.
 - The stage tabs remain 36 pixels tall; primary controls are 44 and every visible target is at least 24 by 24.
 

@@ -1,6 +1,8 @@
 # Life Expectancy Explorer
 
-**Live site: https://maths-ia-explorer.surge.sh/**
+**Live site: https://peterachss.github.io/maths-ia-explorer/**
+
+Mirror: https://maths-ia-explorer.surge.sh/
 
 [![Deploy to GitHub Pages](https://github.com/Peterachss/maths-ia-explorer/actions/workflows/deploy.yml/badge.svg)](https://github.com/Peterachss/maths-ia-explorer/actions/workflows/deploy.yml)
 

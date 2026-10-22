@@ -79,4 +79,4 @@ Build status: `npm run build` passes; `npm test` passes 46/46; axe 16/16 clean; 
 - Known partials: D1 tokenisation, D4 fixed panel, F1 shared chart frame, F4 chart arrow-key navigation. Known blocker: B11 KaTeX. Open owner decision: D2.
 - `data:fetch`/`data:all` deliberately not run; see `DECISIONS.md`.
 
-CONTINUE FROM: H (docs/report commit only)
+Rebuild complete. No build, test or evidence work is pending; only the owner decisions in DECISIONS.md remain open.

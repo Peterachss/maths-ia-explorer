@@ -314,4 +314,4 @@ CHROME_PATH="$HOME/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/G
 
 `rebuild/nasa-grade` contains the complete rebuild and evidence. No deployment or push has been made. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1), the panel resizer (D4), the shared chart frame and SVG arrow-key navigation (F1/F4), and the owner's D2 decision.
 
-CONTINUE FROM: H (docs/report commit only)
+Rebuild complete. No build, test or evidence work is pending; only the owner decisions in DECISIONS.md remain open.

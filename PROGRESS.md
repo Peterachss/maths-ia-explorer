@@ -1,6 +1,6 @@
 # Progress
 
-Branch: `rebuild/nasa-grade`
+Branch: `main` (`rebuild/nasa-grade` merged)
 
 Last update: 22 October 2026
 
@@ -37,6 +37,7 @@ Build status: `npm run build` passes; `npm test` passes 46/46; axe 16/16 clean; 
 | B13 | done | Mini globe removed; capital-coordinate source and note retained. | `d22452a` |
 | B14 | done | Open Graph/Twitter tags and `public/og-image.jpg` added. | `d22452a` |
 | B15 | done | One basemap credit used in the map, sources and imagery sections. | `d22452a` |
+| B16 | done | Visually hidden tables no longer escape the reading panel or extend the page; desktop stays 100dvh with page scroll locked at y=0, stacked layouts still scroll normally. `check:ui` asserts both. | `745cd09` |
 | C1 | done | Four numbered chapters, section observer, progress rail and mobile chapter select. | `d22452a` |
 | C2 | done | Shared section template: number, title, question, body, source line, calculation disclosure. | `d22452a` |
 | C3 | done | Sticky context bar with sample, equation, r², selection and limits. | `d22452a` |
@@ -81,6 +82,7 @@ Build status: `npm run build` passes; `npm test` passes 46/46; axe 16/16 clean; 
 - Final UI evidence was regenerated after `421fdda` and the merge of `origin/main` (`8df22f8`): screenshots at all four widths, `check:ui`, axe 16/16 and both Lighthouse runs.
 - The `8df22f8` country-stats reveal was preserved; its breakpoint was adapted from 860px to the rebuild’s 1200px stage/panel breakpoint.
 - Build, unit tests, anchors, live verification and 68 statistic checks pass after the final UI change.
+- B16 fixed the reported post-scroll glitch: the screen-reader-only tables were absolutely positioned without a top/left anchor, so their static positions in the long reading column extended `documentElement.scrollHeight` from 900 to 9489 at 1440×900. The page could scroll the 100dvh app upward and leave a black band. They are now anchored at 0,0 with `clip-path`; desktop document height equals the viewport and the page cannot scroll. `check:ui` now covers this, and the four-width screenshots were regenerated.
 - Remaining internal partials: D1 tokenisation and F1 shared chart-frame abstraction. Neither changes a rendered style or a user interaction. Known blocker: B11 KaTeX. Held owner choice: D2 light panel.
 - `data:fetch`/`data:all` deliberately not run; see `DECISIONS.md`.
 - The owner authorized publication on 22 October 2026. The `rebuild/nasa-grade` branch is merged into local `main` without force-pushing; the build is published at https://maths-ia-explorer.surge.sh/. GitHub Pages is not updated: the push is blocked by the missing GitHub credential on this machine. Live UI checks and 1440/375 captures are in `audit/live/`.

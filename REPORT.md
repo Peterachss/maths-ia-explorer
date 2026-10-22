@@ -23,7 +23,7 @@ Final checks:
 | `npm run data:verify` | PASS. All source, provenance and cross-check assertions. |
 | `npm run data:verify-live` | PASS. 42 rows, 84 values re-downloaded; GDP max absolute difference $0.0049; life max absolute difference 0.000463 years; public CSV byte-identical. |
 | `npm run data:verify-stats` | PASS. 68 statistic checks. |
-| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 42/42 checkbox labels at least 44px, splitter ArrowLeft 648→672, scatter BDI→TCD + Enter, selection reveal shows Chad, skip link, reduced motion and WebGL fallback pass. |
+| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 42/42 checkbox labels at least 44px, splitter ArrowLeft 648→672, scatter BDI→TCD + Enter, selection reveal shows Chad, skip link, reduced motion and WebGL fallback pass. Desktop document height equals the viewport and page scroll stays at y=0; stacked widths still page-scroll. |
 | axe via `scripts/audit.ts` | 16/16 width/chapter combinations, 0 violations. |
 | Lighthouse desktop | 100 performance, 100 accessibility, 100 best practices, 100 SEO. |
 | Lighthouse mobile | 98 performance, 100 accessibility, 100 best practices, 100 SEO. |
@@ -43,6 +43,7 @@ The one deliberately blocked item is KaTeX (B11). The light panel is held for th
 | `fe27549` | `G1-G4`: final touch-target and UI checks, final screenshots, before captures. |
 | `9a9fa4b` | `H`: `REPORT.md`, `PROGRESS.md`, `DECISIONS.md`, `docs/DESIGN.md`. |
 | `421fdda` | `D4/F4/G1/E4`: pointer/keyboard splitter, keyboard scatter points, splitter hit area, phone label clearance and refreshed evidence. |
+| `745cd09` | `B16`: anchor the visually hidden accessible tables so they cannot extend the document past the desktop 100dvh app; page-scroll regression checks added. |
 | release | Final docs and local `main` merge; published to Surge. GitHub Pages push remains blocked by missing credentials. No force-push was used. |
 
 ## ID table
@@ -78,6 +79,7 @@ The detailed evidence and commit for every ID is in `PROGRESS.md`; this is the c
 | B13 | done | Mini globe removed; capital source retained. |
 | B14 | done | Open Graph/Twitter tags and 1200×630 image. |
 | B15 | done | One basemap credit shared by map, sources and imagery. |
+| B16 | done | Phantom page scroll fixed: visually hidden tables anchored in place; desktop document height equals the viewport, stacked layouts still scroll. |
 | C1 | done | Four numbered chapters, observer, progress rail, mobile select. |
 | C2 | done | Shared section template. |
 | C3 | done | Context bar with sample, equation, r², selection and limits. |

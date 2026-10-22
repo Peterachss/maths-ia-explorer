@@ -28,16 +28,6 @@ KaTeX is not bundled, so the Credits block lists the software actually shipped (
 ### A2: fiscal-year wording
 The OGHIST workbook's FY2027 column is the current classification; the brief's example says "FY2027, July 2026". The site states both the fiscal year and the July date so there is no ambiguity. The 2019 comparison uses FY2020 (July 2019).
 
-### D4: resizable desktop panel
-The phase table mentions a resizable panel. The shipped desktop layout uses `clamp(36rem, 45vw, 44rem)` so the map keeps a predictable 55 percent at 1440px. A drag handle was not added because it would introduce a second layout state, a pointer and keyboard contract, and new screenshot coverage without improving the IA. The prose is constrained inside the panel instead.
-
-Options:
-1. Keep the fixed clamp (current).
-2. Add a pointer/keyboard splitter with persisted width.
-3. Offer two named widths (map-first, reading-first).
-
-Recommendation: option 1 for this submission; option 3 if the owner wants a choice without freeform dragging.
-
 ### D1: tokenisation is partial
 The palette, type, spacing and motion tokens are in `src/styles/tokens.css`, but some component CSS still contains literal colours, radii and paddings. Those literals are consistent with the adjacent tokens and were left rather than risking a late global replacement. This is a maintainability gap, not a rendered-style inconsistency.
 
@@ -46,6 +36,7 @@ The installed `world-atlas` package supplies `countries-110m.json`, derived from
 
 ## Resolved / recorded
 
+- D4 is complete: the desktop panel is a pointer- and keyboard-resizable split view. Width ranges from 560px to 760px; the separator is a focusable `role="separator"` with `aria-valuenow`, arrow-key steps of 24px (48px with Shift), and Home/End. The visible rule is 8px wide, with a 44px effective pointer hit area. The splitter is hidden below 1201px, where the stage becomes a sticky band.
 - Data values remain Appendix A values. The live World Bank pull is a verification only. `data:all` is deliberately not run because its first step (`data:fetch`) could overwrite the authoritative Appendix A values. `data:anchor`, `data:cross`, `data:verify`, `data:verify-live` and `data:verify-stats` are run individually.
 - Coordinates are approximate capital-city positions, not World Bank country-endpoint coordinates, and do not enter the regression.
 - The default selection is Zimbabwe and Singapore when the URL has no `c` parameter. This makes the IA exemplar visible on first paint instead of showing a pair in the context bar that was not actually selected. An explicit `c=` query still wins, and clearing selection stays cleared for the session.
@@ -54,5 +45,7 @@ The installed `world-atlas` package supplies `countries-110m.json`, derived from
 - Numerals use the system `--font-mono` stack. A webfont was rejected because it adds a download and a second licence for a small visual gain.
 - The 641–1200px stage is 52dvh so the bowl controls can be a compact three-column strip and the bowl surface is not buried. The phone stage stays at 45dvh; the bowl's 3D target is shifted slightly up so its axis labels clear the control plate.
 - G1 applies 44px targets to tabs, map tools, segmented controls, buttons, chips, search, disclosures, table sort buttons and rows, range inputs, and checkbox labels. Inline prose links, citation markers and inline text buttons are left at type size under the WCAG 2.5.8 inline exception. The 20px checkbox glyph sits inside a 44px label that is the actual target.
-- F1/F4 remain partial: charts share export and hidden data-table plumbing, but point-level keyboard navigation is provided by the visible sortable country table rather than arrow keys on each SVG. This is an honest accessibility trade-off, not a claim of full chart interaction.
-- The light panel/dark stage conflict (D2) remains open for the owner. The near-black colour is used for the stage and dark surfaces; the reading panel stays light because that was the earlier approved collage direction.
+- F4 is complete for the scatter, the chart with individual country points: a roving tab stop, arrow/Home/End movement, Enter/Space selection, visible focus and an accessible name per point, verified by `npm run check:ui`. The other six charts use `role="img"` plus keyboard-accessible data tables, which is their point-level alternative.
+- E4: phone country labels are lifted 12px so the Singapore label clears the zoom plate at 375px; the label and plate no longer overlap.
+- The light panel/dark stage split is held for this release (D2): the near-black colour is used for the stage and dark surfaces; the reading panel stays light because that was the earlier approved collage direction. The owner can still choose a dark panel in a follow-up.
+- Deployment authorization: the repository rule “never deploy” was superseded by the owner’s explicit request on 22 October 2026 to publish the final version. The rebuild branch was merged into `main` without force-pushing; the existing GitHub Pages workflow builds and deploys it. Live URL: https://peterachss.github.io/maths-ia-explorer/.

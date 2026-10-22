@@ -46,7 +46,7 @@ The reading panel uses a 34px product title on desktop, 22px on a phone, 16–23
 
 ## Layout
 
-The desktop view is a split view: a stage on the left and a scrolling panel on the right. The panel width is `clamp(36rem, 45vw, 44rem)`: 648px at a 1440px viewport, leaving 55 percent for the globe. The stage stays in view while the argument moves. A sticky section index sits flush at the top of the panel when it sticks, and section headings carry a 76px scroll margin so they clear the index.
+The desktop view is a split view: a stage on the left and a scrolling panel on the right. The panel starts at 45 percent of the viewport (648px at 1440px) and can be dragged between 560px and 760px; an 8px visual rule has a 44px pointer hit area and a keyboard separator contract. The stage stays in view while the argument moves. A sticky section index sits flush at the top of the panel when it sticks, and section headings carry a 76px scroll margin so they clear the index.
 
 Below 1201px the stage becomes a sticky band and the report reads underneath it. From 641 to 1200px the band is 52dvh; at 640px and below it is 45dvh. The section index becomes a native select in one 44px row, and headings carry a `52dvh + 84px` (tablet) or `45dvh + 88px` (phone) scroll margin so they land below the stage, context bar and select. The bowl controls become a compact three-column strip at tablet widths; on a phone they remain two columns with a full-width snap button.
 
@@ -58,7 +58,7 @@ The stage tabs, zoom buttons, reset, legend and attribution use solid graphite s
 
 ## Charts
 
-Seven hand-built SVG figures: scatter with both fits, residuals for each model, the gap, the derivative, the inverse and box plots by income group. Life expectancy is a single sequential teal ramp, shared by the pillars, the preview and the scatter dots, so hue never pretends that a continuous variable is a category. The straight line is blue, the logarithmic curve is gold, the observed gap and the selected country are coral. The axes use thin rules and tabular numbers, and each figure has a `role="img"` and a sentence-length accessible name. The least squares bowl is a separate 3D view with a blue to sand error ramp, not a category rainbow.
+Seven hand-built SVG figures: scatter with both fits, residuals for each model, the gap, the derivative, the inverse and box plots by income group. Life expectancy is a single sequential teal ramp, shared by the pillars, the preview and the scatter dots, so hue never pretends that a continuous variable is a category. The straight line is blue, the logarithmic curve is gold, the observed gap and the selected country are coral. The axes use thin rules and tabular numbers, and each figure has a sentence-length accessible name. Six use `role="img"`; the scatter uses `role="group"` so its individual country points can be reached and moved with the keyboard. The least squares bowl is a separate 3D view with a blue to sand error ramp, not a category rainbow.
 
 ## Motion
 

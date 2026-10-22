@@ -1,7 +1,11 @@
 # Rebuild report — Life Expectancy Explorer
 
-Branch: `rebuild/nasa-grade`  
-Final verification: 22 October 2026  
+Branch: `rebuild/nasa-grade` merged to `main`
+
+Final verification: 22 October 2026
+
+Live site: https://peterachss.github.io/maths-ia-explorer/
+
 Site: the companion page for the IB Maths AA SL Internal Assessment comparing GDP per capita with life expectancy for 42 countries in 2019.
 
 ## Result
@@ -19,13 +23,13 @@ Final checks:
 | `npm run data:verify` | PASS. All source, provenance and cross-check assertions. |
 | `npm run data:verify-live` | PASS. 42 rows, 84 values re-downloaded; GDP max absolute difference $0.0049; life max absolute difference 0.000463 years; public CSV byte-identical. |
 | `npm run data:verify-stats` | PASS. 68 statistic checks. |
-| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 42/42 checkbox labels at least 44px, skip link, reduced motion and WebGL fallback pass. |
+| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 42/42 checkbox labels at least 44px, splitter ArrowLeft 648→672, scatter BDI→TCD + Enter, skip link, reduced motion and WebGL fallback pass. |
 | axe via `scripts/audit.ts` | 16/16 width/chapter combinations, 0 violations. |
 | Lighthouse desktop | 100 performance, 100 accessibility, 100 best practices, 100 SEO. |
 | Lighthouse mobile | 98 performance, 100 accessibility, 100 best practices, 100 SEO. |
 | Console | Clean after excluding Chromium's GL ReadPixels driver warning. |
 
-The one deliberately blocked item is KaTeX (B11). The one open owner decision is the light panel versus a near-black interface (D2).
+The one deliberately blocked item is KaTeX (B11). The light panel is held for this release (D2), with the near-black colour reserved for the stage; a dark-panel alternative remains a follow-up option. The internal D1 tokenisation and F1 chart-frame refactors remain partial and do not affect a rendered style or interaction.
 
 ## Branch and commits
 
@@ -37,8 +41,8 @@ The one deliberately blocked item is KaTeX (B11). The one open owner decision is
 | `6e9e110` | `G1-G4`: first screenshot, axe and Lighthouse evidence set. |
 | `fe27549` | `G1-G4`: final touch-target and UI checks, final screenshots, before captures. |
 | `9a9fa4b` | `H`: `REPORT.md`, `PROGRESS.md`, `DECISIONS.md`, `docs/DESIGN.md`. |
-
-No commit was made to `main`, nothing was deployed and no force-push was used.
+| `421fdda` | `D4/F4/G1/E4`: pointer/keyboard splitter, keyboard scatter points, splitter hit area, phone label clearance and refreshed evidence. |
+| release | Final docs and merge to `main`; GitHub Pages deployment. No force-push was used. |
 
 ## ID table
 
@@ -80,9 +84,9 @@ The detailed evidence and commit for every ID is in `PROGRESS.md`; this is the c
 | C5 | done | Selection shared by globe, scatter, table and context; ZWE/SGP visible initially. |
 | C6 | done | Landing answer before the chapters. |
 | D1 | partial | Tokens exist; some literal colours and paddings remain. |
-| D2 | open | Light panel retained; near-black stage. Owner decision. |
+| D2 | held | Light panel retained for this release; near-black stage. Optional dark-panel follow-up recorded. |
 | D3 | done | System mono numerals; no new font dependency. |
-| D4 | partial | Fixed clamp panel; resizer not added. |
+| D4 | done | Pointer/keyboard splitter, 560–760px, ARIA separator and 44px effective hit area; verified by `check:ui`. |
 | D5 | done | Desktop frame, solid chrome, light reading surface. |
 | D6 | done | Shared buttons, chips, segmented controls, cards, disclosures, tables. |
 | D7 | done | Motion timings and reduced-motion override. |
@@ -90,20 +94,20 @@ The detailed evidence and commit for every ID is in `PROGRESS.md`; this is the c
 | E1 | done | Extruded pillars, back-face hiding, 80-year ghost. |
 | E2 | done | Blue Marble, runtime borders/graticule, atmosphere; no cloud/specular/normal textures. |
 | E3 | done | Hover, click, keyboard selection and reset. |
-| E4 | done | Selected labels visible at all four widths; clamped in the stage. |
+| E4 | done | Selected labels visible at all four widths; phone labels lift 12px clear of the zoom plate. |
 | E5 | done | Sample min/max legend and selected markers. |
 | E6 | done | Bowl axes, contours, minimum, colour bar, shadow, snap control. |
 | E7 | done | WebGL fallback: 0 canvases, text fallback, 7 charts, 0 page errors. |
 | F1 | partial | Export/data-table plumbing shared; one SVG frame abstraction not complete. |
 | F2 | done | Axes, units, hairlines, mono ticks. |
 | F3 | done | Direct model and selected labels. |
-| F4 | partial | Hover and visible data-table keyboard access; no arrow-key navigation on SVG points. |
+| F4 | done | Scatter roving tab stop, arrow/Home/End movement, Enter/Space selection and per-point names; other charts keep data tables. |
 | F5 | done | Model labels and confidence band. |
 | F6 | done | Residual histogram. |
 | F7 | done | Extrapolation shading. |
 | F8 | done | PNG, SVG and CSV export. |
 | F9 | done | Sortable country table with 44px targets. |
-| G1 | done | 44px non-inline targets; inline prose links documented as WCAG 2.5.8 exception; footer chips 44px. |
+| G1 | done | 44px non-inline targets; inline prose links documented as WCAG 2.5.8 exception; splitter has a 44px effective hit area. |
 | G2 | done | Skip link first in Tab order and moves focus to `#main-content`; reduced motion respected. |
 | G3 | done | Lighthouse scores above. |
 | G4 | done | axe clean, console clean, WebGL fallback clean. |
@@ -151,7 +155,7 @@ Full URLs, versions, access dates and licence notes are in `SOURCES.md`.
 
 ### Income groups
 
-Current FY2027 counts: Low 10, Lower middle 9, Upper middle 12, High 11.  
+Current FY2027 counts: Low 10, Lower middle 9, Upper middle 12, High 11.
 FY2020 (July 2019) counts: Low 11, Lower middle 11, Upper middle 9, High 11.
 
 The four differences between FY2020 and FY2027 are Nepal (Low → Lower middle), Indonesia, the Philippines and Vietnam (Lower middle → Upper middle). The data values for those countries did not change.
@@ -190,7 +194,7 @@ The before set was captured from the pre-rebuild commit `b0d0e1c` in a detached 
 | 1440×900 | [before](audit/before/1440-landing.png) | [after](audit/after/1440-landing.png) |
 | 375×812 | [before](audit/before/375-landing.png) | [after](audit/after/375-landing.png) |
 
-The before images show the old dark panel and single-page section tabs. The after images show the four-chapter light panel, the selected-country labels, the context bar and the 44px chrome.
+The before images show the old dark panel and single-page section tabs. The after images show the four-chapter light panel, the selected-country labels, the context bar, the desktop splitter and the 44px chrome. The final after set was regenerated after the `421fdda` UI commit.
 
 ### Required matrix
 
@@ -210,7 +214,7 @@ Extras:
 - [1024 WebGL-off fallback](audit/after/1024-webgl-off.png)
 - Machine-readable checks: [axe.json](audit/after/axe.json), [lighthouse desktop](audit/after/lighthouse-desktop.json), [lighthouse mobile](audit/after/lighthouse-mobile.json), [console.json](audit/after/console.json), [ui-checks.json](audit/after/ui-checks.json).
 
-The images were opened and inspected. Fixes made during the screenshot loop included: chapter headings hidden under sticky chrome at 1024/768, the mobile section select lagging one chapter behind, the bowl controls covering the bowl at tablet widths, missing selected labels because the canvas was remounted immediately before capture, and the bowl title colliding with the mobile tabs.
+The images were opened and inspected. Fixes made during the screenshot loop included: chapter headings hidden under sticky chrome at 1024/768, the mobile section select lagging one chapter behind, the bowl controls covering the bowl at tablet widths, missing selected labels because the canvas was remounted immediately before capture, the bowl title colliding with the mobile tabs, the Singapore label touching the zoom plate at 375px, and the splitter hit area.
 
 ## Accessibility and performance
 
@@ -234,12 +238,14 @@ Metrics: desktop FCP 0.3s, LCP 0.5s, TBT 0ms, CLS 0; mobile FCP 1.4s, LCP 2.3s, 
 ### Keyboard, motion and fallback
 
 - First Tab lands on “Skip to the analysis”; Enter moves focus to `#main-content`.
+- The desktop splitter is a focusable separator: ArrowLeft grew the panel 648→672 in the final check.
+- The scatter has one roving tab stop; ArrowRight moved Burundi→Chad and Enter selected Chad in the final check.
 - `prefers-reduced-motion: reduce` is true; the animation duration resolves to `1e-05s` and scroll behaviour to `auto`.
 - With WebGL disabled there are 0 canvases, the text fallback is shown, all 7 charts remain and there are no page errors.
 
 ### Touch targets
 
-`npm run check:ui` reports all non-inline targets at least 44×44 at 1440, 1024, 768 and 375. This includes stage tabs, map tools, model/group segmented controls, primary and ghost buttons, chips, search, disclosures, export menu items, table sort buttons, table rows and range inputs. The 42 checkboxes have 44px labels that are the click target.
+`npm run check:ui` reports all non-inline targets at least 44×44 at 1440, 1024, 768 and 375. This includes stage tabs, map tools, model/group segmented controls, primary and ghost buttons, chips, search, disclosures, export menu items, table sort buttons, table rows, range inputs and the splitter’s 44px effective hit area. The 42 checkboxes have 44px labels that are the click target.
 
 Inline prose links, citation markers and inline text buttons are left at type size under the WCAG 2.5.8 inline exception. This is recorded in `DECISIONS.md` rather than claimed as a 44px target.
 
@@ -264,12 +270,12 @@ The screenshot and audit loops were repeated after layout fixes, so the G estima
 
 | Item | State | Resolution |
 |---|---|---|
-| D2 light panel vs near-black | Open | Keep the light panel and dark stage for this submission; owner confirmation needed. |
+| D2 light panel vs near-black | Held | Keep the light panel and dark stage for this release; dark-panel alternative remains a follow-up. |
 | B11 KaTeX | Blocked | Native MathML; KaTeX would exceed the 50 kB gzipped rule. |
 | D1 tokenisation | Partial | Tokens exist, but some literal colours/paddings remain in `app.css`. |
-| D4 panel resizer | Partial | Fixed `clamp(36rem,45vw,44rem)` panel; freeform drag not added. |
+| D4 panel resizer | Done | Pointer/keyboard splitter from 560–760px, ARIA separator and 44px hit area. |
 | F1 shared chart frame | Partial | Shared export/table plumbing exists; a single SVG frame abstraction does not. |
-| F4 chart keyboard points | Partial | Visible sortable data tables provide keyboard access; SVG arrow-key point navigation is not implemented. |
+| F4 chart keyboard points | Done | Scatter has roving arrow-key point navigation and Enter/Space selection; other charts use keyboard-accessible data tables. |
 | D2 alternate | Not built | A near-black panel or light/dark preference was not built because it would reverse the earlier approved collage direction. |
 | Data pull | Restricted | `data:all` is not run; individual checks pass. Appendix A is authoritative. |
 | Screen-reader testing | UNVERIFIED | axe and keyboard checks were run; no NVDA/JAWS/VoiceOver session was recorded. |
@@ -312,6 +318,6 @@ CHROME_PATH="$HOME/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/G
 
 ## Closing status
 
-`rebuild/nasa-grade` contains the complete rebuild and evidence. No deployment or push has been made. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1), the panel resizer (D4), the shared chart frame and SVG arrow-key navigation (F1/F4), and the owner's D2 decision.
+`main` now contains the complete rebuild and evidence, deployed by GitHub Actions to https://peterachss.github.io/maths-ia-explorer/. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1), the shared chart-frame abstraction (F1), and the optional dark-panel direction (D2). D4 and F4 are no longer partial.
 
-Rebuild complete. No build, test or evidence work is pending; only the owner decisions in DECISIONS.md remain open.
+Release complete. The live build passed the build, unit tests, data anchors, live data verification, 68 statistic checks, UI checks, screenshots, axe and Lighthouse before publication.

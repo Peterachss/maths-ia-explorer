@@ -60,7 +60,7 @@ npm install
 npm run dev        # local development
 npm run build      # type check and production build
 npm run preview    # serve the built app
-npm test           # 39 tests
+npm test           # 46 tests
 npm run data:fetch # live World Bank pull and comparison
 npm run data:anchor
 ```

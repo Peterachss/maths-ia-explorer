@@ -4,7 +4,7 @@ Branch: `rebuild/nasa-grade`
 
 Last update: 22 October 2026
 
-Release: published to GitHub Pages.
+Release: published at https://maths-ia-explorer.surge.sh/.
 
 Build status: `npm run build` passes; `npm test` passes 46/46; axe 16/16 clean; Lighthouse desktop 100/100/100/100, mobile 98/100/100/100.
 
@@ -83,6 +83,6 @@ Build status: `npm run build` passes; `npm test` passes 46/46; axe 16/16 clean; 
 - Build, unit tests, anchors, live verification and 68 statistic checks pass after the final UI change.
 - Remaining internal partials: D1 tokenisation and F1 shared chart-frame abstraction. Neither changes a rendered style or a user interaction. Known blocker: B11 KaTeX. Held owner choice: D2 light panel.
 - `data:fetch`/`data:all` deliberately not run; see `DECISIONS.md`.
-- The owner authorized publication on 22 October 2026. The `rebuild/nasa-grade` branch is merged into `main` without force-pushing and the GitHub Pages workflow publishes the build at https://peterachss.github.io/maths-ia-explorer/.
+- The owner authorized publication on 22 October 2026. The `rebuild/nasa-grade` branch is merged into local `main` without force-pushing; the build is published at https://maths-ia-explorer.surge.sh/. GitHub Pages is not updated: the push is blocked by the missing GitHub credential on this machine. Live UI checks and 1440/375 captures are in `audit/live/`.
 
 Release complete. Only the two internal refactors and the optional design choices remain.

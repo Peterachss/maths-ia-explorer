@@ -4,7 +4,7 @@ Branch: `rebuild/nasa-grade` merged to `main`
 
 Final verification: 22 October 2026
 
-Live site: https://peterachss.github.io/maths-ia-explorer/
+Live site: https://maths-ia-explorer.surge.sh/
 
 Site: the companion page for the IB Maths AA SL Internal Assessment comparing GDP per capita with life expectancy for 42 countries in 2019.
 
@@ -43,7 +43,7 @@ The one deliberately blocked item is KaTeX (B11). The light panel is held for th
 | `fe27549` | `G1-G4`: final touch-target and UI checks, final screenshots, before captures. |
 | `9a9fa4b` | `H`: `REPORT.md`, `PROGRESS.md`, `DECISIONS.md`, `docs/DESIGN.md`. |
 | `421fdda` | `D4/F4/G1/E4`: pointer/keyboard splitter, keyboard scatter points, splitter hit area, phone label clearance and refreshed evidence. |
-| release | Final docs and merge to `main`; GitHub Pages deployment. No force-push was used. |
+| release | Final docs and local `main` merge; published to Surge. GitHub Pages push remains blocked by missing credentials. No force-push was used. |
 
 ## ID table
 
@@ -297,6 +297,14 @@ The full design document is `docs/DESIGN.md`. The short version:
 - **Motion:** slow interruptible camera flights, one 14px section reveal, press-scale buttons, and a 2.8s deferred 3D canvas behind a poster. Reduced motion disables the flights, idle rotation, reveals and transitions.
 - **Charts:** seven hand-built SVG figures sharing the life-expectancy ramp, model colours and direct labels, with PNG/SVG/CSV export and hidden data tables.
 
+### Published build
+
+The live build was checked after upload:
+
+- `https://maths-ia-explorer.surge.sh/` returns HTTP 200; the entry JS asset returns 200, and `robots.txt` and `sitemap.xml` return 200.
+- `npm run check:ui` was re-run with `URL=https://maths-ia-explorer.surge.sh/`: no overflow, no page errors, all 44px targets, splitter, scatter keyboard, selection reveal, reduced motion and WebGL fallback pass. Output: `audit/live/ui-checks.json`.
+- Live captures: `audit/live/1440-landing.png` and `audit/live/375-landing.png`.
+
 ## Reproduce
 
 ```bash
@@ -320,6 +328,6 @@ CHROME_PATH="$HOME/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/G
 
 ## Closing status
 
-`main` now contains the complete rebuild and evidence, deployed by GitHub Actions to https://peterachss.github.io/maths-ia-explorer/. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1), the shared chart-frame abstraction (F1), and the optional dark-panel direction (D2). D4 and F4 are no longer partial.
+`main` now contains the complete rebuild and evidence on the local release branch. The release build is published at https://maths-ia-explorer.surge.sh/; the GitHub Pages push is still blocked because this machine has no GitHub credentials. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1), the shared chart-frame abstraction (F1), and the optional dark-panel direction (D2). D4 and F4 are no longer partial.
 
-Release complete. The live build passed the build, unit tests, data anchors, live data verification, 68 statistic checks, UI checks, screenshots, axe and Lighthouse before publication.
+Release complete. The published build passed the build, unit tests, data anchors, live data verification, 68 statistic checks, UI checks, screenshots, axe and Lighthouse before publication. The live URL was checked again after upload.

@@ -1,0 +1,748 @@
+{
+  "base": "https://maths-ia-explorer.surge.sh/",
+  "widths": {
+    "1440x900": {
+      "bodyWidth": 1440,
+      "viewportWidth": 1440,
+      "small": [],
+      "checkboxTargets": [
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        },
+        {
+          "width": 247,
+          "height": 44
+        }
+      ],
+      "charts": 7,
+      "errors": 0
+    },
+    "1024x768": {
+      "bodyWidth": 1024,
+      "viewportWidth": 1024,
+      "small": [],
+      "checkboxTargets": [
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        }
+      ],
+      "charts": 7,
+      "errors": 0
+    },
+    "768x1024": {
+      "bodyWidth": 768,
+      "viewportWidth": 768,
+      "small": [],
+      "checkboxTargets": [
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        },
+        {
+          "width": 259,
+          "height": 44
+        }
+      ],
+      "charts": 7,
+      "errors": 0
+    },
+    "375x812": {
+      "bodyWidth": 375,
+      "viewportWidth": 375,
+      "small": [],
+      "checkboxTargets": [
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        },
+        {
+          "width": 317,
+          "height": 44
+        }
+      ],
+      "charts": 7,
+      "errors": 0
+    }
+  },
+  "keyboard": {
+    "first": {
+      "tag": "A",
+      "text": "Skip to the analysis"
+    },
+    "after": {
+      "tag": "DIV",
+      "id": "main-content"
+    }
+  },
+  "reducedMotion": {
+    "media": true,
+    "animation": "1e-05s",
+    "scroll": "auto"
+  },
+  "webglOff": {
+    "canvases": 0,
+    "fallback": "This browser could not start 3D graphics. The charts and tables below still work.",
+    "charts": 7,
+    "errors": 0
+  },
+  "splitter": {
+    "before": "648",
+    "after": "672"
+  },
+  "scatterKeyboard": {
+    "before": "BDI",
+    "after": "TCD",
+    "pressed": "true",
+    "preview": {
+      "label": "Chad",
+      "top": 246
+    }
+  },
+  "failures": []
+}

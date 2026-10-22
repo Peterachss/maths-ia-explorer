@@ -731,5 +731,14 @@
     "charts": 7,
     "errors": 0
   },
+  "splitter": {
+    "before": "648",
+    "after": "672"
+  },
+  "scatterKeyboard": {
+    "before": "BDI",
+    "after": "TCD",
+    "pressed": "true"
+  },
   "failures": []
 }

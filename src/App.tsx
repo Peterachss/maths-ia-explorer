@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState, lazy, Suspense, type ReactNode } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState, lazy, Suspense, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import {
   ArrowLeftRight,
   BarChart3,
@@ -57,6 +57,12 @@ const NAV_ICONS = {
 
 const CHAPTER_BY_ID = Object.fromEntries(copy.chapters.map((c) => [c.id, c]));
 const NAV_GROUPS = copy.chapters;
+
+const PANEL_MIN = 560;
+const PANEL_MAX = 760;
+const panelWidthForViewport = () =>
+  typeof window === 'undefined' ? 648 : Math.min(PANEL_MAX, Math.max(PANEL_MIN, Math.round(window.innerWidth * 0.45)));
+const clampPanel = (value: number) => Math.min(PANEL_MAX, Math.max(PANEL_MIN, Math.round(value)));
 
 function Citation({ n }: { n: number }) {
   return (
@@ -329,8 +335,33 @@ export function App() {
   const [gl] = useState(webglAvailable);
   const [working, setWorking] = useState(false);
   const [mount3d, setMount3d] = useState(false);
+  const [panelW, setPanelW] = useState(panelWidthForViewport);
+  const panelDrag = useRef<{ x: number; width: number } | null>(null);
   const view = useRef<ViewCommand>({ zoom: null });
   const { stage, setStage, excluded, selected } = useStore();
+
+  const startPanelResize = (event: ReactPointerEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.currentTarget.setPointerCapture(event.pointerId);
+    panelDrag.current = { x: event.clientX, width: panelW };
+    document.body.classList.add('resizing-panel');
+  };
+  const movePanelResize = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!panelDrag.current) return;
+    setPanelW(clampPanel(panelDrag.current.width + panelDrag.current.x - event.clientX));
+  };
+  const stopPanelResize = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+    panelDrag.current = null;
+    document.body.classList.remove('resizing-panel');
+  };
+  const keyPanelResize = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    const step = event.shiftKey ? 48 : 24;
+    if (event.key === 'ArrowLeft') { event.preventDefault(); setPanelW((w) => clampPanel(w + step)); }
+    else if (event.key === 'ArrowRight') { event.preventDefault(); setPanelW((w) => clampPanel(w - step)); }
+    else if (event.key === 'Home') { event.preventDefault(); setPanelW(PANEL_MIN); }
+    else if (event.key === 'End') { event.preventDefault(); setPanelW(PANEL_MAX); }
+  };
 
   useEffect(() => {
     const stopUrlSync = syncUrl();
@@ -380,7 +411,7 @@ export function App() {
   const user = stage === 'model' ? { a, b: c - a * bowl.ubar, kind: bowlKind } : undefined;
 
   return (
-    <div className="app">
+    <div className="app" style={{ '--panel-w': `${panelW}px` } as CSSProperties}>
       <a className="skip-link" href="#main-content">Skip to the analysis</a>
       <Live />
       <div className="stage" aria-label="3D view">
@@ -416,7 +447,24 @@ export function App() {
         {stage === 'model' && <BowlControls bowl={bowl} a={a} c={c} setA={setBowlA} setC={setBowlC} kind={bowlKind} />}
       </div>
 
-      <aside className="panel" aria-label="Analysis dashboard">
+      <div
+        className="panel-resizer"
+        role="separator"
+        aria-label="Resize the reading panel"
+        aria-orientation="vertical"
+        aria-controls="analysis-panel"
+        aria-valuemin={PANEL_MIN}
+        aria-valuemax={PANEL_MAX}
+        aria-valuenow={panelW}
+        tabIndex={0}
+        onPointerDown={startPanelResize}
+        onPointerMove={movePanelResize}
+        onPointerUp={stopPanelResize}
+        onPointerCancel={stopPanelResize}
+        onKeyDown={keyPanelResize}
+      />
+
+      <aside className="panel" id="analysis-panel" aria-label="Analysis dashboard">
         <SectionRail />
         <div className="panel-main">
           <div className="panel-bar">

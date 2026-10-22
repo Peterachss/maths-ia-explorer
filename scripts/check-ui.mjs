@@ -101,6 +101,38 @@ for (const [width, height] of sizes) {
   } else {
     fail(`keyboard: unexpected focus ${JSON.stringify(results.keyboard)}`);
   }
+
+  const splitter = page.locator('.panel-resizer');
+  await splitter.focus();
+  const splitBefore = await splitter.getAttribute('aria-valuenow');
+  await page.keyboard.press('ArrowLeft');
+  await page.waitForTimeout(120);
+  const splitAfter = await splitter.getAttribute('aria-valuenow');
+  results.splitter = { before: splitBefore, after: splitAfter };
+  if (Number(splitAfter) > Number(splitBefore)) pass(`splitter: ArrowLeft grew the panel ${splitBefore} → ${splitAfter}`);
+  else fail(`splitter: ArrowLeft did not resize (${JSON.stringify(results.splitter)})`);
+
+  const point = page.locator('.scatter-point').first();
+  await point.focus();
+  const pointBefore = await page.evaluate(() => ({
+    iso: document.activeElement?.getAttribute('data-point'),
+    label: document.activeElement?.getAttribute('aria-label')
+  }));
+  await page.keyboard.press('ArrowRight');
+  await page.waitForTimeout(120);
+  const pointAfter = await page.evaluate(() => ({
+    iso: document.activeElement?.getAttribute('data-point'),
+    label: document.activeElement?.getAttribute('aria-label')
+  }));
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(160);
+  const pressed = await page.evaluate(() => document.activeElement?.getAttribute('aria-pressed'));
+  results.scatterKeyboard = { before: pointBefore.iso, after: pointAfter.iso, pressed };
+  if (pointBefore.iso && pointAfter.iso && pointBefore.iso !== pointAfter.iso && pressed === 'true') {
+    pass(`scatter keyboard: ${pointBefore.iso} → ${pointAfter.iso}, Enter selected it`);
+  } else {
+    fail(`scatter keyboard: ${JSON.stringify(results.scatterKeyboard)}`);
+  }
   await context.close();
 }
 

@@ -1,8 +1,48 @@
 .app {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--panel-w);
+  grid-template-columns: minmax(0, 1fr) 8px var(--panel-w);
   height: 100dvh;
   background: var(--ink-0);
+}
+
+/* D4: a real split view. The divider is a keyboard separator, not decoration. */
+.panel-resizer {
+  position: relative;
+  z-index: 8;
+  width: 8px;
+  min-height: 0;
+  cursor: col-resize;
+  touch-action: none;
+  background: var(--ink-0);
+  border-left: 1px solid var(--rule-soft);
+  border-right: 1px solid var(--rule-soft);
+}
+/* A narrow visual rule with a 44px effective hit area. */
+.panel-resizer::before {
+  content: '';
+  position: absolute;
+  inset: 0 -18px;
+  cursor: col-resize;
+}
+.panel-resizer::after {
+  content: '';
+  position: absolute;
+  inset: 0 2px;
+  border-radius: 999px;
+  background: transparent;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.panel-resizer:hover::after,
+.panel-resizer:focus-visible::after {
+  background: var(--accent);
+}
+.panel-resizer:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+body.resizing-panel {
+  cursor: col-resize;
+  user-select: none;
 }
 
 /* The map is the product. Space, imagery and quiet chrome. */
@@ -1094,6 +1134,7 @@ details summary:hover { color: var(--text-0); }
     height: auto;
     min-height: 100dvh;
   }
+  .panel-resizer { display: none; }
   .stage {
     position: sticky;
     top: 0;
@@ -1872,3 +1913,16 @@ details > summary { min-height: 44px; }
 .chip { min-height: 44px; }
 .map-tools button { width: 44px; height: 44px; }
 .section-jump select { min-height: 44px; }
+/* F4: keyboard points in the scatter. A roving tab stop keeps the chart to one
+   stop; arrows move between countries and Enter selects the focused point. */
+.chart .scatter-point:focus { outline: none; }
+.chart .scatter-point:focus-visible circle:last-of-type {
+  stroke: var(--focus);
+  stroke-width: 3;
+}
+.chart .scatter-point:focus-visible .point-label { text-decoration: underline; }
+.poster-open { min-height: 44px; }
+@media (max-width: 640px) {
+  /* Lift country labels clear of the zoom plate on the phone stage. */
+  .pillar-label { transform: translateY(-12px); }
+}

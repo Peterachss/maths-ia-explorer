@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { scaleLinear } from 'd3-scale';
 import { area, line } from 'd3-shape';
 import type { Country } from '../data/schema';
@@ -14,6 +15,7 @@ export interface UserCurve { a: number; b: number; kind: 'linear' | 'log'; }
 
 export function Scatter({ countries, analysis, user }: { countries: Country[]; analysis: Analysis; user?: UserCurve }) {
   const { xAxis, modelShow, selected, excluded, select, hover, hovered } = useStore();
+  const [focusIso, setFocusIso] = useState(() => selected[0] ?? countries[0]?.iso3 ?? '');
   const sx = xScale(xAxis);
   // The straight line predicts above 90 years at the top incomes, so leave headroom for it.
   const sy = scaleLinear().domain([45, 96]).range([innerH, 0]);
@@ -38,13 +40,17 @@ export function Scatter({ countries, analysis, user }: { countries: Country[]; a
   const labelled = new Set([...ALWAYS, ...selected]);
   const summary = `Scatter plot of life expectancy against GDP per capita for ${analysis.points.length} countries in 2019.`;
   const csv = ['country,iso3,gdp_pc_ppp_2019,life_exp_2019', ...countries.map((c) => `${JSON.stringify(c.name)},${c.iso3},${c.gdp},${c.life}`)].join('\n');
+  const focusPoint = (iso3: string) => {
+    setFocusIso(iso3);
+    requestAnimationFrame(() => document.querySelector<SVGGElement>(`[data-point="${iso3}"]`)?.focus());
+  };
 
   return (
     <figure className="chart">
       <div className="chart-actions"><ChartExport filename="life-expectancy-scatter-2019" csv={csv} /></div>
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={summary} aria-describedby="scatter-data">
+      <svg viewBox={`0 0 ${W} ${H}`} role="group" aria-label={summary} aria-describedby="scatter-data">
         <title>Life expectancy against GDP per capita, 2019</title>
-        <desc>{summary} Each dot is a country. The curves are the fitted models.</desc>
+        <desc>{summary} Each dot is a country. Tab enters the points; arrow keys move between countries and Enter selects one.</desc>
         <text x={M.l} y={16} className="chart-title">Life expectancy and income, 2019</text>
         <defs>
           <clipPath id="scatter-plot">
@@ -76,9 +82,35 @@ export function Scatter({ countries, analysis, user }: { countries: Country[]; a
               return (
                 <g
                   key={c.iso3}
+                  className="scatter-point"
+                  data-point={c.iso3}
+                  role="button"
+                  tabIndex={c.iso3 === focusIso ? 0 : -1}
+                  aria-pressed={isSel}
+                  aria-label={`${c.name}: life expectancy ${c.life.toFixed(1)} years, GDP per capita ${Math.round(c.gdp).toLocaleString('en-GB')} dollars${isSel ? ', selected' : ''}`}
                   onClick={() => select(c.iso3)}
                   onPointerEnter={() => hover(c.iso3)}
                   onPointerLeave={() => hover(null)}
+                  onFocus={() => { setFocusIso(c.iso3); hover(c.iso3); }}
+                  onBlur={() => hover(null)}
+                  onKeyDown={(event) => {
+                    const index = countries.findIndex((country) => country.iso3 === c.iso3);
+                    let next = -1;
+                    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % countries.length;
+                    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + countries.length) % countries.length;
+                    else if (event.key === 'Home') next = 0;
+                    else if (event.key === 'End') next = countries.length - 1;
+                    if (next >= 0) {
+                      const target = countries[next];
+                      if (target) {
+                        event.preventDefault();
+                        focusPoint(target.iso3);
+                      }
+                    } else if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      select(c.iso3);
+                    }
+                  }}
                   style={{ cursor: 'pointer' }}
                 >
                   <title>{c.name}: {c.life.toFixed(1)} years, {Math.round(c.gdp).toLocaleString('en-GB')} dollars</title>

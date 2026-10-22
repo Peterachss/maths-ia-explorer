@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://peterachss.github.io/maths-ia-explorer/sitemap.xml

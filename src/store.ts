@@ -36,7 +36,7 @@ function fromUrl(): { selected: string[]; excluded: string[] } {
   if (typeof window === 'undefined') return { selected: [], excluded: [] };
   const q = new URLSearchParams(window.location.search);
   const split = (k: string) => (q.get(k) ?? '').split(',').filter((s) => /^[A-Z]{3}$/.test(s));
-  return { selected: split('c').slice(0, MAX_SELECTED), excluded: split('x') };
+  return { selected: q.has('c') ? split('c').slice(0, MAX_SELECTED) : ['ZWE', 'SGP'], excluded: split('x') };
 }
 
 export const useStore = create<State>((set, get) => ({

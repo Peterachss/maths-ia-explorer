@@ -3,6 +3,7 @@ import type { Country } from '../data/schema';
 import { analyse, dollars, doublingEffect, num, percent, type Analysis, type Point } from '../math';
 import { useStore } from '../store';
 import { makeBowl, type Bowl } from '../math/bowl';
+import { SegmentedControl } from './Segmented';
 
 /** IA sections 7 and 10: tangent change versus exact change, and the doubling effect. */
 export function ChangeTool({ analysis }: { analysis: Analysis }) {
@@ -47,19 +48,34 @@ export function SensitivityPanel({ countries, points }: { countries: Country[]; 
     ['GDP for Singapore life expectancy', (a) => (a.inverse ? dollars(a.inverse.requiredX) : 'n/a')]
   ];
   const on = PRESET.every((c) => excluded.includes(c)) && excluded.length === PRESET.length;
+  const custom = excluded.length > 0 && !on;
   return (
     <div className="tool">
-      <div className="button-row">
-        <button type="button" className="btn" aria-pressed={on} onClick={() => setExcluded(on ? [] : PRESET)}>
-          {on ? 'Include Nigeria and Chad again' : 'Exclude Nigeria and Chad'}
-        </button>
-        <button type="button" className="btn ghost" onClick={() => setExcluded([])} disabled={!excluded.length}>Include everyone</button>
+      <SegmentedControl
+        label="Sensitivity fit"
+        value={on ? 'without' : custom ? 'custom' : 'all'}
+        onChange={(next) => {
+          if (next === 'without') setExcluded(PRESET);
+          if (next === 'all') setExcluded([]);
+        }}
+        options={[
+          { value: 'all', label: 'Include everyone' },
+          { value: 'without', label: 'Without Nigeria and Chad' },
+          ...(custom ? [{ value: 'custom', label: 'Custom selection' }] : [])
+        ]}
+      />
+      {custom && (
+        <p className="note">
+          {excluded.length} countries are excluded. <button type="button" className="text-link" onClick={() => setExcluded([])}>Include everyone</button>
+        </p>
+      )}
+      <div className="table-scroll" tabIndex={0} role="region" aria-label="Sensitivity comparison table">
+        <table className="data">
+          <caption>Logarithmic model with and without Nigeria and Chad</caption>
+          <thead><tr><th scope="col">Quantity</th><th scope="col">All 42</th><th scope="col">Without the two</th></tr></thead>
+          <tbody>{rows.map(([n, f]) => (<tr key={n}><th scope="row">{n}</th><td>{f(base)}</td><td>{f(out)}</td></tr>))}</tbody>
+        </table>
       </div>
-      <table className="data">
-        <caption>Logarithmic model with and without Nigeria and Chad</caption>
-        <thead><tr><th scope="col">Quantity</th><th scope="col">All 42</th><th scope="col">Without the two</th></tr></thead>
-        <tbody>{rows.map(([n, f]) => (<tr key={n}><th scope="row">{n}</th><td>{f(base)}</td><td>{f(out)}</td></tr>))}</tbody>
-      </table>
       <details>
         <summary>Exclude any country</summary>
         <ul className="checks">

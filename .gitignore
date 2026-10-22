@@ -3,3 +3,7 @@ dist/
 *.local
 .DS_Store
 Thumbs.db
+
+# Local investigation and skill fixtures
+.tmp/
+.taste-skill/

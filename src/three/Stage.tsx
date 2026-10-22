@@ -1,5 +1,5 @@
-import { useMemo, useRef, Suspense, type RefObject } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { useEffect, useMemo, useRef, Suspense, type RefObject } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
 import { ACESFilmicToneMapping, Vector3, type DirectionalLight } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
@@ -21,6 +21,38 @@ function CameraSun() {
     if (light.current) light.current.position.copy(camera.position).add(offset);
   });
   return <directionalLight ref={light} intensity={2.6} color="#fff7ec" />;
+}
+
+/** Arrow keys rotate, + and - zoom. The canvas itself is focusable. */
+function KeyboardOrbit({ controls }: { controls: RefObject<OrbitControlsImpl> }) {
+  const camera = useThree((s) => s.camera);
+  const gl = useThree((s) => s.gl);
+  useEffect(() => {
+    const el = gl.domElement;
+    el.tabIndex = 0;
+    el.setAttribute('aria-label', 'Interactive globe. Use the arrow keys to rotate and plus or minus to zoom.');
+    const yAxis = new Vector3(0, 1, 0);
+    const xAxis = new Vector3(1, 0, 0);
+    const onKey = (event: KeyboardEvent) => {
+      const step = 0.085;
+      let handled = true;
+      if (event.key === 'ArrowLeft') camera.position.applyAxisAngle(yAxis, -step);
+      else if (event.key === 'ArrowRight') camera.position.applyAxisAngle(yAxis, step);
+      else if (event.key === 'ArrowUp') camera.position.applyAxisAngle(xAxis, -step);
+      else if (event.key === 'ArrowDown') camera.position.applyAxisAngle(xAxis, step);
+      else if (event.key === '+' || event.key === '=') camera.position.setLength(Math.max(1.3, camera.position.length() * 0.9));
+      else if (event.key === '-' || event.key === '_') camera.position.setLength(Math.min(8.3, camera.position.length() * 1.1));
+      else handled = false;
+      if (handled) {
+        event.preventDefault();
+        camera.lookAt(0, 0, 0);
+        controls.current?.update();
+      }
+    };
+    el.addEventListener('keydown', onKey);
+    return () => el.removeEventListener('keydown', onKey);
+  }, [camera, controls, gl]);
+  return null;
 }
 
 export function Stage({
@@ -66,7 +98,7 @@ export function Stage({
 
       <Suspense fallback={<LoadingGlobe />}>
         <Earth />
-        <Pillars countries={countries} />
+        <Pillars countries={countries} analysis={analysis} />
         {zwe && sgp && gap && (
           <Arc
             from={zwe}
@@ -79,6 +111,7 @@ export function Stage({
       </Suspense>
 
       <CameraRig countries={countries} controls={controls} view={view} />
+      <KeyboardOrbit controls={controls} />
       <OrbitControls
         ref={controls}
         makeDefault

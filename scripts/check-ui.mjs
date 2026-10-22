@@ -125,13 +125,22 @@ for (const [width, height] of sizes) {
     label: document.activeElement?.getAttribute('aria-label')
   }));
   await page.keyboard.press('Enter');
-  await page.waitForTimeout(160);
+  await page.waitForTimeout(1300);
   const pressed = await page.evaluate(() => document.activeElement?.getAttribute('aria-pressed'));
-  results.scatterKeyboard = { before: pointBefore.iso, after: pointAfter.iso, pressed };
+  const preview = await page.evaluate(() => ({
+    label: document.querySelector('.preview h3')?.textContent ?? '',
+    top: Math.round(document.querySelector('.preview')?.getBoundingClientRect().top ?? -1)
+  }));
+  results.scatterKeyboard = { before: pointBefore.iso, after: pointAfter.iso, pressed, preview };
   if (pointBefore.iso && pointAfter.iso && pointBefore.iso !== pointAfter.iso && pressed === 'true') {
     pass(`scatter keyboard: ${pointBefore.iso} → ${pointAfter.iso}, Enter selected it`);
   } else {
     fail(`scatter keyboard: ${JSON.stringify(results.scatterKeyboard)}`);
+  }
+  if (preview.label === 'Chad' && preview.top >= 0) {
+    pass(`selection reveal: preview shows ${preview.label} at y=${preview.top}`);
+  } else {
+    fail(`selection reveal: ${JSON.stringify(preview)}`);
   }
   await context.close();
 }

@@ -68,6 +68,19 @@ const setRange = async (locator, value) => {
   }, value);
 };
 
+// Select a search hit without letting Playwright scroll the search box into view,
+// so the check tests the app's reveal behaviour rather than the test harness.
+const pickFromSearch = async (page, name) => {
+  await page.evaluate((query) => {
+    const input = document.querySelector('input[type="search"]');
+    const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set;
+    setter?.call(input, query);
+    input?.dispatchEvent(new Event('input', { bubbles: true }));
+  }, name);
+  await page.waitForSelector('.search-hits [role="option"] button');
+  await page.evaluate(() => document.querySelector('.search-hits [role="option"] button')?.click());
+};
+
 await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
   await step('search Singapore', async () => {
     await page.getByPlaceholder('Type a country name').fill('Sing');
@@ -150,6 +163,22 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
     if (atWork !== 'Limits') throw new Error(`expected Limits beside Working, got "${atWork}"`);
   });
 
+  await step('country selection reveals the preview', async () => {
+    await page.evaluate(() => document.querySelector('#h-gap')?.scrollIntoView());
+    await page.waitForTimeout(700);
+    await pickFromSearch(page, 'Viet');
+    await page.waitForTimeout(1100);
+    const visible = await page.evaluate(() => {
+      const card = document.querySelector('.preview');
+      const panel = document.querySelector('.panel');
+      if (!card || !panel) return false;
+      const c = card.getBoundingClientRect();
+      const p = panel.getBoundingClientRect();
+      return c.top >= p.top - 1 && c.bottom <= p.bottom + 1;
+    });
+    if (!visible) throw new Error('country preview did not scroll into the panel view');
+  });
+
   await step('scroll to the end', async () => {
     await page.evaluate(() => {
       const panel = document.querySelector('.panel');
@@ -197,6 +226,25 @@ await run('mobile', { width: 375, height: 812 }, async (page, step) => {
     await page.waitForTimeout(700);
     const atWork = await page.evaluate(() => document.querySelector('#section-jump')?.value ?? '');
     if (atWork !== 'h-limits') throw new Error(`expected h-limits beside Working, got "${atWork}"`);
+  });
+  await step('country selection reveals the preview', async () => {
+    await page.evaluate(() => {
+      const el = document.querySelector('#h-gap');
+      const y = (el?.getBoundingClientRect().top ?? 0) + window.scrollY - 440;
+      window.scrollTo({ top: y, behavior: 'instant' });
+    });
+    await page.waitForTimeout(500);
+    await pickFromSearch(page, 'Viet');
+    await page.waitForTimeout(1300);
+    const visible = await page.evaluate(() => {
+      const card = document.querySelector('.preview');
+      const stage = document.querySelector('.stage');
+      if (!card || !stage) return false;
+      const c = card.getBoundingClientRect();
+      const s = stage.getBoundingClientRect();
+      return c.top >= s.bottom - 1 && c.bottom <= window.innerHeight + 1;
+    });
+    if (!visible) throw new Error('country preview did not scroll below the sticky stage');
   });
   await step('resize to tablet and back', async () => {
     await page.setViewportSize({ width: 768, height: 900 });

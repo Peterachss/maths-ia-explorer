@@ -78,7 +78,8 @@ Build status: `npm run build` passes; `npm test` passes 46/46; axe 16/16 clean; 
 ## Checkpoint
 
 - All rebuild changes are committed in phase groups on `rebuild/nasa-grade`: A `6f8698f`, B–G `d22452a`, G evidence `6e9e110` and `fe27549`, and final UI `421fdda`.
-- Final UI evidence was regenerated after `421fdda`: screenshots at all four widths, `check:ui`, axe 16/16 and both Lighthouse runs.
+- Final UI evidence was regenerated after `421fdda` and the merge of `origin/main` (`8df22f8`): screenshots at all four widths, `check:ui`, axe 16/16 and both Lighthouse runs.
+- The `8df22f8` country-stats reveal was preserved; its breakpoint was adapted from 860px to the rebuild’s 1200px stage/panel breakpoint.
 - Build, unit tests, anchors, live verification and 68 statistic checks pass after the final UI change.
 - Remaining internal partials: D1 tokenisation and F1 shared chart-frame abstraction. Neither changes a rendered style or a user interaction. Known blocker: B11 KaTeX. Held owner choice: D2 light panel.
 - `data:fetch`/`data:all` deliberately not run; see `DECISIONS.md`.

@@ -23,7 +23,7 @@ Final checks:
 | `npm run data:verify` | PASS. All source, provenance and cross-check assertions. |
 | `npm run data:verify-live` | PASS. 42 rows, 84 values re-downloaded; GDP max absolute difference $0.0049; life max absolute difference 0.000463 years; public CSV byte-identical. |
 | `npm run data:verify-stats` | PASS. 68 statistic checks. |
-| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 42/42 checkbox labels at least 44px, splitter ArrowLeft 648→672, scatter BDI→TCD + Enter, skip link, reduced motion and WebGL fallback pass. |
+| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 42/42 checkbox labels at least 44px, splitter ArrowLeft 648→672, scatter BDI→TCD + Enter, selection reveal shows Chad, skip link, reduced motion and WebGL fallback pass. |
 | axe via `scripts/audit.ts` | 16/16 width/chapter combinations, 0 violations. |
 | Lighthouse desktop | 100 performance, 100 accessibility, 100 best practices, 100 SEO. |
 | Lighthouse mobile | 98 performance, 100 accessibility, 100 best practices, 100 SEO. |
@@ -36,6 +36,7 @@ The one deliberately blocked item is KaTeX (B11). The light panel is held for th
 | Commit | Contents |
 |---|---|
 | `b0d0e1c` | Pre-rebuild baseline. Used for the before screenshots only. |
+| `8df22f8` | `main` follow-up: reveal the country stats card on selection. Merged into the rebuild; the reveal breakpoint was adapted to the rebuild’s 1200px layout breakpoint. |
 | `6f8698f` | `A1-A12`: sources, provenance, claims register and verification scripts. |
 | `d22452a` | `B1-G4`: chapters, layout, tokens, 3D, charts, mobile chrome, accessibility and performance work. |
 | `6e9e110` | `G1-G4`: first screenshot, axe and Lighthouse evidence set. |
@@ -240,6 +241,7 @@ Metrics: desktop FCP 0.3s, LCP 0.5s, TBT 0ms, CLS 0; mobile FCP 1.4s, LCP 2.3s, 
 - First Tab lands on “Skip to the analysis”; Enter moves focus to `#main-content`.
 - The desktop splitter is a focusable separator: ArrowLeft grew the panel 648→672 in the final check.
 - The scatter has one roving tab stop; ArrowRight moved Burundi→Chad and Enter selected Chad in the final check.
+- The country stats card reveal was verified: selecting Chad moved the preview into view with the label “Chad”.
 - `prefers-reduced-motion: reduce` is true; the animation duration resolves to `1e-05s` and scroll behaviour to `auto`.
 - With WebGL disabled there are 0 canvases, the text fallback is shown, all 7 charts remain and there are no page errors.
 

@@ -738,7 +738,11 @@
   "scatterKeyboard": {
     "before": "BDI",
     "after": "TCD",
-    "pressed": "true"
+    "pressed": "true",
+    "preview": {
+      "label": "Chad",
+      "top": 246
+    }
   },
   "failures": []
 }

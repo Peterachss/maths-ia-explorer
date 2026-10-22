@@ -1,13 +1,33 @@
-import { LocateFixed, Minus, MousePointer2, Plus } from 'lucide-react';
+import { LocateFixed, Minus, Plus } from 'lucide-react';
 import type { RefObject } from 'react';
+import type { Country } from '../data/schema';
 import type { ViewCommand } from '../three/view';
+import { useStore } from '../store';
 import { copy } from '../copy';
 
-/** Google Earth style map chrome: zoom, recentre, a scale legend and credits. */
-export function MapChrome({ view, onReset }: { view: RefObject<ViewCommand>; onReset: () => void }) {
+/** Google Earth style map chrome: tools, a legend, the selected gap and credits. */
+export function MapChrome({
+  countries,
+  view,
+  onReset,
+  gap
+}: {
+  countries: Country[];
+  view: RefObject<ViewCommand>;
+  onReset: () => void;
+  gap?: number;
+}) {
+  const selected = useStore((s) => s.selected);
+  const lives = countries.map((c) => c.life);
+  const low = Math.min(...lives);
+  const high = Math.max(...lives);
+  const selectedNames = selected
+    .map((iso) => countries.find((c) => c.iso3 === iso)?.name)
+    .filter(Boolean) as string[];
   const zoom = (factor: number) => {
     if (view.current) view.current.zoom = factor;
   };
+  const ticks = [55, 65, 75, 85];
   return (
     <>
       <div className="map-tools" role="group" aria-label="Map controls">
@@ -22,14 +42,23 @@ export function MapChrome({ view, onReset }: { view: RefObject<ViewCommand>; onR
         </button>
       </div>
 
-      <div className="map-legend" aria-label={copy.map.legend}>
+      <div className="map-legend" aria-label={`${copy.map.legend}, ${low.toFixed(1)} to ${high.toFixed(1)} years`}>
         <span className="map-legend-title">{copy.map.legend}</span>
         <span className="map-legend-bar" aria-hidden="true" />
-        <span className="map-legend-range"><span>{copy.map.low}</span><span>{copy.map.high}</span></span>
+        <span className="map-legend-ticks" aria-hidden="true">
+          {ticks.map((t) => <span key={t} style={{ left: `${((t - low) / (high - low)) * 100}%` }}>{t}</span>)}
+        </span>
+        {selectedNames.length > 0 && <span className="map-legend-selected">Selected: {selectedNames.join(' / ')}</span>}
       </div>
 
+      {gap !== undefined && (
+        <p className="map-gap" aria-label={`Observed gap ${gap.toFixed(1)} years`}>
+          <strong>{gap.toFixed(1)} years apart</strong>
+          <span>Zimbabwe to Singapore</span>
+        </p>
+      )}
+
       <p className="map-hint">
-        <MousePointer2 size={13} aria-hidden="true" />
         <span className="hint-desktop">{copy.map.hint}</span>
         <span className="hint-touch">{copy.map.hintTouch}</span>
       </p>

@@ -1,93 +1,59 @@
-import { useMemo, useRef } from 'react';
-import { useFrame, useLoader, useThree } from '@react-three/fiber';
+import { useMemo } from 'react';
+import { useLoader, useThree } from '@react-three/fiber';
 import {
   AdditiveBlending,
   BackSide,
-  Color,
   DoubleSide,
   SRGBColorSpace,
   Texture,
-  TextureLoader,
-  Vector2,
-  type Group
+  TextureLoader
 } from 'three';
 import { makeBorderTexture } from '../geo/borders';
-import { prefersReducedMotion } from '../reducedMotion';
 
 const base = import.meta.env.BASE_URL;
 
 /**
- * A photoreal Earth built from NASA Blue Marble imagery, a terrain normal map,
- * an ocean specular map and a separate cloud shell. The borders are a thin
- * transparent layer so the imagery stays in charge.
+ * A Blue Marble Earth. The day image is NASA Blue Marble Next Generation,
+ * December 2004, with topography and bathymetry, credited in Sources. Borders
+ * and a 30 degree graticule are drawn into one transparent overlay. There are
+ * no clouds, bloom or lens flare; the pillars carry the data.
  */
 export function Earth() {
   const compact = useThree((s) => s.size.width < 900);
   const maxAniso = useThree((s) => s.gl.capabilities.getMaxAnisotropy());
-
-  const [day, normal, specular, clouds] = useLoader(TextureLoader, [
-    `${base}textures/${compact ? 'earth-day-2k.jpg' : 'earth-day.jpg'}`,
-    `${base}textures/earth-normal.jpg`,
-    `${base}textures/earth-specular.jpg`,
-    `${base}textures/earth-clouds.png`
-  ]) as [Texture, Texture, Texture, Texture];
+  const [day] = useLoader(TextureLoader, [
+    `${base}textures/${compact ? 'earth-day-1k.jpg' : 'earth-day-2k.jpg'}`
+  ]) as [Texture];
 
   useMemo(() => {
     day.colorSpace = SRGBColorSpace;
-    clouds.colorSpace = SRGBColorSpace;
-    for (const t of [day, normal, specular, clouds]) {
-      t.anisotropy = maxAniso;
-      t.needsUpdate = true;
-    }
-  }, [day, normal, specular, clouds, maxAniso]);
+    day.anisotropy = maxAniso;
+    day.needsUpdate = true;
+  }, [day, maxAniso]);
 
-  const borders = useMemo(() => makeBorderTexture(compact ? 2048 : 4096), [compact]);
-  const cloudGroup = useRef<Group>(null);
-
-  useFrame((_, dt) => {
-    if (cloudGroup.current && !prefersReducedMotion()) {
-      cloudGroup.current.rotation.y += dt * 0.0035;
-    }
-  });
+  const borders = useMemo(() => makeBorderTexture(2048), [compact]);
 
   return (
     <group>
       <mesh>
-        <sphereGeometry args={[1, 160, 96]} />
+        <sphereGeometry args={[1, 64, 42]} />
         <meshPhongMaterial
           map={day}
-          normalMap={normal}
-          normalScale={new Vector2(0.72, 0.72)}
-          specularMap={specular}
-          specular={new Color('#79add8')}
-          shininess={16}
+          specular="#17334f"
+          shininess={7}
         />
       </mesh>
 
       <mesh renderOrder={1}>
-        <sphereGeometry args={[1.0015, 160, 96]} />
+        <sphereGeometry args={[1.0015, 96, 64]} />
         <meshBasicMaterial
           map={borders}
           transparent
-          opacity={0.42}
+          opacity={0.46}
           depthWrite={false}
           side={DoubleSide}
         />
       </mesh>
-
-      <group ref={cloudGroup}>
-        <mesh renderOrder={2}>
-          <sphereGeometry args={[1.012, 128, 80]} />
-          <meshPhongMaterial
-            map={clouds}
-            transparent
-            opacity={0.82}
-            alphaTest={0.008}
-            depthWrite={false}
-            side={DoubleSide}
-          />
-        </mesh>
-      </group>
 
       <Atmosphere />
     </group>
@@ -98,7 +64,7 @@ export function Earth() {
 function Atmosphere() {
   return (
     <mesh scale={1.045} renderOrder={3}>
-      <sphereGeometry args={[1, 96, 64]} />
+      <sphereGeometry args={[1, 64, 42]} />
       <shaderMaterial
         transparent
         depthWrite={false}
@@ -131,7 +97,7 @@ function Atmosphere() {
   );
 }
 
-/** The simple ocean sphere shown while the satellite textures load. */
+/** The simple ocean sphere shown while the satellite texture loads. */
 export function LoadingGlobe() {
   return (
     <mesh>

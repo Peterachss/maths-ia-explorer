@@ -65,7 +65,7 @@ export function CameraRig({
     }
     flight.current = {
       t0: performance.now(),
-      dur: 1100,
+      dur: 800,
       fromDir,
       toDir,
       fromDist: camera.position.length(),

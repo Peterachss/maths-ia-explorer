@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Html } from '@react-three/drei';
 import { AdditiveBlending, CatmullRomCurve3, TubeGeometry, type Mesh } from 'three';
 import { arcPoints, angleBetween, latLon } from '../geo/project';
 import { theme } from '../theme';
@@ -60,19 +59,12 @@ export function Arc({ from, to, observedGap, modelFraction, modelColour }: Props
   const angle = angleBetween(a, b);
   const outer = useMemo(() => arcPoints(a, b, 0.12 + angle * 0.1), [a, b, angle]);
   const inner = useMemo(() => arcPoints(a, b, 0.05 + angle * 0.04, Math.min(1, Math.max(0.02, modelFraction))), [a, b, angle, modelFraction]);
-  const apex = outer[Math.floor(outer.length / 2)]!;
   return (
     <group>
       <Tube pts={outer} radius={0.01} colour={theme.thread} glow />
       <Tube pts={outer} radius={0.0038} colour={theme.thread} />
       <Tube pts={inner} radius={0.008} colour={modelColour} glow />
       <Tube pts={inner} radius={0.0032} colour={modelColour} dashed />
-      <Html position={apex} center style={{ pointerEvents: 'none' }}>
-        <span className="arc-label">
-          <strong>{observedGap.toFixed(1)} years apart</strong>
-          <span>observed gap</span>
-        </span>
-      </Html>
     </group>
   );
 }

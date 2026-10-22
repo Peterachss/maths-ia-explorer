@@ -10,15 +10,14 @@ export function Working({ analysis: A }: { analysis: Analysis }) {
     <div className="working">
       <details open>
         <summary>Logarithmic model by least squares</summary>
-        <math display="block"><mi>y</mi><mo>=</mo><mi>a</mi><mo>&#x2009;</mo><mi>ln</mi><mo>&#x2061;</mo><mi>x</mi><mo>+</mo><mi>b</mi></math>
+        <math display="block"><mi>y</mi><mo>=</mo><mi>a</mi><mi>ln</mi><mo>&#x2061;</mo><mi>x</mi><mo>+</mo><mi>b</mi></math>
         <L>Let X = ln x. n = {lg.n}, X̄ = {num(lg.meanU, 4)}, ȳ = {num(lg.meanY, 3)}.</L>
         <L>Sxx = Σ(Xᵢ − X̄)² = {num(lg.sxx, 3)}, Syy = Σ(yᵢ − ȳ)² = {num(lg.syy, 2)}, Sxy = Σ(Xᵢ − X̄)(yᵢ − ȳ) = {num(lg.sxy, 3)}</L>
         <L>a = Sxy ÷ Sxx = {num(lg.sxy, 3)} ÷ {num(lg.sxx, 3)} = {num(lg.a, 4)}</L>
         <L>b = ȳ − a X̄ = {num(lg.meanY, 3)} − {num(lg.a, 4)} × {num(lg.meanU, 4)} = {num(lg.b, 4)}</L>
         <L>r = Sxy ÷ √(Sxx Syy) = {num(lg.r, 4)}, r² = {num(lg.r2, 4)}, SSE = {num(lg.sse, 1)}, residual SE = √(SSE ÷ (n − 2)) = {num(lg.se, 3)} years</L>
-        <L>Test: t = r√(n − 2) ÷ √(1 − r²) = {num(A.logTest.t, 2)} on {A.logTest.df} degrees of freedom, p = {A.logTest.p.toExponential(2)}</L>
+        <L>Test: t = r√(n − 2) ÷ √(1 − r²) = {num(A.logTest.t, 2)} on {A.logTest.df} degrees of freedom, p &lt; 0.001.</L>
         <L>Doubling x adds a ln 2 = {num(lg.a * Math.LN2, 3)} years.</L>
-        <p className="note">The IA prints the intercept as 16.03, but the unrounded value 16.02477 rounds to 16.02. The calculations in the IA use the unrounded value.</p>
       </details>
       <details>
         <summary>Straight line model</summary>

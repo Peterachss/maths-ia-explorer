@@ -14,16 +14,26 @@ export default defineConfig({
   plugins: [react(), ...(single ? [viteSingleFile()] : [])],
   build: {
     target: 'es2022',
+    modulePreload: false,
     sourcemap: !single,
     chunkSizeWarningLimit: 1500,
     rollupOptions: single
       ? {}
       : {
           output: {
-            manualChunks: {
-              three: ['three'],
-              r3f: ['@react-three/fiber', '@react-three/drei'],
-              d3: ['d3-array', 'd3-scale', 'd3-shape', 'd3-geo']
+            manualChunks(id) {
+              // Keep Vite's preload helper with the entry's vendor chunk. If it
+              // lands in the lazy r3f chunk, the initial bundle imports r3f and
+              // three just to obtain this 1 kB helper.
+              if (id.includes('vite/preload-helper')) return 'vendor';
+              if (!id.includes('node_modules')) return undefined;
+              if (id.includes('@react-three')) return 'r3f';
+              if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) return 'react';
+              if (/node_modules\/three\//.test(id)) return 'three';
+              if (/node_modules\/d3-/.test(id)) return 'd3';
+              if (id.includes('world-atlas') || id.includes('topojson')) return 'geo';
+              if (id.includes('lucide-react') || id.includes('/zustand/')) return 'vendor';
+              return undefined;
             }
           }
         }

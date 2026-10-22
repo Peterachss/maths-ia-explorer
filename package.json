@@ -5,12 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && node scripts/optimize-dist.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "data:fetch": "node scripts/fetch_worldbank.mjs 2019",
     "data:anchor": "node scripts/anchor_check.mjs",
-    "data:cross": "python scripts/crosscheck.py",
+    "data:cross": "python3 scripts/crosscheck.py",
+    "data:verify": "node scripts/verify_sources.mjs",
+    "data:verify-live": "vite-node scripts/verify-data.ts",
+    "data:verify-stats": "vite-node scripts/verify-stats.ts",
+    "data:all": "npm run data:fetch && npm run data:anchor && npm run data:cross && npm run data:verify && npm run data:verify-live && npm run data:verify-stats",
+    "check:ui": "node scripts/check-ui.mjs audit/after/ui-checks.json",
     "audit": "node scripts/audit.mjs",
     "shots": "node scripts/shoot.mjs && node scripts/shoot-sections.mjs"
   },
@@ -33,6 +38,7 @@
     "zustand": "^4.5.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@types/d3-array": "^3.2.1",
     "@types/d3-geo": "^3.1.0",
     "@types/d3-interpolate": "^3.0.4",
@@ -46,7 +52,9 @@
     "@types/topojson-specification": "^1.0.5",
     "@vitejs/plugin-react": "^4.3.1",
     "d3-interpolate": "^3.0.1",
+    "lighthouse": "^13.5.0",
     "playwright": "^1.64.1",
+    "tsx": "^4.23.15",
     "typescript": "^5.5.4",
     "vite": "^5.4.2",
     "vite-plugin-singlefile": "^2.0.2",

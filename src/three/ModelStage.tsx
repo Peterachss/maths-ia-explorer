@@ -60,8 +60,8 @@ export function ModelStage({ bowl, a, c }: { bowl: Bowl; a: number; c: number })
       </mesh>
       <Html position={[1.05, 0, 0]} center style={{ pointerEvents: 'none' }}><span className="axis-label axis-label-low">slope a</span></Html>
       <Html position={[0, 0, 1.05]} center style={{ pointerEvents: 'none' }}><span className="axis-label axis-label-low">level at the mean</span></Html>
-      <Html position={[-1, 1.15, -1]} center style={{ pointerEvents: 'none' }}><span className="axis-label">sum of squared errors</span></Html>
-      <OrbitControls enablePan={false} minDistance={2} maxDistance={7} />
+      <Html position={[-1, 0.65, -1]} center style={{ pointerEvents: 'none' }}><span className="axis-label">sum of squared errors</span></Html>
+      <OrbitControls enablePan={false} minDistance={2} maxDistance={7} target={[0, -0.22, 0]} />
     </Canvas>
   );
 }

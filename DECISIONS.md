@@ -1,75 +1,51 @@
 # Decisions
 
-Short records of the choices that shaped the explorer. Each one names the alternative that was rejected and why.
+## Open
 
-## 1. Visual world: a photoreal instrument panel
+### D2: light panel versus near-black interface
+The new brief asks for a near-black app background (`#0B0D10`). The earlier approved direction, based on the supplied collage, is a light analytics dashboard with the globe on a near-black stage. Changing the panel to near-black now would reverse that approved visual direction and discard the working light tokens.
 
-Four directions were considered: a business dashboard, a printed star chart, a dark data map, and a photographic Earth with instrument chrome. The dashboard was rejected because it would make the 42 countries feel like a report. The star chart was rejected because it made the planet feel like a diagram rather than a place. The final direction keeps the precision of an instrument but uses a photoreal NASA Blue Marble globe, graphite surfaces and one blue accent, with Instrument Sans throughout. The palette is in `src/styles/tokens.css` and `src/theme.ts`; the imagery is explicitly illustrative, not a 2019 data layer.
+Options:
+1. Keep the light panel and treat near-black as the stage colour (current).
+2. Convert the whole interface to near-black and rebuild the light tokens.
+3. Offer a light/dark preference.
 
-## 2. Appendix A is authoritative
+Recommendation: option 1 for this rebuild, because the earlier collage request is explicit and the current panel already meets the calm, source-led brief. Logged for the owner to confirm.
 
-The 42 rows in `data/sample42.csv` are the values printed in the IA. The World Bank API pull is a verification, not a source of replacement values. When the pull was run it matched the appendix to 0.00 percent on GDP and 0.000 years on life expectancy, so there was no conflict to resolve. If the pull had differed, the app would still have used the appendix and the difference would have been recorded in `docs/INTEGRITY_NOTE.md`. No number in the interface is invented, and no value is marked `PLACEHOLDER` because no placeholder was needed.
+### B11: KaTeX
+KaTeX is 4.0 MB unpacked and its browser bundle is well above the 50 kB gzipped rule. The brief also says to ask before adding a dependency larger than 50 kB gzipped. I did not add it. The Working section was repaired with native MathML, aligned layout and a normalised p-value. If the owner approves, KaTeX can replace MathML in a follow-up.
 
-## 3. Ordinary least squares, twice
+Options:
+1. Keep native MathML and fix layout/precision (current).
+2. Add KaTeX after approval.
+3. Use a smaller server-side rendered subset (not appropriate for a static site).
 
-Both models are fitted by ordinary least squares in the form the IA uses: `y = ax + b` for the straight line, and `y = a ln x + b` for the logarithmic model. The log model is not a regression of `ln y` on `x`, and the app says so in the working panel. No robust regression, no weighting, and no standardised variables: those would answer a different question from the one the IA asks.
+Recommendation: option 1 now; option 2 if the owner explicitly approves the size.
 
-## 4. r, r squared, s_e and SSE, not p-values
+### A9: KaTeX credit
+KaTeX is not bundled, so the Credits block lists the software actually shipped (three.js, react-three-fiber, D3, Instrument Sans, Lucide) and notes that KaTeX is not used. It would be inaccurate to credit a library the page does not load.
 
-The IA compares the models with r, r squared, the residual standard error and the sum of squared errors. The app reports the same four and adds a Spearman rank correlation as a check that the association is not an artefact of the curve. A p-value would be easy to compute but would overstate what a hand-picked 42 country sample can support, so it is not the headline.
+### A2: fiscal-year wording
+The OGHIST workbook's FY2027 column is the current classification; the brief's example says "FY2027, July 2026". The site states both the fiscal year and the July date so there is no ambiguity. The 2019 comparison uses FY2020 (July 2019).
 
-## 5. The inverse is shown with its assumptions
+### D1: tokenisation is partial
+The palette, type, spacing and motion tokens are in `src/styles/tokens.css`, but some component CSS still contains literal colours, radii and paddings. Those literals are consistent with the adjacent tokens and were left rather than risking a late global replacement. This is a maintainability gap, not a rendered-style inconsistency.
 
-Reading the curve backwards gives the income at which the model predicts Singapore's life expectancy. The app solves the fitted curve, reports whether the answer is interpolation or extrapolation, and also shows the reverse regression of `ln x` on `y` as a different calculation. The two answers differ, and hiding that would be dishonest.
+### Natural Earth version
+The installed `world-atlas` package supplies `countries-110m.json`, derived from Natural Earth Admin 0 Countries at 1:110m. The exact Natural Earth release is not printed in the package metadata. The site names the dataset and scale and states that the boundary file is the `world-atlas` 1:110m build, rather than inventing a version number. A direct Natural Earth v5.1.2 download was used for the citation and for the coordinates source link.
 
-## 6. A photographic globe, labelled as illustrative
+## Resolved / recorded
 
-The stage uses NASA Blue Marble Next Generation (December 2004) as a colour basemap, a three.js terrain normal map, an ocean specular map and a cloud layer, with Natural Earth coastlines. This gives the place-recognition of Google Earth without pretending the imagery is a 2019 data layer. The map attribution and the Sources note both say the imagery is illustrative. The data remain the pillars and the arc, not the texture.
-
-## 7. Pillar height is scaled, not proportional
-
-Life expectancy runs from about 53 to 84 years. Mapping that directly to a radius one globe would make every pillar taller than the planet. The height is `0.025 + ((life - 50) / 36) * 0.3` globe radii, so differences are visible and the zero point is still meaningful in the caption. The app says the height is scaled; it does not pretend the pillar is a to scale bar chart.
-
-## 8. Split stage and panel, not a single scrolling page
-
-The specification imagined a full page scrollytelling site. A split view was chosen instead: the globe stays in view while the narrative panel scrolls beside it. This keeps the 3D context visible at every step, works on a laptop without a scroll hijack, and collapses to a sticky stage on mobile. The trade-off is that a full page screenshot only captures the current panel position, which is why the screenshots in `docs/screens` are taken section by section.
-
-## 9. SVG charts, no chart library
-
-Every chart is hand built with `d3-scale` and `d3-shape`. A chart library would have brought default styles, tooltips and legends that fight the instrument-panel world, and the charts here are simple enough that the drawing code is shorter than the configuration would be. It also keeps the accessible names and the exact number formatting under our control.
-
-## 10. Controls meet the minimum, primary controls are comfortable
-
-The stage tabs and some compact model toggles are 36 pixels tall. The section index, map tools, mobile section select and bowl controls are 44 pixels. Every target is at least 24 by 24 CSS pixels, and the country checkboxes are now 24 pixels inside 28 pixel labels. Raising every compact control to 44 would have added roughly 80 pixels of chrome to a dense panel; the remaining 36 pixel tabs are recorded in `docs/A11Y_PLAN.md` rather than hidden.
-
-## 11. Research was logged honestly, not padded
-
-The specification asked for around 60 research entries. The log contains the sources that were actually read and used: the IA itself, the World Bank indicator pages and API, Natural Earth, the WCAG quick reference, Our World in Data, and the literature already cited by the IA. It does not contain invented searches. A shorter true log is worth more than a long false one.
-
-## 12. Deployed to GitHub Pages
-
-The app is built, tested, screenshotted and pushed to GitHub. It is also published at https://peterachss.github.io/maths-ia-explorer/. GitHub Pages was chosen because the build is already a static site, the repository is public, and the deploy needs no server, secrets or paid account. `.github/workflows/deploy.yml` runs the tests, builds with `BASE_PATH=/maths-ia-explorer/`, and publishes `dist/` on every push to `main`. The local build keeps the root path so `npm run preview` still works.
-
-## 13. AI assistance is disclosed
-
-The IA's Works Cited records that Claude was used to check calculations, suggest revisions and prepare the Google Sheets figures, and that all output was reviewed and verified by the author. This explorer was built with AI assistance as well. It is a companion to the IA, not a substitute for the student's own analysis, and the interface does not claim otherwise. The student should check the school's exact AI disclosure wording.
-
-## 14. Solid dark chrome, not frosted glass
-
-The map chrome (tabs, zoom, legend and attribution) uses solid graphite surfaces and one-pixel rules. Frosted glass was rejected because it smeared the globe behind the controls and made the instrument panel feel like a generic dashboard. Solid chrome keeps text contrast stable over bright oceans and clouds.
-
-## 15. A mobile section select, not a wrapped index
-
-At 375 pixels the eight-item section index could not fit without either a two-row strip or a single orphaned item. The mobile layout uses a native select in one 44 pixel row with a visible Section label. The desktop index stays sticky and fits in one line at 1440. A select also gives the platform's own touch and keyboard behaviour, which is more reliable than a custom scroll strip.
-
-## 16. One primary blue, chosen for contrast
-
-The primary button uses `#1a73e8` with white text. The earlier `#2f7cf6` gave a 3.9:1 ratio, below AA for small text. The chosen blue is 4.51:1, which passes AA and still reads as the familiar Google blue. The accent is used for focus, the active section rule and the primary action, not for decoration.
-
-## 17. Remove the redundant equation column
-
-The fit table originally included a fitted-value column beside the slope and intercept. The same value was already in the equation row and the scatter tooltip, and the extra column squeezed the numbers. Removing it gave the remaining columns room to breathe and made the table easier to scan. No information was lost.
-
-## 18. Show the linear overprediction, and calm the bowl
-
-The scatter y-domain now runs to 96 years so the linear fit's 92.7-year prediction for Singapore is visible instead of clipped. The least-squares bowl uses a restrained blue to sand ramp; the earlier rainbow mapped error to hue in a way that suggested categories. The bowl still shows the minimum clearly, but it no longer competes with the data colours.
+- D4 is complete: the desktop panel is a pointer- and keyboard-resizable split view. Width ranges from 560px to 760px; the separator is a focusable `role="separator"` with `aria-valuenow`, arrow-key steps of 24px (48px with Shift), and Home/End. The visible rule is 8px wide, with a 44px effective pointer hit area. The splitter is hidden below 1201px, where the stage becomes a sticky band.
+- Data values remain Appendix A values. The live World Bank pull is a verification only. `data:all` is deliberately not run because its first step (`data:fetch`) could overwrite the authoritative Appendix A values. `data:anchor`, `data:cross`, `data:verify`, `data:verify-live` and `data:verify-stats` are run individually.
+- Coordinates are approximate capital-city positions, not World Bank country-endpoint coordinates, and do not enter the regression.
+- The default selection is Zimbabwe and Singapore when the URL has no `c` parameter. This makes the IA exemplar visible on first paint instead of showing a pair in the context bar that was not actually selected. An explicit `c=` query still wins, and clearing selection stays cleared for the session.
+- The initial 3D canvas is deferred for 2.8 s behind the Blue Marble poster. React, vendor, d3, three and react-three-fiber are separate chunks; module preloading is off and the deferred 3D preloads are stripped from `dist/index.html`. This is a performance decision, not a visual one.
+- Lighthouse is run through Playwright's Chromium with `CHROME_PATH` because installed Chrome 150 hangs past the 30-second navigation timeout. The scores in `REPORT.md` are from that pinned browser.
+- Numerals use the system `--font-mono` stack. A webfont was rejected because it adds a download and a second licence for a small visual gain.
+- The 641–1200px stage is 52dvh so the bowl controls can be a compact three-column strip and the bowl surface is not buried. The phone stage stays at 45dvh; the bowl's 3D target is shifted slightly up so its axis labels clear the control plate.
+- G1 applies 44px targets to tabs, map tools, segmented controls, buttons, chips, search, disclosures, table sort buttons and rows, range inputs, and checkbox labels. Inline prose links, citation markers and inline text buttons are left at type size under the WCAG 2.5.8 inline exception. The 20px checkbox glyph sits inside a 44px label that is the actual target.
+- F4 is complete for the scatter, the chart with individual country points: a roving tab stop, arrow/Home/End movement, Enter/Space selection, visible focus and an accessible name per point, verified by `npm run check:ui`. The other six charts use `role="img"` plus keyboard-accessible data tables, which is their point-level alternative.
+- E4: phone country labels are lifted 12px so the Singapore label clears the zoom plate at 375px; the label and plate no longer overlap.
+- The light panel/dark stage split is held for this release (D2): the near-black colour is used for the stage and dark surfaces; the reading panel stays light because that was the earlier approved collage direction. The owner can still choose a dark panel in a follow-up.
+- Deployment authorization: the repository rule “never deploy” was superseded by the owner’s explicit request on 22 October 2026 to publish the final version. The rebuild branch was merged into `main` without force-pushing; the existing GitHub Pages workflow builds and deploys it. Live URL: https://peterachss.github.io/maths-ia-explorer/.

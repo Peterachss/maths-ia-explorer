@@ -1,9 +1,11 @@
-import { lazy, Suspense, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import type { Country } from '../data/schema';
 import type { Analysis } from '../math';
 import { dollars, signed, years } from '../math';
-const PreviewPillar = lazy(() => import('../three/PreviewPillar').then((m) => ({ default: m.PreviewPillar })));
 import { useStore } from '../store';
+
+const COORDINATES =
+  'https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-populated-places/';
 
 export function PreviewCard({ countries, analysis }: { countries: Country[]; analysis: Analysis }) {
   const { selected, hovered, excluded, selectionEvent } = useStore();
@@ -17,7 +19,7 @@ export function PreviewCard({ countries, analysis }: { countries: Country[]; ana
     lastEvent.current = selectionEvent;
     const node = card.current;
     if (!node || !selected.length) return;
-    const mobile = window.matchMedia('(max-width: 860px)').matches;
+    const mobile = window.matchMedia('(max-width: 1200px)').matches;
     const panel = node.closest<HTMLElement>('.panel');
     const frame = mobile ? null : panel?.getBoundingClientRect();
     const stage = mobile ? document.querySelector<HTMLElement>('.stage')?.getBoundingClientRect() : null;
@@ -47,18 +49,27 @@ export function PreviewCard({ countries, analysis }: { countries: Country[]; ana
   const rank = [...countries].sort((a, b) => b.life - a.life).findIndex((k) => k.iso3 === c.iso3) + 1;
   return (
     <section ref={card} className="preview" aria-label={`Preview: ${c.name}`}>
-      <div className="preview-3d"><Suspense fallback={null}><PreviewPillar life={c.life} lat={c.lat} lon={c.lon} /></Suspense></div>
       <div className="preview-text">
-        <h3>{c.name}</h3>
+        <div className="preview-head">
+          <h3>{c.name}</h3>
+          <span className="preview-coords">{Math.abs(c.lat).toFixed(1)}°{c.lat >= 0 ? 'N' : 'S'} {Math.abs(c.lon).toFixed(1)}°{c.lon >= 0 ? 'E' : 'W'}</span>
+        </div>
         <dl>
           <dt>GDP per capita</dt><dd>{dollars(c.gdp)}</dd>
           <dt>Life expectancy</dt><dd>{years(c.life, 1)}</dd>
           <dt>Model value</dt><dd>{years(pred, 1)}</dd>
           <dt>Residual</dt><dd>{signed(res, 1)} years {res >= 0 ? 'above' : 'below'} the model</dd>
           <dt>Life expectancy rank</dt><dd>{rank} of {countries.length}</dd>
-          <dt>Income group</dt><dd>{c.incomeGroup}</dd>
+          <dt>Income group, today</dt><dd>{c.incomeGroup}</dd>
+          <dt>Income group, 2019</dt><dd>{c.incomeGroup2019}</dd>
         </dl>
         {excluded.includes(c.iso3) && <p className="note">Excluded from the fit.</p>}
+        <p className="preview-source">
+          Each pillar is placed at the country&rsquo;s capital. Coordinates are approximate and come from{' '}
+          <a href={COORDINATES} target="_blank" rel="noreferrer">Natural Earth Populated Places</a> (1:10m, public domain).
+          Values: <a href={c.gdpSourceUrl} target="_blank" rel="noreferrer">GDP</a> and{' '}
+          <a href={c.lifeSourceUrl} target="_blank" rel="noreferrer">life expectancy</a> (World Bank WDI, 2019).
+        </p>
       </div>
     </section>
   );

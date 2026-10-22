@@ -3,6 +3,7 @@ import { Search, X } from 'lucide-react';
 import type { Country } from '../data/schema';
 import { useStore } from '../store';
 import { copy } from '../copy';
+import { SegmentedControl } from './Segmented';
 
 export function SearchBox({ countries }: { countries: Country[] }) {
   const id = useId();
@@ -62,41 +63,27 @@ export function SelectionBar({ countries }: { countries: Country[] }) {
 
 export function ModelToggles() {
   const { modelShow, setModelShow, xAxis, setXAxis } = useStore();
-  const Seg = <T extends string>({ value, set, options, label }: { value: T; set: (v: T) => void; options: [T, string][]; label: string }) => {
-    const move = (step: number) => {
-      const i = options.findIndex(([k]) => k === value);
-      set(options[(i + step + options.length) % options.length]![0]);
-    };
-    return (
-      <div
-        role="radiogroup"
-        aria-label={label}
-        className="segmented"
-        onKeyDown={(e) => {
-          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); move(1); }
-          if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
-        }}
-      >
-        {options.map(([v, text]) => (
-          <button
-            key={v}
-            type="button"
-            role="radio"
-            aria-checked={value === v}
-            tabIndex={value === v ? 0 : -1}
-            className={value === v ? 'on' : ''}
-            onClick={() => set(v)}
-          >{text}</button>
-        ))}
-      </div>
-    );
-  };
   return (
     <div className="toggles">
-      <Seg label="Models shown" value={modelShow} set={setModelShow}
-        options={[['linear', copy.controls.linear], ['log', copy.controls.log], ['both', copy.controls.both]]} />
-      <Seg label="Horizontal axis" value={xAxis} set={setXAxis}
-        options={[['linear', copy.controls.linearAxis], ['log', copy.controls.logAxis]]} />
+      <SegmentedControl
+        label="Models shown"
+        value={modelShow}
+        onChange={setModelShow}
+        options={[
+          { value: 'linear', label: copy.controls.linear },
+          { value: 'log', label: copy.controls.log },
+          { value: 'both', label: copy.controls.both }
+        ]}
+      />
+      <SegmentedControl
+        label="Horizontal axis"
+        value={xAxis}
+        onChange={setXAxis}
+        options={[
+          { value: 'linear', label: copy.controls.linearAxis },
+          { value: 'log', label: copy.controls.logAxis }
+        ]}
+      />
     </div>
   );
 }

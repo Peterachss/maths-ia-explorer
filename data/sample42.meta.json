@@ -8,11 +8,24 @@
   },
   "gdp_definition": "GDP per capita, PPP, constant 2021 international dollars",
   "life_definition": "Life expectancy at birth, total, years",
+  "source_urls": {
+    "gdp": "https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD",
+    "life": "https://data.worldbank.org/indicator/SP.DYN.LE00.IN"
+  },
   "retrieved_on": "2026-10-06",
-  "live_pull_on": "2026-10-20",
-  "live_pull_result": "All 42 rows present. GDP max relative difference 0.00 percent. Life expectancy max absolute difference 0.000 years.",
+  "live_pull_on": "2026-10-22",
+  "live_pull_result": "All 42 rows present. GDP maximum relative difference 0.0004 percent. Life expectancy maximum absolute difference 0.000463 years.",
   "authority": "Appendix A values are authoritative. The live pull is a check and does not replace them.",
-  "income_groups": "Current World Bank classification at the time of writing; may differ from the 2019 classification.",
-  "coordinates": "Capital city latitude and longitude from the World Bank country endpoint.",
-  "notes": "No placeholders. No missing values. No invented numbers."
+  "income_groups": {
+    "today": "FY2027 (July 2026), current World Bank classification, accessed 22 October 2026",
+    "in_2019": "FY2020 (July 2019), classification in force during 2019, from OGHIST.xlsx",
+    "changed": [
+      "Nepal: Low to Lower middle",
+      "Indonesia: Lower middle to Upper middle",
+      "Philippines: Lower middle to Upper middle",
+      "Vietnam: Lower middle to Upper middle"
+    ]
+  },
+  "coordinates": "Approximate capital-city coordinates used for globe placement only. They are not the World Bank country-endpoint reference points and are not used in the regression.",
+  "notes": "No placeholders. No missing values. No invented numbers. source_url and life_source_url point to the country/year life-expectancy API query; gdp_source_url points to the GDP query. All URLs are in the CSV itself."
 }

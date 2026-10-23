@@ -11,9 +11,9 @@ const url = process.argv[2] ?? 'http://localhost:4173/';
 const out = 'docs/screens';
 await mkdir(out, { recursive: true });
 
-// Use Playwright's pinned Chromium. The installed Chrome 150 build cannot
-// create pages through Playwright 1.64 on this machine.
-const browser = await chromium.launch();
+// Use the installed Chrome. The bundled Playwright browser is not installed
+// in this checkout.
+const browser = await chromium.launch({ channel: 'chrome' });
 const report = { url, runs: [], pass: true };
 
 function watch(page, label) {

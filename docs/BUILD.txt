@@ -1,25 +1,30 @@
-# Build transcript (ANSI colour codes removed)
+# Build transcript (ANSI colour codes removed; BASE_PATH=/maths-ia-explorer/)
 
 > maths-ia-explorer@1.0.0 build
-> tsc --noEmit && vite build
+> tsc --noEmit && vite build && node scripts/optimize-dist.mjs
 
 vite v5.4.21 building for production...
 transforming...
-2424 modules transformed.
+OK 2423 modules transformed.
 rendering chunks...
 computing gzip size...
+dist/index.html                                                     2.08 kB | gzip:   0.73 kB
+dist/assets/instrument-sans-latin-ext-wght-normal-B5bTHO_g.woff2   11.14 kB
+dist/assets/instrument-sans-latin-wght-normal-BbzFLZTg.woff2       30.09 kB
+dist/assets/index-CfVf63ua.css                                     45.74 kB | gzip:   9.81 kB
+dist/assets/ModelStage-DYGfGPGw.js                                  2.23 kB | gzip:   1.09 kB | map:     6.01 kB
+dist/assets/Stage-C1OBPwio.js                                      12.53 kB | gzip:   4.85 kB | map:    45.89 kB
+dist/assets/vendor-d_OPeTbN.js                                     13.88 kB | gzip:   4.24 kB | map:    38.09 kB
+dist/assets/d3-Dbn3Qhaw.js                                         47.61 kB | gzip:  18.46 kB | map:   224.05 kB
+dist/assets/index-D3-3BVnS.js                                      93.92 kB | gzip:  28.42 kB | map:   230.27 kB
+dist/assets/geo-NurYNIKo.js                                       108.82 kB | gzip:  39.91 kB | map:    13.32 kB
+dist/assets/react-DCO4km40.js                                     145.99 kB | gzip:  47.15 kB | map:   357.22 kB
+dist/assets/r3f-D9Hbhefz.js                                       153.40 kB | gzip:  49.73 kB | map:   494.27 kB
+dist/assets/three-CUaW6Xg9.js                                     666.65 kB | gzip: 172.43 kB | map: 2,170.70 kB
+OK built in 10.99s
+optimised dist/index.html: CSS inlined, deferred 3D preloads removed
 
-dist/index.html                                                   0.97 kB | gzip:   0.48 kB
-dist/assets/instrument-sans-latin-ext-wght-normal-B5bTHO_g.woff2  11.14 kB
-dist/assets/instrument-sans-latin-wght-normal-BbzFLZTg.woff2      30.09 kB
-dist/assets/index-4E-fpYhR.css                                    18.67 kB | gzip:   4.97 kB
-dist/assets/glow-CKQLwm-0.js                                       1.15 kB | gzip:   0.60 kB
-dist/assets/PreviewPillar-BS4vvmv5.js                              1.60 kB | gzip:   0.81 kB
-dist/assets/ModelStage-By2qKJFX.js                                 2.15 kB | gzip:   1.05 kB
-dist/assets/d3-C6-UKg7P.js                                        46.06 kB | gzip:  18.05 kB
-dist/assets/index-DH7HkjZI.js                                     53.69 kB | gzip:  17.07 kB
-dist/assets/Stage-CmZbBhi5.js                                    119.20 kB | gzip:  44.66 kB
-dist/assets/r3f-KODORzd-.js                                      304.49 kB | gzip:  98.21 kB
-dist/assets/three-CLI-eVro.js                                    666.65 kB | gzip: 172.43 kB
+textures/earth-poster.jpg referenced in textures/earth-poster.jpg didn't resolve at build time, it will remain unchanged to be resolved at runtime
+(Expected: the poster is a public asset resolved at runtime.)
 
-Built in 11.92s with no TypeScript errors.
+Built with no TypeScript errors.

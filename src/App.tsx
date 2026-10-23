@@ -181,37 +181,13 @@ function useSectionGo() {
   };
 }
 
-function ReadingProgress() {
-  const [p, setP] = useState(0);
-  useEffect(() => {
-    const scroller = document.querySelector<HTMLElement>('.panel-scroll');
-    const update = () => {
-      const top = window.scrollY;
-      const doc = document.documentElement.scrollHeight - window.innerHeight;
-      const panelTop = scroller && scroller.scrollHeight > scroller.clientHeight + 10
-        ? scroller.scrollTop / Math.max(1, scroller.scrollHeight - scroller.clientHeight)
-        : 0;
-      const page = doc > 0 ? top / doc : 0;
-      setP(Math.min(1, Math.max(page, panelTop)));
-    };
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    scroller?.addEventListener('scroll', update, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', update);
-      scroller?.removeEventListener('scroll', update);
-    };
-  }, []);
-  return <div className="reading-progress" aria-hidden="true"><i style={{ transform: `scaleX(${p})` }} /></div>;
-}
-
 /** A compact contents rail. It is a table of contents for one report, not an app switcher. */
 function SectionRail() {
   const active = useStore((s) => s.activeSection);
   const go = useSectionGo();
   return (
     <nav className="rail" aria-label="Report contents">
-      <span className="rail-mark" aria-hidden="true"><EarthIcon size={18} strokeWidth={1.6} /></span>
+      <span className="rail-mark" aria-hidden="true"><EarthIcon size={18} strokeWidth={1.6} aria-hidden="true" /></span>
       <p className="rail-label">Contents</p>
       <div className="rail-nav">
         {copy.chapters.map((chapter) => (
@@ -235,10 +211,6 @@ function SectionRail() {
           </Fragment>
         ))}
       </div>
-      <div className="rail-foot">
-        <ReadingProgress />
-        <span className="rail-year">2019</span>
-      </div>
     </nav>
   );
 }
@@ -261,7 +233,7 @@ function SectionJump() {
           </optgroup>
         ))}
       </select>
-      <span className="jump-current" aria-hidden="true">{chapter ? `${chapter.no} ${chapter.title}` : ''} <ChevronRight size={12} /> {current?.label ?? ''}</span>
+      <span className="jump-current" aria-hidden="true">{chapter ? `${chapter.no} ${chapter.title}` : ''} <ChevronRight size={12} aria-hidden="true" /> {current?.label ?? ''}</span>
     </div>
   );
 }

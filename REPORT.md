@@ -134,7 +134,7 @@ The detailed evidence and commit for every ID is in `PROGRESS.md`; this is the c
 | S3 | World Bank country and lending groups, FY2027 | Verified. All 42 current labels match the API classification. |
 | S4 | World Bank OGHIST, FY2020 column AH / FY2027 column AO | Verified. Nepal, Indonesia, the Philippines and Vietnam differ between July 2019 and July 2026. |
 | S5 | Preston (1975), *Population Studies* 29(2), 231–248 | Verified via Crossref; DOI resolves. |
-| S6 | NASA Blue Marble Next Generation, December 2004 | Verified; NASA page 200; 5400×2700 source resized locally. |
+| S6 | NASA Blue Marble Next Generation, December 2004 | Verified; NASA page 200; the 21,600 × 10,800 master is rendered at 8K, 4K and 2K. |
 | S7 | Natural Earth Admin 0 Countries, 1:110m | Dataset and scale verified. Exact Natural Earth point release is **UNVERIFIED** because `world-atlas` does not print it; the site says this. |
 | S8 | Natural Earth Populated Places, 1:10m | Verified. Coordinates approximate; not in the regression. |
 | S9 | WHO, *Equity, social determinants and public health programmes* | Verified through stable IRIS record `10665/44289`; old health-topics URL returned 403. |
@@ -342,3 +342,7 @@ CHROME_PATH="$HOME/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/G
 `main` contains the complete rebuild, the country-stats reveal, the globe surface pick and the release evidence. The canonical build is published at https://peterachss.github.io/maths-ia-explorer/; https://maths-ia-explorer.surge.sh/ is a verified mirror. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1), the shared chart-frame abstraction (F1), and the optional dark-panel direction (D2). D4 and F4 are no longer partial.
 
 Release complete. The published build passed the build, 46 unit tests, 11 data anchors, live data verification, 68 statistic checks, the 25/7 interaction sweep, UI checks at four widths, screenshots, axe and Lighthouse before publication. The live GitHub Pages URL, deep link, drag guard and page-scroll lock were checked again after upload.
+
+## Post-release fixes, 23 October 2026
+
+B18 removed the Contents rail footer: a two pixel reading-progress bar and an 11 pixel `2019` label that read as a red and blue glitch at the bottom of the rail. The rail now ends at Sources. E8 replaced the 1024/2048 day texture with 8K, 4K and 2K renders from NASA's 21,600 by 10,800 master, raised the border overlay to 4096 and the sphere and border to 128 by 84 segments. The 8K texture is requested at 1440 and the 2K at 375, with no rail footer, no failed requests and no console errors. The fixes were published to the same GitHub Pages URL and preserve the H4 base-path and surface-picking work.

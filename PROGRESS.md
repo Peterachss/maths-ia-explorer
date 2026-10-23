@@ -16,7 +16,7 @@ Build status: `npm run build` passes; `npm test` passes 46/46; the interaction s
 | A4 | done | OWID further-reading URL `https://ourworldindata.org/grapher/life-expectancy-vs-gdp-per-capita`; marked background, not a calculation source. | `6f8698f` |
 | A5 | done | NASA Blue Marble Next Generation December 2004, exact file and credit in `SOURCES.md` S6. | `6f8698f` |
 | A6 | done | Natural Earth Admin 0 1:110m and Populated Places 1:10m recorded; `world-atlas` build limitation stated. | `6f8698f` |
-| A7 | done | Five untraceable textures deleted; only two Blue Marble derivatives plus `earth-poster.jpg` remain. | `d22452a` |
+| A7 | done | Five untraceable textures deleted; the 2K, 4K and 8K Blue Marble derivatives plus `earth-poster.jpg` remain. | `d22452a` |
 | A8 | done | Approximate capital coordinates and the “not used in the regression” sentence are in the UI and `SOURCES.md` S8. | `d22452a` |
 | A9 | done | Credits block lists shipped software; KaTeX explicitly not shipped. See `DECISIONS.md` A9. | `d22452a` |
 | A10 | done | `CLAIMS.md` maps C01–C49 to sources and checks. | `6f8698f` |
@@ -93,3 +93,11 @@ Build status: `npm run build` passes; `npm test` passes 46/46; the interaction s
 - Live verification at 1440×900, 1024×768, 768×1024 and 375×812: no failed requests or console errors; 7 charts and 93 data rows; `?c=THA%2CKEN` restores Thailand and Kenya; canonical URL is GitHub Pages. At 1440 the document stays 900px, page scroll remains y=0 and the stage tabs stay visible after the panel scrolls; stacked widths scroll normally. The drag guard preserves Zimbabwe and Singapore after an 80 px orbit drag. Evidence: `audit/live/github-checks.json`, `audit/live/ui-checks.json`, `docs/interaction-report.json` and `audit/live/github-*.png`.
 
 Release complete. Only the two internal refactors and the optional design choices remain.
+
+## Post-release fixes, 23 October 2026
+
+The owner reported two defects on the published build: a red and blue glitch at the foot of the Contents rail, and a soft globe at the closest zoom. Both were visible at https://peterachss.github.io/maths-ia-explorer/.
+
+- **B18: rail footer removed.** The rail ended with a two pixel blue reading-progress bar and an 11 pixel `2019` label, which read as a red and blue glitch at the foot of the dark rail. The footer is removed rather than restyled, so the rail ends at Sources; the scroll spy still marks the active destination.
+- **E8: 8K globe.** The globe used a 1024 or 2048 pixel Blue Marble render. It now requests 8K when `maxTextureSize` is at least 8192, 4K on GPUs capped below that, and 2K on phone-sized viewports. The border overlay is generated at 4096 and the sphere at 128 by 84 segments. At 1440 the stage is about 830 pixels because the reading panel takes the rest, so the compact test requires both a narrow stage and a viewport under 900 pixels; a stage-only test served 2K to desktop.
+- Verification: `npm run build` passes, `npm test` passes 46/46, the GitHub base-path preview serves the 8K texture at 1440 and the 2K at 375, the rail footer is absent, all 11 anchors are present and there are no failed requests or console errors. The audit remains clean at 1440 and 375.

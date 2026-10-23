@@ -90,6 +90,13 @@ Grades follow the brief: A is a primary or official statistical source, B is rep
 **Used for:** the integrity note.
 **What it changed:** both `DECISIONS.md` and the app's own note say that AI assistance was used, rather than hiding it. The original Works Cited wording ("this practice draft") read like a disclaimer and was rewritten in the revised PDF; confirm the school's exact AI wording before submission.
 
+## R13. NASA Blue Marble Next Generation master
+
+**Source:** NASA Earth Observatory, Blue Marble Next Generation, December 2004, topography and bathymetry, `world.topo.bathy.200412.3x21600x10800.jpg`, https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73909/world.topo.bathy.200412.3x21600x10800.jpg. Public domain.
+**Grade:** A for the imagery; it is illustrative and carries no data values.
+**Used for:** the globe basemap at 8K, 4K and 2K.
+**What it changed:** the earlier build used a 5400 by 2700 download at 1024 or 2048 pixels, which blurred at the closest zoom. The master is now the source for all three renders, and the credit names the exact file. The basemap never enters a calculation.
+
 ---
 
 ## Sources deliberately not used

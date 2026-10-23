@@ -3,15 +3,88 @@
     "viewport": 1440,
     "scrollWidth": 1440,
     "overflow": false,
-    "interactive": 111,
+    "interactive": 174,
     "unnamed": [],
-    "svgs": 16,
+    "svgs": 37,
     "svgUnlabelled": 0,
     "imgs": 0,
     "imgNoAlt": 0,
     "h1": 1,
     "headingSkips": 0,
-    "smallTargets": []
+    "smallTargets": [
+      {
+        "tag": "DIV",
+        "text": "Resize the reading panel",
+        "w": 8,
+        "h": 900
+      },
+      {
+        "tag": "A",
+        "text": "Reference 1",
+        "w": 16,
+        "h": 11
+      },
+      {
+        "tag": "A",
+        "text": "Reference 2",
+        "w": 16,
+        "h": 11
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sources and checks",
+        "w": 104,
+        "h": 16
+      },
+      {
+        "tag": "A",
+        "text": "Natural Earth Populated Places",
+        "w": 173,
+        "h": 13
+      },
+      {
+        "tag": "A",
+        "text": "GDP",
+        "w": 17,
+        "h": 13
+      },
+      {
+        "tag": "A",
+        "text": "life expectancy",
+        "w": 87,
+        "h": 13
+      },
+      {
+        "tag": "A",
+        "text": "Natural Earth Populated Places",
+        "w": 198,
+        "h": 18
+      },
+      {
+        "tag": "A",
+        "text": "Reference 8",
+        "w": 16,
+        "h": 11
+      },
+      {
+        "tag": "A",
+        "text": "Preston (1975)",
+        "w": 98,
+        "h": 18
+      },
+      {
+        "tag": "A",
+        "text": "Reference 5",
+        "w": 16,
+        "h": 11
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Working",
+        "w": 50,
+        "h": 19
+      }
+    ]
   },
   "desktopReducedMotion": {
     "duration": "1e-05s",
@@ -21,15 +94,88 @@
     "viewport": 375,
     "scrollWidth": 375,
     "overflow": false,
-    "interactive": 111,
+    "interactive": 174,
     "unnamed": [],
-    "svgs": 16,
+    "svgs": 37,
     "svgUnlabelled": 0,
     "imgs": 0,
     "imgNoAlt": 0,
     "h1": 1,
     "headingSkips": 0,
-    "smallTargets": []
+    "smallTargets": [
+      {
+        "tag": "A",
+        "text": "Reference 1",
+        "w": 16,
+        "h": 11
+      },
+      {
+        "tag": "A",
+        "text": "Reference 2",
+        "w": 16,
+        "h": 11
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Sources and checks",
+        "w": 104,
+        "h": 16
+      },
+      {
+        "tag": "A",
+        "text": "GDP",
+        "w": 17,
+        "h": 13
+      },
+      {
+        "tag": "A",
+        "text": "life expectancy",
+        "w": 87,
+        "h": 13
+      },
+      {
+        "tag": "A",
+        "text": "Natural Earth Populated Places",
+        "w": 198,
+        "h": 18
+      },
+      {
+        "tag": "A",
+        "text": "Reference 8",
+        "w": 16,
+        "h": 11
+      },
+      {
+        "tag": "A",
+        "text": "Preston (1975)",
+        "w": 98,
+        "h": 18
+      },
+      {
+        "tag": "A",
+        "text": "Reference 5",
+        "w": 16,
+        "h": 11
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Working",
+        "w": 50,
+        "h": 19
+      },
+      {
+        "tag": "INPUT",
+        "text": "Burundi",
+        "w": 20,
+        "h": 20
+      },
+      {
+        "tag": "INPUT",
+        "text": "Chad",
+        "w": 20,
+        "h": 20
+      }
+    ]
   },
   "mobileReducedMotion": {
     "duration": "1e-05s",

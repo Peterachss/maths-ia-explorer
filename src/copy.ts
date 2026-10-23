@@ -153,10 +153,10 @@ export const copy = {
         id: 'nasa',
         kind: 'source',
         apa:
-          'NASA Earth Observatory. (2005). Blue Marble: Next generation (December 2004, topography and bathymetry, 5400 × 2700) [Image]. https://visibleearth.nasa.gov/collection/1484/blue-marble',
+          'NASA Earth Observatory. (2005). Blue Marble: Next generation (December 2004, topography and bathymetry, 21,600 × 10,800) [Image]. https://visibleearth.nasa.gov/collection/1484/blue-marble',
         short: 'Blue Marble basemap',
         detail:
-          'Image credit: NASA Earth Observatory / Reto Stöckli, Blue Marble Next Generation. The file used is world.topo.bathy.200412.3x5400x2700.jpg, resized for the globe. Visual basemap only, not a 2019 data layer. NASA imagery is public domain; attribution is shown.',
+          'Image credit: NASA Earth Observatory / Reto Stöckli, Blue Marble Next Generation. The master file is world.topo.bathy.200412.3x21600x10800.jpg, rendered at 8K for the globe, with 4K and 2K fallbacks. Visual basemap only, not a 2019 data layer. NASA imagery is public domain; attribution is shown.',
         url: 'https://visibleearth.nasa.gov/collection/1484/blue-marble',
         licence: 'Public domain (NASA); attribution shown',
         accessed: '22 October 2026'
@@ -225,7 +225,7 @@ export const copy = {
       'scripts/verify-data.ts re-downloads all 84 values; scripts/verify-stats.ts recomputes the rendered statistics.'
     ],
     imagery:
-      'The globe uses NASA Earth Observatory / Reto Stöckli, Blue Marble Next Generation (December 2004, topography and bathymetry), with Natural Earth Admin 0 boundaries at 1:110m. It is a visual basemap, not a 2019 data layer. The pillars carry the data.',
+      'The globe uses NASA Earth Observatory / Reto Stöckli, Blue Marble Next Generation (December 2004, topography and bathymetry, rendered at 8K, 4K or 2K), with Natural Earth Admin 0 boundaries at 1:110m. It is a visual basemap, not a 2019 data layer. The pillars carry the data.',
     cite:
       'Life Expectancy Explorer. (2026). Life expectancy and GDP per capita, 2019 [Interactive data visualisation]. https://peterachss.github.io/maths-ia-explorer/'
   },

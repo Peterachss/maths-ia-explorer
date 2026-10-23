@@ -1,5 +1,5 @@
 {
-  "base": "http://localhost:4175/",
+  "base": "http://localhost:4173/",
   "widths": {
     "1440x900": {
       "bodyWidth": 1440,
@@ -9,171 +9,171 @@
       "small": [],
       "checkboxTargets": [
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         },
         {
-          "width": 247,
+          "width": 242,
           "height": 44
         }
       ],
@@ -544,7 +544,7 @@
     "375x812": {
       "bodyWidth": 375,
       "viewportWidth": 375,
-      "docHeight": 17513,
+      "docHeight": 17532,
       "viewportHeight": 812,
       "small": [],
       "checkboxTargets": [

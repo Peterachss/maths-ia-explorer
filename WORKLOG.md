@@ -113,3 +113,17 @@ The interaction sweep needed repair before it could prove the feature. It now wa
 The GitHub base path exposed one real release bug. `optimize-dist.mjs` tried to find the stylesheet under `dist/maths-ia-explorer/assets/...`, failed, and left the CSS external. The poster URL inside that CSS then resolved to `/maths-ia-explorer/assets/textures/earth-poster.jpg` and returned 404. The script now strips `BASE_PATH` before inlining; the live build has no failed requests at 1440, 1024, 768 or 375.
 
 Pushed `57df98f` normally. GitHub Actions run 39887371851 built in 40 seconds and deployed in 29. Verified the live site: 7 charts, 93 table rows, Thailand and Kenya restored from `?c=THA%2CKEN`, canonical URL correct, desktop document height 900 and page scroll locked at y=0 with the stage tabs visible after the panel scroll, stacked widths scroll normally, no console errors or failed requests. An 80 px orbit drag left Zimbabwe and Singapore selected. Live screenshots and measurements are in `audit/live/`; `check:ui` passes against the live URL and its output is `audit/live/ui-checks.json`.
+
+## 14:10 23 October 2026: rail footer and 8K globe
+
+The owner reported two defects on the published build: a red and blue glitch at the foot of the Contents rail, and a soft globe at the closest zoom. The rail footer was present in the live build at 1440, and the 2K render softened under zoom.
+
+B18 removed the rail footer. It held a two pixel `reading-progress` bar and an 11 pixel `2019` label. At the foot of the dark rail the pair read as a red and blue glitch. Removing the footer removes the artifact; the rail now ends at Sources and the scroll spy still drives the active item.
+
+E8 replaced the 1024/2048 day map with three renders from NASA's 21,600 by 10,800 master: 8K (8192 by 4096, 4.46 MB), 4K (1.52 MB) and 2K (416 kB). The globe asks for 8K when `maxTextureSize` is at least 8192, falls back to 4K below that, and uses 2K only on phone-sized viewports. At 1440 the stage is about 830 pixels because the reading panel takes the rest, so the compact test now requires both a narrow stage and a viewport under 900 pixels; a stage-only test was still serving 2K to desktop. The border overlay rose from 2048 to 4096 and the sphere and border from 64 by 42 and 96 by 64 to 128 by 84.
+
+The GitHub base-path preview at `/maths-ia-explorer/` serves the 8K texture at 1440 and the 2K at 375, with no failed requests, no console errors, all 11 anchors and no rail footer. Build passes, 46 tests pass, and the refreshed screenshots are in `docs/screens/`.
+
+The bundled Playwright browser is not installed in this checkout, so `check-ui.mjs` and `interaction-test.mjs` now launch the installed Chrome with `channel: 'chrome'`; the 25/7 sweep and the four-width UI check pass with it.
+
+Also removed the orphaned `src/three/PreviewPillar.tsx`; nothing imported it, and it still pointed at the deleted `earth-preview.jpg`. The live preview is `src/ui/PreviewCard.tsx`.

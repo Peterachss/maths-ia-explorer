@@ -21,7 +21,7 @@ const fail = (message) => {
   console.log(`FAIL  ${message}`);
 };
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({ channel: 'chrome' });
 for (const [width, height] of sizes) {
   const context = await browser.newContext({ viewport: { width, height } });
   const page = await context.newPage();
@@ -186,7 +186,7 @@ for (const [width, height] of sizes) {
 await browser.close();
 
 {
-  const noGl = await chromium.launch({ args: ['--disable-webgl', '--disable-gpu'] });
+  const noGl = await chromium.launch({ channel: 'chrome', args: ['--disable-webgl', '--disable-gpu'] });
   const page = await noGl.newPage({ viewport: { width: 1024, height: 768 } });
   const errors = [];
   page.on('pageerror', (error) => errors.push(String(error)));

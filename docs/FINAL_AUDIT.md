@@ -2,7 +2,7 @@
 
 ## Verdict
 
-The explorer builds, the tests pass, the numbers reconcile with the IA, and the layout holds at four widths. The stage is a photoreal Blue Marble globe with solid graphite chrome, the mobile section index is a native select, and every non-inline control is at least 44 by 44 CSS pixels. It is not a perfect implementation of the brief: seven SVG charts instead of nine and a shorter research log. Those deviations are listed at the bottom rather than hidden. The app is live at https://peterachss.github.io/maths-ia-explorer/; https://maths-ia-explorer.surge.sh/ is a mirror.
+The explorer builds, the tests pass, the numbers reconcile with the IA, and the layout holds at four widths. The stage is a photoreal Blue Marble globe with a dark stage and a light reading panel, the mobile section index is a native select, and every non-inline control is at least 44 by 44 CSS pixels. It is not a perfect implementation of the brief: seven SVG charts instead of nine and a shorter research log. Those deviations are listed at the bottom rather than hidden. The app is live at https://peterachss.github.io/maths-ia-explorer/; https://maths-ia-explorer.surge.sh/ is a mirror.
 
 ## IA revision
 
@@ -19,13 +19,14 @@ The seven editorial issues in `docs/IA_RECONCILIATION.md` were fixed in a revise
 | Invariant: residuals sum to zero | covered by `regression.test.ts` |
 | Invariant: least squares minimum | covered by `bowl.test.ts` |
 | Invariant: predictions match IA | covered by `ia.contract.test.ts` |
-| Horizontal overflow at 375, 414, 768, 1440 | none |
+| Horizontal overflow at 375, 768, 1024, 1440 | none |
 | Console errors on load | none |
 | Browser interaction sweep | desktop 25 steps, mobile 7 steps, 0 console, page, request or HTTP errors |
 | Section index | Gap and Working assertions pass on desktop and mobile |
 | Country selection reveal | clicking a pillar, chart point or search hit scrolls the stats card into view; desktop tucks the selection bar under the sticky index, mobile places the card below the sticky stage |
 | Map surface click | a click on a country's territory, or any bare point within 7 degrees of a marker, selects the nearest country; a beam click selects exactly that country; far-side beams cannot hover or select; drags never select |
-| Live site | deployed on GitHub Pages; the CSV, fonts and textures return 200; no failed requests or console errors at 1440, 1024, 768 and 375; deep link `?c=THA%2CKEN` shows Thailand and Kenya |
+| Live site | deployed on GitHub Pages; the CSV, fonts and 8K/4K/2K textures return 200; no failed requests or console errors at 1440, 1024, 768 and 375; deep link `?c=THA%2CKEN` shows Thailand and Kenya |
+| Post-release rail and globe fixes | B18 removes the rail footer; E8 requests the 8K texture at 1440, the 2K at 375 and the 4K on GPUs capped below 8K; no failed requests or console errors under the Pages base path. |
 | Data error path | readable alert when the CSV is blocked |
 | Unnamed interactive controls | 0 |
 | Unlabelled SVG charts | 0 |
@@ -63,8 +64,8 @@ The seven editorial issues in `docs/IA_RECONCILIATION.md` were fixed in a revise
 ## Deviations from the brief
 
 1. **Seven SVG charts, not nine.** The brief counted the fit comparison and the sensitivity table as charts. They are tables, and counting them twice would be padding. The seven figures are scatter, two residual panels, gap, derivative, inverse and box plots, plus the bowl in 3D.
-2. **The research log has 12 entries, not 60.** Every entry is a source that was actually opened and used. The log says so at the top. Inventing 48 more would have made it worthless.
-3. **Playwright Chromium, not a manual browser session.** Screenshots, console errors and DOM measurements were taken with Playwright driving its pinned Chromium. The installed Chrome 150 build cannot create pages through Playwright 1.64 on this machine, so it was not used for the interactive sweep. Nobody clicked every control by hand on a physical device; that remains a useful follow-up.
+2. **The research log has 13 entries, not 60.** Every entry is a source that was actually opened and used. The log says so at the top. Inventing 48 more would have made it worthless.
+3. **Playwright with installed Chrome, not a manual browser session.** Screenshots, console errors and DOM measurements were taken with Playwright driving the installed Chrome through `channel: 'chrome'`. The bundled Playwright browser is not installed in this checkout, so `check-ui.mjs` and `interaction-test.mjs` now use the same Chrome channel as the screenshot and audit scripts. Nobody clicked every control by hand on a physical device; that remains a useful follow-up.
 4. **The panel scrolls inside a split view.** The brief imagined a full page story. The split view was chosen so the globe stays visible, and the trade-off is documented.
 
 ## What is still worth doing
@@ -82,7 +83,7 @@ The seven editorial issues in `docs/IA_RECONCILIATION.md` were fixed in a revise
 - `docs/audit.json`: the DOM measurements and contrast ratios.
 - `docs/crosscheck.json`: the independent recomputation of every statistic.
 - `docs/IA_RECONCILIATION.md`: the side by side comparison with the written IA.
-- `docs/interaction-report.json`: the live 25 desktop + 7 mobile interaction run.
+- `docs/interaction-report.json`: the 25 desktop + 7 mobile interaction run.
 - `audit/live/ui-checks.json`: the live four-width UI, keyboard, reduced-motion and WebGL checks.
 - `audit/live/github-checks.json`: live canonical URL, deep link, scroll-lock and drag-guard measurements.
 - `docs/screens/`: the captured screens.

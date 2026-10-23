@@ -18,9 +18,10 @@ const base = import.meta.env.BASE_URL;
 
 /**
  * A Blue Marble Earth. The day image is NASA Blue Marble Next Generation,
- * December 2004, with topography and bathymetry, credited in Sources. Borders
- * and a 30 degree graticule are drawn into one transparent overlay. There are
- * no clouds, bloom or lens flare; the pillars carry the data.
+ * December 2004, with topography and bathymetry, rendered at 8K, 4K or 2K from
+ * the 21600 x 10800 master and credited in Sources. Borders and a 30 degree
+ * graticule are drawn into one transparent overlay. There are no clouds,
+ * bloom or lens flare; the pillars carry the data.
  *
  * Clicking the map itself picks a country. The beams are only a few pixels
  * wide, so a click on a country's territory must also work: any point within
@@ -33,11 +34,22 @@ const pickDir = new Vector3();
 export const PICK_DRAG_PX = 8;
 
 export function Earth({ countries }: { countries: Country[] }) {
-  const compact = useThree((s) => s.size.width < 900);
+  // The stage is narrower than the viewport on desktop because the reading
+  // panel takes the right side. Treat "compact" as a phone-sized viewport, not
+  // just a narrow stage, so a 1440 laptop still gets the 8K render.
+  const stageWidth = useThree((s) => s.size.width);
+  const compact = stageWidth < 900 && typeof window !== 'undefined' && window.innerWidth < 900;
   const maxAniso = useThree((s) => s.gl.capabilities.getMaxAnisotropy());
-  const [day] = useLoader(TextureLoader, [
-    `${base}textures/${compact ? 'earth-day-1k.jpg' : 'earth-day-2k.jpg'}`
-  ]) as [Texture];
+  const maxTexture = useThree((s) => s.gl.capabilities.maxTextureSize);
+  // The NASA master is 21600 x 10800. The 8K render keeps the satellite image
+  // sharp when the camera is close; older GPUs that cap textures at 4K get the
+  // 4K render instead, and phones keep the small download.
+  const texture = compact
+    ? 'earth-day-2k.jpg'
+    : maxTexture >= 8192
+      ? 'earth-day-8k.jpg'
+      : 'earth-day-4k.jpg';
+  const [day] = useLoader(TextureLoader, [`${base}textures/${texture}`]) as [Texture];
 
   const markers = useMemo(
     () => countries.map((c) => ({ iso3: c.iso3, dir: latLon(c.lat, c.lon, 1).normalize() })),
@@ -50,7 +62,7 @@ export function Earth({ countries }: { countries: Country[] }) {
     day.needsUpdate = true;
   }, [day, maxAniso]);
 
-  const borders = useMemo(() => makeBorderTexture(2048), [compact]);
+  const borders = useMemo(() => makeBorderTexture(4096), []);
 
   /** Nearest marker to a point on the sphere, or null if none is close. */
   const pick = (point: Vector3): string | null => {
@@ -86,7 +98,7 @@ export function Earth({ countries }: { countries: Country[] }) {
   return (
     <group>
       <mesh onClick={surfaceClick} onPointerOver={surfaceOver}>
-        <sphereGeometry args={[1, 64, 42]} />
+        <sphereGeometry args={[1, 128, 84]} />
         <meshPhongMaterial
           map={day}
           specular="#17334f"
@@ -95,7 +107,7 @@ export function Earth({ countries }: { countries: Country[] }) {
       </mesh>
 
       <mesh renderOrder={1}>
-        <sphereGeometry args={[1.0015, 96, 64]} />
+        <sphereGeometry args={[1.0015, 128, 84]} />
         <meshBasicMaterial
           map={borders}
           transparent

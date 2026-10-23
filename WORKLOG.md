@@ -127,3 +127,5 @@ The GitHub base-path preview at `/maths-ia-explorer/` serves the 8K texture at 1
 The bundled Playwright browser is not installed in this checkout, so `check-ui.mjs` and `interaction-test.mjs` now launch the installed Chrome with `channel: 'chrome'`; the 25/7 sweep and the four-width UI check pass with it.
 
 Also removed the orphaned `src/three/PreviewPillar.tsx`; nothing imported it, and it still pointed at the deleted `earth-preview.jpg`. The live preview is `src/ui/PreviewCard.tsx`.
+
+Pushed `ef05eaa` normally. GitHub Actions run 39919923719 built in 34 seconds and deployed in 17. Live verification: 11 rail buttons and no footer, 8K requested at 1440, 2K at 375, all five anchor values (83.6, 120,678, 61.1, 4,994, 22.5), `?c=THA%2CKEN` reads "Thailand vs Kenya", the 8K/4K/2K/CSV/OG/favicon/robots/sitemap return 200, the retired 1K returns 404, and there are no failed requests or console errors. `check-ui` passes at 1440/1024/768/375, including the splitter, scatter keyboard, reduced-motion and WebGL-off checks. Evidence is in `audit/live/`.

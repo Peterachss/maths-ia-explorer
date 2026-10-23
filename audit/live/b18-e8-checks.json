@@ -1,0 +1,105 @@
+{
+  "url": "https://peterachss.github.io/maths-ia-explorer/",
+  "commit": "ef05eaa",
+  "checkedAt": "2026-10-23T07:33:34.216Z",
+  "desktop": {
+    "title": "Life Expectancy Explorer",
+    "h1": 1,
+    "railButtons": 11,
+    "railFooter": {
+      "foot": false,
+      "year": false,
+      "progress": false
+    },
+    "textures": [
+      "https://peterachss.github.io/maths-ia-explorer/textures/earth-day-8k.jpg"
+    ],
+    "overflow": false,
+    "canonical": "https://peterachss.github.io/maths-ia-explorer/",
+    "anchors": [
+      [
+        "83.6",
+        true
+      ],
+      [
+        "120,678",
+        true
+      ],
+      [
+        "61.1",
+        true
+      ],
+      [
+        "4,994",
+        true
+      ],
+      [
+        "22.5",
+        true
+      ]
+    ]
+  },
+  "mobile": {
+    "rail": "none",
+    "selectVisible": true,
+    "textures": [
+      "https://peterachss.github.io/maths-ia-explorer/textures/earth-day-2k.jpg"
+    ],
+    "overflow": false,
+    "railFooter": false
+  },
+  "deepLink": {
+    "bodyHasThailand": true,
+    "bodyHasKenya": true,
+    "context": "Selected: Thailand vs Kenya"
+  },
+  "assets": {
+    "textures/earth-day-8k.jpg": {
+      "status": 200,
+      "type": "image/jpeg",
+      "bytes": 4456465
+    },
+    "textures/earth-day-4k.jpg": {
+      "status": 200,
+      "type": "image/jpeg",
+      "bytes": 1519920
+    },
+    "textures/earth-day-2k.jpg": {
+      "status": 200,
+      "type": "image/jpeg",
+      "bytes": 416252
+    },
+    "data/sample42.csv": {
+      "status": 200,
+      "type": "text/csv; charset=utf-8",
+      "bytes": 22315
+    },
+    "og-image.jpg": {
+      "status": 200,
+      "type": "image/jpeg",
+      "bytes": 137198
+    },
+    "favicon.svg": {
+      "status": 200,
+      "type": "image/svg+xml",
+      "bytes": 701
+    },
+    "robots.txt": {
+      "status": 200,
+      "type": "text/plain; charset=utf-8",
+      "bytes": 92
+    },
+    "sitemap.xml": {
+      "status": 200,
+      "type": "application/xml",
+      "bytes": 290
+    },
+    "textures/earth-day-1k.jpg (retired)": {
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "bytes": 9379
+    }
+  },
+  "failedResponses": [],
+  "consoleErrors": []
+}

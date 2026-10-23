@@ -2,11 +2,11 @@
 
 Branch: `main` (`rebuild/nasa-grade` merged)
 
-Last update: 22 October 2026
+Last update: 23 October 2026
 
-Release: published at https://maths-ia-explorer.surge.sh/.
+Release: published at https://peterachss.github.io/maths-ia-explorer/ (canonical). https://maths-ia-explorer.surge.sh/ is a verified mirror.
 
-Build status: `npm run build` passes; `npm test` passes 46/46; axe 16/16 clean; Lighthouse desktop 100/100/100/100, mobile 98/100/100/100.
+Build status: `npm run build` passes; `npm test` passes 46/46; the interaction sweep passes 25 desktop and 7 mobile steps; `check:ui` passes at all four widths, desktop page scroll stays at y=0; axe 16/16 clean; Lighthouse desktop 100/100/100/100, mobile 98/100/100/100.
 
 | ID | Status | Evidence | Commit |
 |---|---|---|---|
@@ -38,6 +38,7 @@ Build status: `npm run build` passes; `npm test` passes 46/46; axe 16/16 clean; 
 | B14 | done | Open Graph/Twitter tags and `public/og-image.jpg` added. | `d22452a` |
 | B15 | done | One basemap credit used in the map, sources and imagery sections. | `d22452a` |
 | B16 | done | Visually hidden tables no longer escape the reading panel or extend the page; desktop stays 100dvh with page scroll locked at y=0, stacked layouts still scroll normally. `check:ui` asserts both. | `745cd09` |
+| B17 | done | Globe surface click picks the nearest country within 7 degrees; beam clicks still select exactly; drags over 8 px and far-side beams cannot select or hover. Hint text names the behaviour. `scripts/interaction-test.mjs` passes 25 desktop and 7 mobile steps against the live build. | `57df98f` |
 | C1 | done | Four numbered chapters, section observer, progress rail and mobile chapter select. | `d22452a` |
 | C2 | done | Shared section template: number, title, question, body, source line, calculation disclosure. | `d22452a` |
 | C3 | done | Sticky context bar with sample, equation, r², selection and limits. | `d22452a` |
@@ -75,16 +76,20 @@ Build status: `npm run build` passes; `npm test` passes 46/46; axe 16/16 clean; 
 | H1 | done | `REPORT.md` with ID table, source status, data diffs, screenshot index, audits, timings, decisions. | `9a9fa4b` |
 | H2 | done | `docs/DESIGN.md` reconciled with shipped textures, panel widths, stage heights and type. | `9a9fa4b` |
 | H3 | done | Before/after screenshot index and final audit artefacts under `audit/`. | `fe27549` |
+| H4 | done | GitHub Pages release at https://peterachss.github.io/maths-ia-explorer/; canonical and OG URLs, `BASE_PATH` build and sitemap match. `optimize-dist.mjs` now strips `BASE_PATH` before inlining CSS, so the poster and styles no longer 404. Workflow run 39887371851 passed; live checks at 1440/1024/768/375, deep link `?c=THA%2CKEN`, page-scroll lock and drag guard recorded in `audit/live/`. | `57df98f` |
 
 ## Checkpoint
 
 - All rebuild changes are committed in phase groups on `rebuild/nasa-grade`: A `6f8698f`, B–G `d22452a`, G evidence `6e9e110` and `fe27549`, and final UI `421fdda`.
 - Final UI evidence was regenerated after `421fdda` and the merge of `origin/main` (`8df22f8`): screenshots at all four widths, `check:ui`, axe 16/16 and both Lighthouse runs.
+- `origin/main` then added the country-stats reveal, the globe surface pick (`728c879`) and a live-verification record (`855e291`). These were merged in `57df98f` without force-pushing. The surface pick, 7 degree radius, 8 px drag guard and far-side beam guard were ported onto the rebuilt globe and pillars; the rebuilt textures and layout were kept.
 - The `8df22f8` country-stats reveal was preserved; its breakpoint was adapted from 860px to the rebuild’s 1200px stage/panel breakpoint.
+- The GitHub Pages build exposed a real `BASE_PATH` bug: `optimize-dist.mjs` could not find the stylesheet under `/maths-ia-explorer/`, so CSS stayed external and the poster resolved to `/assets/textures/earth-poster.jpg` (404). The script now strips `BASE_PATH` before inlining; the live build has no failed requests.
 - Build, unit tests, anchors, live verification and 68 statistic checks pass after the final UI change.
 - B16 fixed the reported post-scroll glitch: the screen-reader-only tables were absolutely positioned without a top/left anchor, so their static positions in the long reading column extended `documentElement.scrollHeight` from 900 to 9489 at 1440×900. The page could scroll the 100dvh app upward and leave a black band. They are now anchored at 0,0 with `clip-path`; desktop document height equals the viewport and the page cannot scroll. `check:ui` now covers this, and the four-width screenshots were regenerated.
 - Remaining internal partials: D1 tokenisation and F1 shared chart-frame abstraction. Neither changes a rendered style or a user interaction. Known blocker: B11 KaTeX. Held owner choice: D2 light panel.
 - `data:fetch`/`data:all` deliberately not run; see `DECISIONS.md`.
-- The owner authorized publication on 22 October 2026. The `rebuild/nasa-grade` branch is merged into local `main` without force-pushing; the build is published at https://maths-ia-explorer.surge.sh/. GitHub Pages is not updated: the push is blocked by the missing GitHub credential on this machine. Live UI checks and 1440/375 captures are in `audit/live/`.
+- The owner authorized publication on 22 October 2026. `main` was pushed normally (no force-push) and GitHub Actions run 39887371851 built and deployed the site in 69 seconds. The canonical release is https://peterachss.github.io/maths-ia-explorer/; Surge remains a mirror.
+- Live verification at 1440×900, 1024×768, 768×1024 and 375×812: no failed requests or console errors; 7 charts and 93 data rows; `?c=THA%2CKEN` restores Thailand and Kenya; canonical URL is GitHub Pages. At 1440 the document stays 900px, page scroll remains y=0 and the stage tabs stay visible after the panel scrolls; stacked widths scroll normally. The drag guard preserves Zimbabwe and Singapore after an 80 px orbit drag. Evidence: `audit/live/github-checks.json`, `audit/live/ui-checks.json`, `docs/interaction-report.json` and `audit/live/github-*.png`.
 
 Release complete. Only the two internal refactors and the optional design choices remain.

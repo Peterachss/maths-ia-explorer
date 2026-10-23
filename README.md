@@ -16,7 +16,7 @@ The app is built around the student's own 42 rows, not a demonstration dataset. 
 
 - **Globe stage.** A NASA Blue Marble globe carries forty two pillars at capital city coordinates. Height is life expectancy and colour is the same value on a single ramp. Singapore and Zimbabwe are joined by an arc labelled 22.5 years, the observed gap. The basemap is illustrative, not a 2019 data layer.
 - **Section index.** A sticky index on desktop and a native 44 pixel select on mobile follow the reading position through the eight report sections.
-- **Country selection.** Click a pillar, search by name, or use the country list in the panel. Selecting a country flies the camera to it and updates every view.
+- **Country selection.** Click a pillar, click anywhere on the globe within 7 degrees of a country marker, search by name, or use the country list in the panel. Selecting a country flies the camera to it and updates every view; a drag orbits without changing the selection.
 - **Two models.** A straight line and a logarithmic curve can be shown on a linear or logarithmic income axis. The panel reports the equation, r, r squared, the residual standard error and the sum of squared errors for both.
 - **Seven SVG charts.** Scatter with both fits, residuals for each model, the gap, the derivative, the inverse and box plots by income group, plus the least squares bowl in 3D and the sensitivity table.
 - **Show working.** A drawer lists each calculation with its formula, inputs and result.

@@ -1,5 +1,5 @@
 {
-  "url": "http://localhost:4177/maths-ia-explorer/",
+  "url": "https://peterachss.github.io/maths-ia-explorer/",
   "runs": [
     {
       "name": "desktop",
@@ -155,7 +155,7 @@
     "hasMessage": true,
     "visible": true,
     "errors": [
-      "requestfailed: http://localhost:4177/maths-ia-explorer/data/sample42.csv net::ERR_FAILED",
+      "requestfailed: https://peterachss.github.io/maths-ia-explorer/data/sample42.csv net::ERR_FAILED",
       "console: Failed to load resource: net::ERR_FAILED"
     ]
   },

@@ -1,0 +1,98 @@
+{
+  "url": "https://peterachss.github.io/maths-ia-explorer/?c=THA%2CKEN",
+  "commit": "57df98f",
+  "workflowRun": 39887371851,
+  "checkedAt": "2026-10-23T02:08:27.150Z",
+  "widths": [
+    {
+      "width": 1440,
+      "height": 900,
+      "title": "Life Expectancy Explorer",
+      "canonical": "https://peterachss.github.io/maths-ia-explorer/",
+      "charts": 7,
+      "tableRows": 93,
+      "selection": [
+        "Thailand",
+        "Kenya"
+      ],
+      "documentHeight": 900,
+      "viewportHeight": 900,
+      "stageTabs": 2,
+      "hint": "Drag to rotate · Scroll to zoom · Click a country for its statsDrag to rotate · Pinch to zoom · Tap a country for its stats",
+      "scrollAfter500": 0,
+      "panelScroll": {
+        "top": 14361,
+        "tabsVisible": true,
+        "scrollY": 0
+      },
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "title": "Life Expectancy Explorer",
+      "canonical": "https://peterachss.github.io/maths-ia-explorer/",
+      "charts": 7,
+      "tableRows": 93,
+      "selection": [
+        "Thailand",
+        "Kenya"
+      ],
+      "documentHeight": 15571,
+      "viewportHeight": 768,
+      "stageTabs": 2,
+      "hint": "Drag to rotate · Scroll to zoom · Click a country for its statsDrag to rotate · Pinch to zoom · Tap a country for its stats",
+      "scrollAfter500": 500,
+      "errors": []
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "title": "Life Expectancy Explorer",
+      "canonical": "https://peterachss.github.io/maths-ia-explorer/",
+      "charts": 7,
+      "tableRows": 93,
+      "selection": [
+        "Thailand",
+        "Kenya"
+      ],
+      "documentHeight": 15704,
+      "viewportHeight": 1024,
+      "stageTabs": 2,
+      "hint": "Drag to rotate · Scroll to zoom · Click a country for its statsDrag to rotate · Pinch to zoom · Tap a country for its stats",
+      "scrollAfter500": 500,
+      "errors": []
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "title": "Life Expectancy Explorer",
+      "canonical": "https://peterachss.github.io/maths-ia-explorer/",
+      "charts": 7,
+      "tableRows": 93,
+      "selection": [
+        "Thailand",
+        "Kenya"
+      ],
+      "documentHeight": 17513,
+      "viewportHeight": 812,
+      "stageTabs": 2,
+      "hint": "Drag to rotate · Scroll to zoom · Click a country for its statsDrag to rotate · Pinch to zoom · Tap a country for its stats",
+      "scrollAfter500": 500,
+      "errors": []
+    }
+  ],
+  "dragGuard": {
+    "before": [
+      "Zimbabwe",
+      "Singapore"
+    ],
+    "after": [
+      "Zimbabwe",
+      "Singapore"
+    ],
+    "preserved": true,
+    "search": "?c=ZWE%2CSGP",
+    "errors": []
+  }
+}

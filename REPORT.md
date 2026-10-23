@@ -2,9 +2,9 @@
 
 Branch: `rebuild/nasa-grade` merged to `main`
 
-Final verification: 22 October 2026
+Final verification: 23 October 2026
 
-Live site: https://maths-ia-explorer.surge.sh/
+Live site: https://peterachss.github.io/maths-ia-explorer/ (canonical). Mirror: https://maths-ia-explorer.surge.sh/.
 
 Site: the companion page for the IB Maths AA SL Internal Assessment comparing GDP per capita with life expectancy for 42 countries in 2019.
 
@@ -23,7 +23,9 @@ Final checks:
 | `npm run data:verify` | PASS. All source, provenance and cross-check assertions. |
 | `npm run data:verify-live` | PASS. 42 rows, 84 values re-downloaded; GDP max absolute difference $0.0049; life max absolute difference 0.000463 years; public CSV byte-identical. |
 | `npm run data:verify-stats` | PASS. 68 statistic checks. |
-| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 42/42 checkbox labels at least 44px, splitter ArrowLeft 648→672, scatter BDI→TCD + Enter, selection reveal shows Chad, skip link, reduced motion and WebGL fallback pass. Desktop document height equals the viewport and page scroll stays at y=0; stacked widths still page-scroll. |
+| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 42/42 checkbox labels at least 44px, splitter ArrowLeft 648→672, scatter BDI→TCD + Enter, selection reveal shows Chad, skip link, reduced motion and WebGL fallback pass. Desktop document height equals the viewport and page scroll stays at y=0; stacked widths still page-scroll. Re-run against the live GitHub Pages URL: `audit/live/ui-checks.json`. |
+| `scripts/interaction-test.mjs` | PASS against local and live builds: 25 desktop + 7 mobile steps, 0 console, page, request or HTTP errors. Covers the globe surface pick, drag guard, search, toggles, bowl, section index, selection reveal, deep-link reload, resize and data-error path. |
+| GitHub Pages base path | PASS. `BASE_PATH=/maths-ia-explorer/` build serves every asset; the CSS is inlined and the poster returns 200. Live checks at four widths have no failed requests. |
 | axe via `scripts/audit.ts` | 16/16 width/chapter combinations, 0 violations. |
 | Lighthouse desktop | 100 performance, 100 accessibility, 100 best practices, 100 SEO. |
 | Lighthouse mobile | 98 performance, 100 accessibility, 100 best practices, 100 SEO. |
@@ -37,6 +39,9 @@ The one deliberately blocked item is KaTeX (B11). The light panel is held for th
 |---|---|
 | `b0d0e1c` | Pre-rebuild baseline. Used for the before screenshots only. |
 | `8df22f8` | `main` follow-up: reveal the country stats card on selection. Merged into the rebuild; the reveal breakpoint was adapted to the rebuild’s 1200px layout breakpoint. |
+| `728c879` | `B17`: select the nearest country when the globe surface is clicked, with a 7 degree radius, an 8 px drag guard and far-side beam guards. Ported onto the rebuilt globe. |
+| `855e291` | Live verification record for the surface pick. |
+| `57df98f` | Merge `origin/main`; keep the rebuilt globe/pillars and the surface pick; fix `BASE_PATH` CSS inlining and update the interaction sweep. |
 | `6f8698f` | `A1-A12`: sources, provenance, claims register and verification scripts. |
 | `d22452a` | `B1-G4`: chapters, layout, tokens, 3D, charts, mobile chrome, accessibility and performance work. |
 | `6e9e110` | `G1-G4`: first screenshot, axe and Lighthouse evidence set. |
@@ -44,7 +49,7 @@ The one deliberately blocked item is KaTeX (B11). The light panel is held for th
 | `9a9fa4b` | `H`: `REPORT.md`, `PROGRESS.md`, `DECISIONS.md`, `docs/DESIGN.md`. |
 | `421fdda` | `D4/F4/G1/E4`: pointer/keyboard splitter, keyboard scatter points, splitter hit area, phone label clearance and refreshed evidence. |
 | `745cd09` | `B16`: anchor the visually hidden accessible tables so they cannot extend the document past the desktop 100dvh app; page-scroll regression checks added. |
-| release | Final docs and local `main` merge; published to Surge. GitHub Pages push remains blocked by missing credentials. No force-push was used. |
+| `57df98f` release | Final docs and `main` push; GitHub Actions run 39887371851 deployed the canonical GitHub Pages build. No force-push was used. Surge is the mirror. |
 
 ## ID table
 
@@ -80,6 +85,7 @@ The detailed evidence and commit for every ID is in `PROGRESS.md`; this is the c
 | B14 | done | Open Graph/Twitter tags and 1200×630 image. |
 | B15 | done | One basemap credit shared by map, sources and imagery. |
 | B16 | done | Phantom page scroll fixed: visually hidden tables anchored in place; desktop document height equals the viewport, stacked layouts still scroll. |
+| B17 | done | Globe surface click selects the nearest country within 7 degrees; 8 px drag guard; far-side beams cannot hover or select; hint says “Click a country for its stats”. Interaction sweep 25/7 passes live. |
 | C1 | done | Four numbered chapters, observer, progress rail, mobile select. |
 | C2 | done | Shared section template. |
 | C3 | done | Context bar with sample, equation, r², selection and limits. |
@@ -117,6 +123,7 @@ The detailed evidence and commit for every ID is in `PROGRESS.md`; this is the c
 | H1 | done | This report. |
 | H2 | done | `docs/DESIGN.md` reconciled with shipped assets and layout. |
 | H3 | done | Before/after and audit evidence in `audit/`. |
+| H4 | done | GitHub Pages canonical release; `BASE_PATH` CSS inlining fixed; live four-width, deep-link, page-scroll and drag-guard checks in `audit/live/`. |
 
 ## Source status
 
@@ -303,9 +310,11 @@ The full design document is `docs/DESIGN.md`. The short version:
 
 The live build was checked after upload:
 
-- `https://maths-ia-explorer.surge.sh/` returns HTTP 200; the entry JS asset returns 200, and `robots.txt` and `sitemap.xml` return 200.
-- `npm run check:ui` was re-run with `URL=https://maths-ia-explorer.surge.sh/`: no overflow, no page errors, all 44px targets, splitter, scatter keyboard, selection reveal, reduced motion and WebGL fallback pass. Output: `audit/live/ui-checks.json`.
-- Live captures: `audit/live/1440-landing.png` and `audit/live/375-landing.png`.
+- `https://peterachss.github.io/maths-ia-explorer/` returns HTTP 200; the entry JS, CSS (inlined), fonts, textures, `robots.txt` and `sitemap.xml` all load without a failed request. GitHub Actions run 39887371851 passed the build and deploy jobs.
+- `npm run check:ui` was re-run with `URL=https://peterachss.github.io/maths-ia-explorer/`: no overflow, no page errors, all 44px targets, splitter, scatter keyboard, selection reveal, reduced motion and WebGL fallback pass. Output: `audit/live/ui-checks.json`.
+- The interaction sweep passed 25 desktop and 7 mobile steps against the live URL. `docs/interaction-report.json` records the run.
+- Live four-width evidence: `audit/live/github-checks.json` and `audit/live/github-1440.png`, `github-1024.png`, `github-768.png`, `github-375.png`. The `?c=THA%2CKEN` deep link restores Thailand and Kenya; an 80 px orbit drag leaves Zimbabwe and Singapore selected; 1440 page scroll stays at y=0 while the stage tabs remain visible.
+- Surge remains a mirror at `https://maths-ia-explorer.surge.sh/`.
 
 ## Reproduce
 
@@ -330,6 +339,6 @@ CHROME_PATH="$HOME/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/G
 
 ## Closing status
 
-`main` now contains the complete rebuild and evidence on the local release branch. The release build is published at https://maths-ia-explorer.surge.sh/; the GitHub Pages push is still blocked because this machine has no GitHub credentials. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1), the shared chart-frame abstraction (F1), and the optional dark-panel direction (D2). D4 and F4 are no longer partial.
+`main` contains the complete rebuild, the country-stats reveal, the globe surface pick and the release evidence. The canonical build is published at https://peterachss.github.io/maths-ia-explorer/; https://maths-ia-explorer.surge.sh/ is a verified mirror. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1), the shared chart-frame abstraction (F1), and the optional dark-panel direction (D2). D4 and F4 are no longer partial.
 
-Release complete. The published build passed the build, unit tests, data anchors, live data verification, 68 statistic checks, UI checks, screenshots, axe and Lighthouse before publication. The live URL was checked again after upload.
+Release complete. The published build passed the build, 46 unit tests, 11 data anchors, live data verification, 68 statistic checks, the 25/7 interaction sweep, UI checks at four widths, screenshots, axe and Lighthouse before publication. The live GitHub Pages URL, deep link, drag guard and page-scroll lock were checked again after upload.

@@ -1,9 +1,11 @@
 {
-  "base": "https://maths-ia-explorer.surge.sh/",
+  "base": "https://peterachss.github.io/maths-ia-explorer/",
   "widths": {
     "1440x900": {
       "bodyWidth": 1440,
       "viewportWidth": 1440,
+      "docHeight": 900,
+      "viewportHeight": 900,
       "small": [],
       "checkboxTargets": [
         {
@@ -176,11 +178,14 @@
         }
       ],
       "charts": 7,
+      "pageScrollAfter500": 0,
       "errors": 0
     },
     "1024x768": {
       "bodyWidth": 1024,
       "viewportWidth": 1024,
+      "docHeight": 15571,
+      "viewportHeight": 768,
       "small": [],
       "checkboxTargets": [
         {
@@ -353,11 +358,14 @@
         }
       ],
       "charts": 7,
+      "pageScrollAfter500": 500,
       "errors": 0
     },
     "768x1024": {
       "bodyWidth": 768,
       "viewportWidth": 768,
+      "docHeight": 15704,
+      "viewportHeight": 1024,
       "small": [],
       "checkboxTargets": [
         {
@@ -530,11 +538,14 @@
         }
       ],
       "charts": 7,
+      "pageScrollAfter500": 500,
       "errors": 0
     },
     "375x812": {
       "bodyWidth": 375,
       "viewportWidth": 375,
+      "docHeight": 17513,
+      "viewportHeight": 812,
       "small": [],
       "checkboxTargets": [
         {
@@ -707,6 +718,7 @@
         }
       ],
       "charts": 7,
+      "pageScrollAfter500": 500,
       "errors": 0
     }
   },

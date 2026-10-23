@@ -1,6 +1,6 @@
 # Worklog
 
-Times are local, 20-21 October 2026. The order is the order the work happened, not a tidy retrospective.
+Times are local, 20-22 October 2026. The order is the order the work happened, not a tidy retrospective.
 
 ## 22:30 Reading the brief and finding the starter
 
@@ -93,3 +93,13 @@ Clicking a country on the globe should show its stats, but the preview card live
 The same pass fixed the cause of that clipped strip: the sticky index floated 28 pixels below the scrollport because of the panel's top padding, so scrolling text showed through the gap above it. The top inset moved to the panel header and the index now sits flush with the scrollport edge. Added a `.selection` scroll margin of 3.5 rem to place the bar 11 pixels under the index, and a 11 rem card margin as the short-viewport fallback.
 
 Two new interaction steps lock the behaviour in, one desktop and one mobile. They set the search field through the native value setter and click the first hit via the DOM so the test harness cannot scroll the search box into view and hide the behaviour under test; both then assert the card lands fully inside the panel view, and the mobile step asserts it lands below the sticky stage. Pillar clicks at Gap were verified by hand at 1440 by 900 (Cambodia), 1440 by 700 (Singapore) and 375 by 812 (Kenya), with the reveal geometry measured in each case. The sweep is now 24 desktop steps and 7 mobile steps with no problems; build, 39 unit tests, 11 anchors and the accessibility audit all still pass.
+
+## 20:45 Picking countries off the map
+
+The map did not respond to a click on a country. Only the thin pillar beams had a click handler, about 13 pixels wide at the default view, so clicking a country's own territory missed everything and nothing happened. The sphere now picks as well: any bare point within 7 degrees of a marker selects the nearest country, a point over open ocean or far from any marker selects nothing, and both the sphere and the beams ignore a drag longer than 8 pixels, so orbiting the globe can never change the selection.
+
+The first version of the fix leaked in the wrong direction. React Three Fiber sends a raycast event to every object the ray hits, including beams behind the Earth, so a click over open ocean could light up a country on the far side of the globe. The sphere now stops propagation on hover and on click, and because it is the front-most surface the event reaches it first; a far-side beam can neither hover, which would have put the wrong country in the preview card, nor select.
+
+One failing test had nothing to do with picking. Scrolling the panel into a section fires the observer's `flyTo`, so reaching the Gap section re-frames the camera on Zimbabwe and Singapore. A screen point derived while the camera sat on Madagascar means nothing in the anchors framing, which is why the same coordinates picked a country twice and then, after the Gap scroll, picked nothing at all. The test now waits for that flight to settle and derives its surface click after the scroll. The five scenarios all pass: an off-globe click selects nothing, a beam click selects exactly that country, a bare-surface click selects the nearest, a surface click at the Gap selects and scrolls the card fully into the panel from 2,565 to 372 pixels, and a 10 pixel nudge inside a beam plus an 80 pixel orbit drag select nothing.
+
+The hint bar now reads "Click a country for its stats", and "Tap a country for its stats" on touch screens. A permanent desktop step, "map surface picks the nearest country", spirals out from the globe centre to the most central facing pillar and clicks bare points 14 to 24 pixels off it until a chip appears and the share link gains a `?c=` parameter. The sweep is now 25 desktop steps and 7 mobile steps with no problems; the build, 39 unit tests, 11 anchors and the accessibility audit, no overflow, no unnamed controls, no small targets and no console errors at 1440 and 375, all still pass.

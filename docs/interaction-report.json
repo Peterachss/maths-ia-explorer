@@ -1,5 +1,5 @@
 {
-  "url": "http://localhost:4173/",
+  "url": "http://localhost:4177/maths-ia-explorer/",
   "runs": [
     {
       "name": "desktop",
@@ -8,6 +8,10 @@
         "height": 900
       },
       "steps": [
+        {
+          "label": "map surface picks the nearest country",
+          "ok": true
+        },
         {
           "label": "search Singapore",
           "ok": true
@@ -151,7 +155,7 @@
     "hasMessage": true,
     "visible": true,
     "errors": [
-      "requestfailed: http://localhost:4173/data/sample42.csv net::ERR_FAILED",
+      "requestfailed: http://localhost:4177/maths-ia-explorer/data/sample42.csv net::ERR_FAILED",
       "console: Failed to load resource: net::ERR_FAILED"
     ]
   },

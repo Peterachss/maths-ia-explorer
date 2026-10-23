@@ -13,9 +13,12 @@ let html = readFileSync(indexPath, 'utf8');
 html = html.replace(/\s*<link rel="modulepreload" crossorigin href="[^"]*(?:three|r3f)-[^"]*\.js">/g, '');
 
 // Inline the single stylesheet. It is under 10 kB gzipped and removes a
-// render-blocking request from the critical path.
+// render-blocking request from the critical path. The href includes BASE_PATH
+// on GitHub Pages, so strip that prefix before resolving inside dist.
+const base = process.env.BASE_PATH ?? '/';
 for (const link of [...html.matchAll(/<link rel="stylesheet" crossorigin href="([^"]+)">/g)]) {
-  const assetPath = resolve(dist, link[1].replace(/^\//, ''));
+  const href = link[1].startsWith(base) ? link[1].slice(base.length) : link[1].replace(/^\//, '');
+  const assetPath = resolve(dist, href);
   if (existsSync(assetPath)) {
     const css = readFileSync(assetPath, 'utf8');
     html = html.replace(link[0], `<style>${css}</style>`);

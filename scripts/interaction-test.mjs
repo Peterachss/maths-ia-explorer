@@ -11,7 +11,9 @@ const url = process.argv[2] ?? 'http://localhost:4173/';
 const out = 'docs/screens';
 await mkdir(out, { recursive: true });
 
-const browser = await chromium.launch({ channel: 'chrome' });
+// Use Playwright's pinned Chromium. The installed Chrome 150 build cannot
+// create pages through Playwright 1.64 on this machine.
+const browser = await chromium.launch();
 const report = { url, runs: [], pass: true };
 
 function watch(page, label) {
@@ -48,6 +50,9 @@ async function run(name, viewport, body) {
   try {
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForTimeout(1500);
+    // The 3D canvas is deferred behind the poster; give it time to mount before
+    // any test that needs to click or measure the stage.
+    await page.waitForSelector('.stage canvas', { state: 'attached', timeout: 10000 }).catch(() => {});
     await body(page, step);
 
     if (w.errors.length) {
@@ -82,6 +87,61 @@ const pickFromSearch = async (page, name) => {
 };
 
 await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
+  await step('map surface picks the nearest country', async () => {
+    // Spiral out from the globe centre to the most central facing pillar, then
+    // click a bare point just off its beam: outside the ~10px hit cylinder
+    // (no label under the cursor) but within the 7 degree surface pick radius.
+    const centre = await page.evaluate(() => {
+      const r = document.querySelector('.stage canvas')?.getBoundingClientRect();
+      return r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
+    });
+    if (!centre) throw new Error('no stage canvas');
+    const hovering = async () => {
+      const sel = (await page.locator('.chip').allInnerTexts()).map((s) => s.replace(/\s+/g, ' ').trim());
+      for (const raw of await page.locator('.pillar-label').allInnerTexts()) {
+        const name = raw.replace(/\s+/g, ' ').replace(/\s*\d.*$/, '').trim();
+        if (name && !sel.includes(name)) return name;
+      }
+      return null;
+    };
+    let beam = null;
+    for (let r = 0; r <= 300 && !beam; r += 12) {
+      for (let a = 0; a < 360; a += 10) {
+        const x = Math.round(centre.x + r * Math.cos((a * Math.PI) / 180));
+        const y = Math.round(centre.y + r * Math.sin((a * Math.PI) / 180));
+        if (x < 40 || x > 920 || y < 70 || y > 800) continue;
+        await page.mouse.move(x, y);
+        await page.waitForTimeout(26);
+        if (await hovering()) { beam = { x, y }; break; }
+      }
+    }
+    if (!beam) throw new Error('no facing pillar found near the globe centre');
+    let picked = false;
+    for (const d of [14, 17, 20, 24]) {
+      for (let a = 0; a < 360 && !picked; a += 30) {
+        const x = Math.round(beam.x + d * Math.cos((a * Math.PI) / 180));
+        const y = Math.round(beam.y + d * Math.sin((a * Math.PI) / 180));
+        const onCanvas = await page.evaluate(
+          ([x, y]) => document.elementFromPoint(x, y)?.tagName === 'CANVAS',
+          [x, y]
+        );
+        if (!onCanvas) continue;
+        await page.mouse.move(x, y);
+        await page.waitForTimeout(60);
+        if (await hovering()) continue; // a beam is under the cursor, not bare surface
+        const before = await page.locator('.chip').count();
+        await page.mouse.click(x, y);
+        await page.waitForTimeout(500);
+        picked = (await page.locator('.chip').count()) > before;
+      }
+    }
+    if (!picked) throw new Error('bare-surface click did not select the nearest country');
+    const search = await page.evaluate(() => location.search);
+    if (!/\?c=[A-Z]{3}/.test(search)) throw new Error(`expected a share link, got "${search}"`);
+    await page.getByRole('button', { name: 'Clear selection' }).click();
+    await page.waitForTimeout(1400);
+  });
+
   await step('search Singapore', async () => {
     await page.getByPlaceholder('Type a country name').fill('Sing');
     await page.waitForTimeout(200);
@@ -110,10 +170,10 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
   await step('close working', async () => page.getByRole('button', { name: 'Hide working' }).click());
 
   await step('exclude the two outliers', async () => {
-    await page.getByRole('button', { name: 'Exclude Nigeria and Chad' }).click();
+    await page.getByRole('radio', { name: 'Without Nigeria and Chad' }).click();
     await page.waitForTimeout(500);
   });
-  await step('include everyone', async () => page.getByRole('button', { name: 'Include everyone' }).click());
+  await step('include everyone', async () => page.getByRole('radio', { name: 'Include everyone' }).click());
   await step('open country checklist', async () => page.getByText('Exclude any country').click());
   await step('toggle one country', async () => {
     await page.getByRole('checkbox', { name: 'Vietnam' }).check();
@@ -152,15 +212,23 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
     await page.evaluate(() => document.querySelector('#h-gap').scrollIntoView());
     await page.waitForTimeout(700);
     const active = await page.evaluate(
-      () => document.querySelector('.section-nav [aria-current="true"]')?.textContent?.trim() ?? ''
+      () => document.querySelector('.rail [aria-current="true"]')?.textContent?.trim() ?? ''
     );
-    if (active !== 'Gap') throw new Error(`expected Gap active, got "${active}"`);
+    if (active !== 'Gap') {
+      const debug = await page.evaluate(() => ({
+        rail: [...document.querySelectorAll('.rail button')].map((b) => [b.textContent?.trim(), b.getAttribute('aria-current')]),
+        railDisplay: getComputedStyle(document.querySelector('.rail')).display,
+        panelScroll: document.querySelector('.panel-scroll')?.scrollTop,
+        gapTop: document.querySelector('#h-gap')?.getBoundingClientRect().top
+      }));
+      throw new Error(`expected Gap active, got "${active}" ${JSON.stringify(debug)}`);
+    }
     await page.evaluate(() => document.querySelector('#h-work').scrollIntoView());
     await page.waitForTimeout(700);
     const atWork = await page.evaluate(
-      () => document.querySelector('.section-nav [aria-current="true"]')?.textContent?.trim() ?? ''
+      () => document.querySelector('.rail [aria-current="true"]')?.textContent?.trim() ?? ''
     );
-    if (atWork !== 'Limits') throw new Error(`expected Limits beside Working, got "${atWork}"`);
+    if (atWork !== 'Working') throw new Error(`expected Working active, got "${atWork}"`);
   });
 
   await step('country selection reveals the preview', async () => {
@@ -225,7 +293,7 @@ await run('mobile', { width: 375, height: 812 }, async (page, step) => {
     await page.evaluate(() => document.querySelector('#h-work').scrollIntoView());
     await page.waitForTimeout(700);
     const atWork = await page.evaluate(() => document.querySelector('#section-jump')?.value ?? '');
-    if (atWork !== 'h-limits') throw new Error(`expected h-limits beside Working, got "${atWork}"`);
+    if (atWork !== 'h-work') throw new Error(`expected h-work in the section select, got "${atWork}"`);
   });
   await step('country selection reveals the preview', async () => {
     await page.evaluate(() => {

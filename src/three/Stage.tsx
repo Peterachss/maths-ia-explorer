@@ -97,7 +97,7 @@ export function Stage({
       />
 
       <Suspense fallback={<LoadingGlobe />}>
-        <Earth />
+        <Earth countries={countries} />
         <Pillars countries={countries} analysis={analysis} />
         {zwe && sgp && gap && (
           <Arc

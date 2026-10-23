@@ -1,5 +1,5 @@
 {
-  "base": "http://127.0.0.1:4173/",
+  "base": "http://localhost:4175/",
   "widths": {
     "1440x900": {
       "bodyWidth": 1440,
@@ -544,7 +544,7 @@
     "375x812": {
       "bodyWidth": 375,
       "viewportWidth": 375,
-      "docHeight": 17495,
+      "docHeight": 17513,
       "viewportHeight": 812,
       "small": [],
       "checkboxTargets": [

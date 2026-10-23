@@ -21,9 +21,10 @@ The seven editorial issues in `docs/IA_RECONCILIATION.md` were fixed in a revise
 | Invariant: predictions match IA | covered by `ia.contract.test.ts` |
 | Horizontal overflow at 375, 414, 768, 1440 | none |
 | Console errors on load | none |
-| Browser interaction sweep | desktop 24 steps, mobile 7 steps, 0 console, page, request or HTTP errors |
+| Browser interaction sweep | desktop 25 steps, mobile 7 steps, 0 console, page, request or HTTP errors |
 | Section index | Gap and Working assertions pass on desktop and mobile |
 | Country selection reveal | clicking a pillar, chart point or search hit scrolls the stats card into view; desktop tucks the selection bar under the sticky index, mobile places the card below the sticky stage |
+| Map surface click | a click on a country's territory, or any bare point within 7 degrees of a marker, selects the nearest country; a beam click selects exactly that country; far-side beams cannot hover or select; drags never select |
 | Live site | deployed on GitHub Pages; the CSV and all six textures return 200; no console errors |
 | Data error path | readable alert when the CSV is blocked |
 | Unnamed interactive controls | 0 |

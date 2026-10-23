@@ -46,8 +46,8 @@ export const copy = {
     zoomOut: 'Zoom out',
     reset: 'Frame the selected countries',
     legend: 'Life expectancy, 2019',
-    hint: 'Drag to rotate · Scroll to zoom · Arrow keys rotate',
-    hintTouch: 'Drag to rotate · Pinch to zoom',
+    hint: 'Drag to rotate · Scroll to zoom · Click a country for its stats',
+    hintTouch: 'Drag to rotate · Pinch to zoom · Tap a country for its stats',
     imagery:
       'Blue Marble Next Generation, December 2004, with topography and bathymetry (NASA Earth Observatory / Reto Stöckli). Borders: Natural Earth Admin 0, 1:110m. Visual basemap, not a 2019 data layer.'
   },

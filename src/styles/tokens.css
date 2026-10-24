@@ -61,35 +61,35 @@
   --dur-med: 240ms;
   --dur-slow: 700ms;
 
-  /* The light analysis console that sits beside the globe. */
-  --surface-0: #ffffff;
-  --surface-1: #fbfbfc;
-  --surface-2: #f4f5f7;
-  --surface-3: #ececee;
-  --line-1: #e8eaed;
-  --line-2: #d7dbe0;
-  --text-0: #16181d;
-  --text-1: #4b5058;
-  --text-2: #6b7078;
-  --text-3: #656b73;
-  --ink-button: #1d1f20;
-  --accent-blue: #2563eb;
-  --positive: #1f5f5a;
-  --positive-bg: #e6f4f1;
-  --positive-ink: #123f3b;
+  /* Black analysis console, with accessible light text and chart colours. */
+  --surface-0: #080808;
+  --surface-1: #101010;
+  --surface-2: #000000;
+  --surface-3: #242424;
+  --line-1: #292929;
+  --line-2: #414141;
+  --text-0: #f5f5f5;
+  --text-1: #d0d0d0;
+  --text-2: #a6a6a6;
+  --text-3: #a6a6a6;
+  --ink-button: #ededed;
+  --accent-blue: #80b4ff;
+  --positive: #9bd8c9;
+  --positive-bg: #132823;
+  --positive-ink: #bcebdd;
 
-  --chart-linear: #2563eb;
-  --chart-log: #b45309;
-  --chart-thread: #d94f32;
-  --chart-dot-ring: #667085;
-  --chart-muted: #98a2b3;
-  --chart-user: #16181d;
-  --chart-box: #e8f3f0;
-  --chart-box-line: #7fb3a6;
-  --chart-median: #1f5f5a;
-  --chart-grid: #eef0f2;
-  --chart-axis: #d0d5dd;
-  --chart-extrapolation: #f3f1ec;
+  --chart-linear: #80b4ff;
+  --chart-log: #f6bd64;
+  --chart-thread: #ff896f;
+  --chart-dot-ring: #b0bac8;
+  --chart-muted: #84909e;
+  --chart-user: #f5f5f5;
+  --chart-box: #17352d;
+  --chart-box-line: #78b8a5;
+  --chart-median: #bcebdd;
+  --chart-grid: #242424;
+  --chart-axis: #666666;
+  --chart-extrapolation: #202020;
 
   --radius-card: 8px;
   --radius-control: 6px;

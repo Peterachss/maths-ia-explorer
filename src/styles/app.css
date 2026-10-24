@@ -204,9 +204,9 @@ body.resizing-panel {
   min-height: 0;
   overflow: hidden;
   background: var(--surface-2);
-  border-left: 1px solid #cfd4da;
+  border-left: 1px solid var(--line-1);
   color: var(--text-0);
-  color-scheme: light;
+  color-scheme: dark;
   font-size: 0.875rem;
   --paper-0: var(--text-0);
   --paper-1: var(--text-1);
@@ -853,7 +853,7 @@ table.data caption {
 }
 table.data th, table.data td {
   padding: 8px;
-  border-bottom: 1px solid #f1f2f4;
+  border-bottom: 1px solid var(--line-1);
   font-weight: 400;
   text-align: left;
   vertical-align: middle;
@@ -1962,3 +1962,16 @@ table.data tr.best > *:first-child { padding-left: 12px; }
 @media (max-width: 640px) {
   .map-gap { top: 4.75rem; }
 }
+
+/* Black analysis theme: replace the remaining fixed light-theme states. */
+.rail button:hover { background: var(--surface-3); }
+.panel ::selection { background: #28466a; color: var(--text-0); }
+.panel-scroll { scrollbar-color: #555 transparent; }
+.panel .btn.primary { color: #080808; }
+.panel .btn.primary:hover { background: #ffffff; border-color: #ffffff; color: #080808; }
+.panel .btn:hover { border-color: var(--line-2); }
+table.data tr.best { background: #14271f; }
+.country-table tbody tr.selected { background: #321c17; }
+.callout { background: #292213; border-color: #68512c; }
+.callout strong { color: #f6cd83; }
+.refs li:target .ref-line { background: #292213; }

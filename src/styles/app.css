@@ -1954,3 +1954,11 @@ details > summary { min-height: 44px; }
 
 .context-bar { padding-inline: 16px; }
 @media (max-width: 640px) { .stage-meta { right: 16px; } }
+
+/* Keep floating map labels separate from tabs and row markers clear of text. */
+.map-gap { top: 5rem; }
+table.country-table tr > *:first-child,
+table.data tr.best > *:first-child { padding-left: 12px; }
+@media (max-width: 640px) {
+  .map-gap { top: 4.75rem; }
+}

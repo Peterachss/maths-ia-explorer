@@ -73,3 +73,10 @@ The 3D canvas is deferred for 2.8s behind a Blue Marble poster and an “Open no
 - Frosted glass chrome: it reduced contrast and looked like a generic product demo.
 - A rainbow error bowl: hue implied categories where the surface is continuous.
 - A second display typeface: it added a voice the instrument panel did not need.
+
+
+## October 24 reading refinement
+
+Retain the globe and the light analysis console. Evidence blocks use a flat pale teal surface and tabular Instrument Sans numerals. Reading content has 22px desktop gutters and 16px phone gutters; evidence cards have 20px and 16px padding. Titles and questions share a clear hierarchy without nested accent rules. Mobile overview statistics stay in a single three-column strip. Country search is an ARIA combobox with name/code matching, arrow-key navigation, Enter selection, Escape dismissal and an explicit no-match state.
+
+Verified with 46 unit/data tests and browser checks at 1440, 1024, 768 and 375px, including the splitter, keyboard scatter selection, reduced motion and no-WebGL fallback.

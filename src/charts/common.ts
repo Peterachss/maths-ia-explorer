@@ -3,12 +3,12 @@ import type { XAxis } from '../store';
 
 export const W = 520;
 export const H = 340;
-export const M = { l: 58, r: 18, t: 30, b: 50 };
+export const M = { l: 58, r: 18, t: 46, b: 50 };
 export const innerW = W - M.l - M.r;
 export const innerH = H - M.t - M.b;
 
-export const X_LABEL = 'GDP per capita (constant 2021 international $, PPP)';
-export const Y_LABEL = 'Life expectancy at birth (years)';
+export const X_LABEL = 'GDP per capita (2021 PPP $)';
+export const Y_LABEL = 'Life expectancy (years)';
 
 export function xScale(axis: XAxis) {
   return axis === 'log'

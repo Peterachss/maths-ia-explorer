@@ -25,15 +25,15 @@
           "ok": true
         },
         {
-          "label": "straight line only",
+          "label": "straight line active model",
           "ok": true
         },
         {
-          "label": "log only",
+          "label": "logarithmic active model",
           "ok": true
         },
         {
-          "label": "both models",
+          "label": "show both curves",
           "ok": true
         },
         {
@@ -118,6 +118,10 @@
         "height": 812
       },
       "steps": [
+        {
+          "label": "open the globe from the poster",
+          "ok": true
+        },
         {
           "label": "search and select",
           "ok": true

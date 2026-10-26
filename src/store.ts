@@ -2,7 +2,7 @@
 import { create } from 'zustand';
 
 export type StageView = 'globe' | 'model';
-export type ModelShow = 'linear' | 'log' | 'both';
+export type ActiveModel = 'linear' | 'log';
 export type XAxis = 'linear' | 'log';
 export interface Focus { key: number; iso3: string[]; }
 
@@ -11,7 +11,8 @@ interface State {
   hovered: string | null;
   excluded: string[];
   stage: StageView;
-  modelShow: ModelShow;
+  model: ActiveModel;
+  compareCurves: boolean;
   xAxis: XAxis;
   focus: Focus;
   activeSection: string;
@@ -24,7 +25,8 @@ interface State {
   toggleExcluded: (iso3: string) => void;
   setExcluded: (list: string[]) => void;
   setStage: (s: StageView) => void;
-  setModelShow: (m: ModelShow) => void;
+  setModel: (m: ActiveModel) => void;
+  setCompareCurves: (v: boolean) => void;
   setXAxis: (x: XAxis) => void;
   setActiveSection: (id: string) => void;
   flyTo: (iso3: string[]) => void;
@@ -33,18 +35,22 @@ interface State {
 
 const MAX_SELECTED = 8;
 
-function fromUrl(): { selected: string[]; excluded: string[] } {
-  if (typeof window === 'undefined') return { selected: [], excluded: [] };
+function fromUrl(): { selected: string[]; excluded: string[]; model: ActiveModel } {
+  if (typeof window === 'undefined') return { selected: [], excluded: [], model: 'log' };
   const q = new URLSearchParams(window.location.search);
   const split = (k: string) => (q.get(k) ?? '').split(',').filter((s) => /^[A-Z]{3}$/.test(s));
-  return { selected: q.has('c') ? split('c').slice(0, MAX_SELECTED) : ['ZWE', 'SGP'], excluded: split('x') };
+  return {
+    selected: q.has('c') ? split('c').slice(0, MAX_SELECTED) : ['ZWE', 'SGP'],
+    excluded: split('x'),
+    model: q.get('m') === 'linear' ? 'linear' : 'log'
+  };
 }
 
 export const useStore = create<State>((set, get) => ({
   ...fromUrl(),
   hovered: null,
   stage: 'globe',
-  modelShow: 'both',
+  compareCurves: true,
   xAxis: 'log',
   focus: { key: 0, iso3: ['ZWE', 'SGP'] },
   activeSection: 'h-two',
@@ -77,7 +83,8 @@ export const useStore = create<State>((set, get) => ({
   },
   setExcluded: (list) => set({ excluded: list }),
   setStage: (stage) => set({ stage }),
-  setModelShow: (modelShow) => set({ modelShow }),
+  setModel: (model) => set({ model }),
+  setCompareCurves: (compareCurves) => set({ compareCurves }),
   setXAxis: (xAxis) => set({ xAxis }),
   setActiveSection: (activeSection) => set({ activeSection }),
   flyTo: (iso3) => set((st) => ({ focus: { key: st.focus.key + 1, iso3 } })),
@@ -93,6 +100,7 @@ export function syncUrl(): () => void {
     const q = new URLSearchParams();
     if (s.selected.length) q.set('c', s.selected.join(','));
     if (s.excluded.length) q.set('x', s.excluded.join(','));
+    if (s.model === 'linear') q.set('m', 'linear');
     const qs = q.toString();
     window.history.replaceState(null, '', qs ? `?${qs}` : window.location.pathname);
   });

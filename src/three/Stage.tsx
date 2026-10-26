@@ -65,6 +65,7 @@ export function Stage({
   view: RefObject<ViewCommand>;
 }) {
   const controls = useRef<OrbitControlsImpl>(null);
+  const compact = typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches;
   const zwe = countries.find((c) => c.iso3 === 'ZWE');
   const sgp = countries.find((c) => c.iso3 === 'SGP');
   const gap = analysis.gap;
@@ -73,7 +74,7 @@ export function Stage({
 
   return (
     <Canvas
-      dpr={[1, 2]}
+      dpr={[1, compact ? 1.5 : 2]}
       camera={{ fov: 32, position: [0, 1.1, 5.2], near: 0.05, far: 200 }}
       gl={{ antialias: true, powerPreference: 'high-performance' }}
       onCreated={({ gl }) => {
@@ -89,7 +90,7 @@ export function Stage({
       <Stars
         radius={80}
         depth={55}
-        count={5600}
+        count={compact ? 2400 : 5600}
         factor={2.3}
         saturation={0}
         fade

@@ -9,6 +9,7 @@ export interface Analysis {
   linear: Fit;
   log: Fit;
   better: ModelKind;
+  model: ModelKind; // the model the reader has chosen; every derived quantity follows it
   xSummary: Summary;
   ySummary: Summary;
   spearman: number;
@@ -18,15 +19,16 @@ export interface Analysis {
   xOnY: ReturnType<typeof xOnYTarget> | null;
 }
 
-export function analyse(all: readonly Point[], excluded: ReadonlySet<string> = new Set()): Analysis {
+export function analyse(all: readonly Point[], excluded: ReadonlySet<string> = new Set(), model?: ModelKind): Analysis {
   const points = all.filter((p) => !excluded.has(p.iso3));
   const { linear, log, better } = fitBoth(points);
   const zwe = points.find((p) => p.iso3 === 'ZWE');
   const sgp = points.find((p) => p.iso3 === 'SGP');
-  const fit = better === 'log' ? log : linear;
+  const active = model ?? better;
+  const fit = active === 'log' ? log : linear;
   const xs = points.map((p) => p.x);
   return {
-    points, linear, log, better,
+    points, linear, log, better, model: active,
     xSummary: summarise(xs),
     ySummary: summarise(points.map((p) => p.y)),
     spearman: spearman(xs, points.map((p) => p.y)),

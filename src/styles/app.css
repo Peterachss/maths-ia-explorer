@@ -1776,15 +1776,26 @@ details summary:hover { color: var(--text-0); }
   font-size: 12px;
 }
 .stage-poster-globe {
-  width: min(58%, 360px);
-  aspect-ratio: 1.9 / 1;
+  position: relative;
+  width: min(46%, 300px);
+  aspect-ratio: 1;
   border-radius: 50%;
   background: url('textures/earth-poster.jpg') center / cover;
   box-shadow: 0 0 55px 8px rgb(50 120 190 / 0.18), inset -30px -12px 50px rgb(0 0 0 / 0.55);
-  opacity: 0.9;
+  opacity: 0.94;
+}
+.stage-poster-globe::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 26%, rgb(255 255 255 / 0.16), transparent 38%),
+    radial-gradient(circle at 68% 78%, transparent 42%, rgb(0 8 16 / 0.5) 76%, rgb(0 4 10 / 0.82) 100%);
+  pointer-events: none;
 }
 @media (max-width: 640px) {
-  .stage-poster-globe { width: 72%; }
+  .stage-poster-globe { width: min(48%, 190px); }
 }
 .poster-open {
   min-height: 36px;

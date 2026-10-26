@@ -4,6 +4,7 @@ import '@fontsource-variable/instrument-sans';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/app.css';
+import './styles/redesign.css';
 import { App } from './App';
 
 createRoot(document.getElementById('root')!).render(

@@ -62,7 +62,12 @@ export function MapChrome({
         <span className="hint-desktop">{copy.map.hint}</span>
         <span className="hint-touch">{copy.map.hintTouch}</span>
       </p>
-      <p className="map-attribution">{copy.map.imagery}</p>
+      <p className="map-attribution">
+        <span className="attribution-long">{copy.map.imagery}</span>
+        <span className="attribution-short" title={copy.map.imagery}>
+          Blue Marble: NASA Earth Observatory. Borders: Natural Earth. Basemap only.
+        </span>
+      </p>
     </>
   );
 }

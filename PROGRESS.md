@@ -2,11 +2,11 @@
 
 Branch: `main` (`rebuild/nasa-grade` merged)
 
-Last update: 23 October 2026
+Last update: 27 October 2026
 
 Release: published at https://peterachss.github.io/maths-ia-explorer/ (canonical). https://maths-ia-explorer.surge.sh/ is a verified mirror.
 
-Build status: `npm run build` passes; `npm test` passes 46/46; the interaction sweep passes 25 desktop and 7 mobile steps; `check:ui` passes at all four widths, desktop page scroll stays at y=0; axe 16/16 clean; Lighthouse desktop 100/100/100/100, mobile 98/100/100/100.
+Build status: `npm run build` passes; `npm test` passes 46/46; the interaction sweep passes 25 desktop and 8 mobile steps; `check:ui` passes at all four widths, desktop page scroll stays at y=0; axe 16/16 clean; final redesign Lighthouse desktop 97/100/100/100, mobile 96/100/100/100 (the desktop trace includes the 4K globe; the mobile trace is the poster path).
 
 | ID | Status | Evidence | Commit |
 |---|---|---|---|
@@ -101,3 +101,19 @@ The owner reported two defects on the published build: a red and blue glitch at 
 - **B18: rail footer removed.** The rail ended with a two pixel blue reading-progress bar and an 11 pixel `2019` label, which read as a red and blue glitch at the foot of the dark rail. The footer is removed rather than restyled, so the rail ends at Sources; the scroll spy still marks the active destination.
 - **E8: 8K globe.** The globe used a 1024 or 2048 pixel Blue Marble render. It now requests 8K when `maxTextureSize` is at least 8192, 4K on GPUs capped below that, and 2K on phone-sized viewports. The border overlay is generated at 4096 and the sphere at 128 by 84 segments. At 1440 the stage is about 830 pixels because the reading panel takes the rest, so the compact test requires both a narrow stage and a viewport under 900 pixels; a stage-only test served 2K to desktop.
 - Verification: `npm run build` passes, `npm test` passes 46/46, the GitHub base-path preview serves the 8K texture at 1440 and the 2K at 375, the rail footer is absent, all 11 anchors are present and there are no failed requests or console errors. The audit remains clean at 1440 and 375. The live release (run 39919923719, commit `ef05eaa`) repeats those results: 8K at 1440, 2K at 375, the deep link shows Thailand vs Kenya, the 1K texture is gone, and all assets return 200. Evidence: `audit/live/b18-e8-checks.json`, `audit/live/github-1440.png`, `audit/live/github-1440-zoom.png`, `audit/live/github-375.png` and `audit/live/ui-checks.json`.
+
+## Redesign, 26-27 October 2026
+
+Branch: `main`, on top of `75cf6df`. The redesign is one normal commit group, `R1`; nothing was force-pushed.
+
+Scope: a full app-screen redesign of the published explorer while keeping the React/Vite/Three.js stack, the 42-row dataset, the regression code and every working interaction. The `design-taste-frontend` and `impeccable` skills were used.
+
+- **Shell.** Replaced the 56px icon rail with a 152px typographic contents index. Merged the stacked header bands into one masthead plus a compact context strip. Widened the reading panel to 53% of the viewport (600-800px). Added a four-KPI finding strip and a headline computed from the active model.
+- **One active model.** A single `model` store value (`log` or `linear`, URL `m=linear`) now drives the scatter, residuals, gap, derivative and inverse charts, the working, the tables and the headline. Sensitivity is always recomputed from the current sample. The linear model uses explicit overshoot wording rather than capping the predicted share at 100%.
+- **Charts.** All seven were rewritten for dynamic axes, consistent colours, direct labels, readable ticks and active-model values. Added `SensitivityChart` (four-row dumbbell) in place of hardcoded prose. Added the residual histogram label and axis, moved derivative country values into a legend key, anchored inverse labels away from the plot edge, and kept the gap percent label inside the bar.
+- **Globe.** FOV/aspect-aware camera fit. 4K Blue Marble at laptop size, 8K only when the stage is at least 2000 device pixels wide; the border canvas follows the same threshold (2048 below it). Phones use a 96x64 sphere, 2400 stars and a 1.5 DPR cap. Mobile keeps the poster until the reader presses "Open the globe"; desktop and tablet mount the scene when the main thread is idle.
+- **Mobile and tablet.** Sticky contents bar with a native section select. 44px targets, compact one-line bowl controls, and a stage that grows to 48dvh only when the bowl tab is active. The phone poster is a circular, shaded hemisphere; the stage gap badge is hidden below 640px because the headline immediately below states the same gap.
+- **Accessibility.** Darkened the small-text tokens to meet WCAG AA without changing the coral rules or chart accents. axe reports 0 violations across all 16 width/chapter combinations. The keyboard scatter, skip link, reduced motion and WebGL fallback checks still pass.
+- **Data.** Both CSV copies were re-hashed (`0b0a1624...f37f66d`), the full-precision values were recomputed independently, and no data value changed. The log fit remains `y = 5.927678825 ln x + 16.024564`, r2 = 0.768662883; the observed gap is 22.535 years and the predicted gap 18.879168 years (83.777093%).
+- **Verification.** `npm test` 46/46, `data:verify-stats` 68/68, `data:anchor` 11/11, `check:ui` at all four widths, interaction sweep 25 desktop and 8 mobile steps, axe 16/16 clean, build passing. Final Lighthouse: desktop 97/100/100/100 and mobile 96/100/100/100. The desktop trace includes the 4K globe and the 4K texture; the mobile trace is the 180 KiB poster path. Screenshots: `audit/after/`; chart set: `audit/charts/`; before set: `audit/baseline/`; audits: `audit/after-redesign/`.
+- **Remaining limitation.** The mobile 3D scene is opt-in and still costs roughly 1-3 seconds of main-thread work when opened on a mid-range phone. The report itself, not the globe, is now the main mobile cost (seven SVG charts). The panel remains light (D2).

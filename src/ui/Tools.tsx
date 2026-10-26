@@ -7,12 +7,13 @@ import { SegmentedControl } from './Segmented';
 
 /** IA sections 7 and 10: tangent change versus exact change, and the doubling effect. */
 export function ChangeTool({ analysis }: { analysis: Analysis }) {
-  const fit = analysis.better === 'log' ? analysis.log : analysis.linear;
+  const fit = analysis.model === 'log' ? analysis.log : analysis.linear;
   const [lx, setLx] = useState(Math.log(4994));
   const [step, setStep] = useState(1000);
   const x = Math.exp(lx);
   const tangent = fit.derivative(x) * step;
   const exact = fit.predict(x + step) - fit.predict(x);
+  const modelName = analysis.model === 'log' ? 'logarithmic' : 'straight-line';
   return (
     <div className="tool">
       <label>
@@ -27,8 +28,9 @@ export function ChangeTool({ analysis }: { analysis: Analysis }) {
         <dt>Rate dy/dx at this income</dt><dd>{num(fit.derivative(x) * 1000, 3)} years per $1,000</dd>
         <dt>Tangent estimate for the increase</dt><dd>{num(tangent, 3)} years</dd>
         <dt>Exact change in the model</dt><dd>{num(exact, 3)} years</dd>
-        {analysis.better === 'log' && (<><dt>Every doubling of GDP per capita adds</dt><dd>{num(doublingEffect(fit.a), 2)} years</dd></>)}
+        {analysis.model === 'log' && (<><dt>Every doubling of GDP per capita adds</dt><dd>{num(doublingEffect(fit.a), 2)} years</dd></>)}
       </dl>
+      <p className="note">These values follow the active {modelName} model. Change the model above the scatter plot to compare.</p>
     </div>
   );
 }
@@ -37,13 +39,15 @@ const PRESET = ['NGA', 'TCD'];
 
 /** IA section 12: exclude countries and watch everything refit. */
 export function SensitivityPanel({ countries, points }: { countries: Country[]; points: Point[] }) {
-  const { excluded, setExcluded, toggleExcluded } = useStore();
-  const base = useMemo(() => analyse(points), [points]);
-  const out = useMemo(() => analyse(points, new Set(PRESET)), [points]);
+  const { excluded, setExcluded, toggleExcluded, model } = useStore();
+  const base = useMemo(() => analyse(points, new Set(), model), [points, model]);
+  const out = useMemo(() => analyse(points, new Set(PRESET), model), [points, model]);
+  const slopeLabel = model === 'log' ? 'Slope a' : 'Slope a (years per $1,000)';
+  const slope = (a: Analysis) => (model === 'log' ? num(a.log.a, 3) : num(a.linear.a * 1000, 3));
   const rows: [string, (a: Analysis) => string][] = [
-    ['Slope a', (a) => num(a.log.a, 3)],
-    ['r', (a) => num(a.log.r, 3)],
-    ['Residual SE (years)', (a) => num(a.log.se, 2)],
+    [slopeLabel, slope],
+    ['r', (a) => num(model === 'log' ? a.log.r : a.linear.r, 3)],
+    ['Residual SE (years)', (a) => num(model === 'log' ? a.log.se : a.linear.se, 2)],
     ['Predicted gap, share of observed', (a) => (a.gap ? percent(a.gap.percentReproduced, 1) : 'n/a')],
     ['GDP for Singapore life expectancy', (a) => (a.inverse ? dollars(a.inverse.requiredX) : 'n/a')]
   ];
@@ -71,8 +75,8 @@ export function SensitivityPanel({ countries, points }: { countries: Country[]; 
       )}
       <div className="table-scroll" tabIndex={0} role="region" aria-label="Sensitivity comparison table">
         <table className="data">
-          <caption>Logarithmic model with and without Nigeria and Chad</caption>
-          <thead><tr><th scope="col">Quantity</th><th scope="col">All 42</th><th scope="col">Without the two</th></tr></thead>
+          <caption>{model === 'log' ? 'Logarithmic' : 'Straight-line'} model with and without Nigeria and Chad</caption>
+          <thead><tr><th scope="col">Quantity</th><th scope="col">All {base.points.length}</th><th scope="col">Without the two</th></tr></thead>
           <tbody>{rows.map(([n, f]) => (<tr key={n}><th scope="row">{n}</th><td>{f(base)}</td><td>{f(out)}</td></tr>))}</tbody>
         </table>
       </div>
@@ -86,7 +90,7 @@ export function SensitivityPanel({ countries, points }: { countries: Country[]; 
           ))}
         </ul>
       </details>
-      <p className="note">The charts above and the globe use the current choice. The table always compares all 42 with the preset.</p>
+      <p className="note">Every chart, the KPIs and the globe follow the current choice. The table keeps the all-versus-preset comparison so the sensitivity check stays fixed.</p>
     </div>
   );
 }

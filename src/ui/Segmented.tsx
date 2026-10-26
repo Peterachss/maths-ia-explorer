@@ -41,18 +41,21 @@ export function SegmentedControl<T extends string>({
         if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
       }}
     >
-      {options.map((o) => (
-        <button
-          key={o.value}
-          id={`${id}-${o.value}`}
-          type="button"
-          role="radio"
-          aria-checked={value === o.value}
-          tabIndex={value === o.value ? 0 : -1}
-          className={value === o.value ? 'on' : ''}
-          onClick={() => onChange(o.value)}
-        >{o.label}</button>
-      ))}
+      <span className="seg-label" aria-hidden="true">{label}</span>
+      <div className="seg-options">
+        {options.map((o) => (
+          <button
+            key={o.value}
+            id={`${id}-${o.value}`}
+            type="button"
+            role="radio"
+            aria-checked={value === o.value}
+            tabIndex={value === o.value ? 0 : -1}
+            className={value === o.value ? 'on' : ''}
+            onClick={() => onChange(o.value)}
+          >{o.label}</button>
+        ))}
+      </div>
     </div>
   );
 }

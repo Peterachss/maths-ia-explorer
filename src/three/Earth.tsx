@@ -36,17 +36,26 @@ export const PICK_DRAG_PX = 8;
 export function Earth({ countries }: { countries: Country[] }) {
   // The stage is narrower than the viewport on desktop because the reading
   // panel takes the right side. Treat "compact" as a phone-sized viewport, not
-  // just a narrow stage, so a 1440 laptop still gets the 8K render.
+  // just a narrow stage, and size the map layers to the pixels the stage can
+  // actually show.
   const stageWidth = useThree((s) => s.size.width);
   const compact = stageWidth < 900 && typeof window !== 'undefined' && window.innerWidth < 900;
   const maxAniso = useThree((s) => s.gl.capabilities.getMaxAnisotropy());
   const maxTexture = useThree((s) => s.gl.capabilities.maxTextureSize);
-  // The NASA master is 21600 x 10800. The 8K render keeps the satellite image
-  // sharp when the camera is close; older GPUs that cap textures at 4K get the
-  // 4K render instead, and phones keep the small download.
+  const devicePx = stageWidth * Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 2);
+  // A 2048 border canvas and a 96 x 64 sphere are indistinguishable at laptop
+  // size, and avoid generating a 4096 x 2048 texture on the main thread. The
+  // larger layer is reserved for the same large stages that earn the 8K render.
+  const borderSize = devicePx >= 2000 ? 4096 : 2048;
+  const segments = compact ? ([96, 64] as const) : ([128, 84] as const);
+  // The NASA master is 21600 x 10800. Match the render to the pixels the stage
+  // can actually show: a 1440 laptop gives the globe roughly 600 CSS px, so a
+  // 4K render is already oversampled at 2x DPR. The 8K file is reserved for
+  // large stages, where its 4.3 MB download and 134 MB GPU upload earn their
+  // keep. Older GPUs that cap textures at 4K fall back to the 4K render.
   const texture = compact
     ? 'earth-day-2k.jpg'
-    : maxTexture >= 8192
+    : maxTexture >= 8192 && devicePx >= 2000
       ? 'earth-day-8k.jpg'
       : 'earth-day-4k.jpg';
   const [day] = useLoader(TextureLoader, [`${base}textures/${texture}`]) as [Texture];
@@ -62,7 +71,7 @@ export function Earth({ countries }: { countries: Country[] }) {
     day.needsUpdate = true;
   }, [day, maxAniso]);
 
-  const borders = useMemo(() => makeBorderTexture(4096), []);
+  const borders = useMemo(() => makeBorderTexture(borderSize), [borderSize]);
 
   /** Nearest marker to a point on the sphere, or null if none is close. */
   const pick = (point: Vector3): string | null => {
@@ -98,7 +107,7 @@ export function Earth({ countries }: { countries: Country[] }) {
   return (
     <group>
       <mesh onClick={surfaceClick} onPointerOver={surfaceOver}>
-        <sphereGeometry args={[1, 128, 84]} />
+        <sphereGeometry args={[1, ...segments]} />
         <meshPhongMaterial
           map={day}
           specular="#17334f"
@@ -107,7 +116,7 @@ export function Earth({ countries }: { countries: Country[] }) {
       </mesh>
 
       <mesh renderOrder={1}>
-        <sphereGeometry args={[1.0015, 128, 84]} />
+        <sphereGeometry args={[1.0015, ...segments]} />
         <meshBasicMaterial
           map={borders}
           transparent

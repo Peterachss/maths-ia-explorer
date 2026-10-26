@@ -50,6 +50,13 @@ async function settle(page: Page, ms: number) {
   await page.waitForTimeout(ms);
 }
 
+/** Phones keep the Blue Marble poster until the reader asks for WebGL. */
+async function open3d(page: Page) {
+  const poster = page.locator('.poster-open');
+  if (await poster.count()) await poster.first().click().catch(() => undefined);
+  await page.waitForSelector('.stage canvas', { state: 'attached', timeout: 30_000 }).catch(() => undefined);
+}
+
 async function scrollPanelTo(page: Page, selector: string) {
   await page.evaluate((sel) => {
     const el = document.querySelector<HTMLElement>(sel);
@@ -67,7 +74,7 @@ async function scrollPanelTo(page: Page, selector: string) {
 async function run() {
   await ensureServer();
   await mkdir(out, { recursive: true });
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ channel: 'chrome' });
   const consoleLog: { width: string; type: string; text: string }[] = [];
 
   for (const size of sizes) {
@@ -96,6 +103,7 @@ async function run() {
     // Globe view. Keep this canvas mounted for the chapter shots so the selected
     // labels are already present when the panel scrolls.
     await page.getByRole('tab', { name: /Globe/i }).click().catch(() => undefined);
+    await open3d(page);
     await settle(page, 1200);
     await page.screenshot({ path: `${out}/${size.name}-globe.png` });
 
@@ -108,6 +116,7 @@ async function run() {
     // Bowl view, with the Models chapter in the reading panel.
     await scrollPanelTo(page, '[data-chapter-heading="models"]');
     await page.getByRole('tab', { name: /least squares bowl/i }).click().catch(() => undefined);
+    await open3d(page);
     await page.waitForTimeout(1800);
     await page.screenshot({ path: `${out}/${size.name}-bowl.png` });
 

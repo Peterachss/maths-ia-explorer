@@ -83,7 +83,7 @@ export function ChartExport({ filename, csv }: { filename: string; csv?: string 
 
   return (
     <details className="export" ref={root}>
-      <summary><Download size={14} strokeWidth={1.8} aria-hidden="true" /> Export</summary>
+      <summary aria-label="Export chart"><Download size={14} strokeWidth={1.8} aria-hidden="true" /> <span className="export-label">Export</span></summary>
       <div className="export-menu">
         <button type="button" onClick={exportPng}>PNG</button>
         <button type="button" onClick={exportSvg}>SVG</button>

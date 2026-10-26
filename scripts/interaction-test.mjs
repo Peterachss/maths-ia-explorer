@@ -50,9 +50,10 @@ async function run(name, viewport, body) {
   try {
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForTimeout(1500);
-    // The 3D canvas is deferred behind the poster; give it time to mount before
-    // any test that needs to click or measure the stage.
-    await page.waitForSelector('.stage canvas', { state: 'attached', timeout: 10000 }).catch(() => {});
+    // Desktop mounts the scene when idle; phones keep the poster until asked.
+    if (!(await page.locator('.poster-open').count())) {
+      await page.waitForSelector('.stage canvas', { state: 'attached', timeout: 10000 }).catch(() => {});
+    }
     await body(page, step);
 
     if (w.errors.length) {
@@ -82,8 +83,8 @@ const pickFromSearch = async (page, name) => {
     setter?.call(input, query);
     input?.dispatchEvent(new Event('input', { bubbles: true }));
   }, name);
-  await page.waitForSelector('.search-hits [role="option"] button');
-  await page.evaluate(() => document.querySelector('.search-hits [role="option"] button')?.click());
+  await page.waitForSelector('.search-hits [role="option"]');
+  await page.evaluate(() => document.querySelector('.search-hits [role="option"]')?.click());
 };
 
 await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
@@ -145,15 +146,15 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
   await step('search Singapore', async () => {
     await page.getByPlaceholder('Type a country name').fill('Sing');
     await page.waitForTimeout(200);
-    await page.locator('.search-hits [role="option"] button').first().click();
+    await page.locator('.search-hits [role="option"]').first().click();
     await page.waitForTimeout(600);
   });
 
   await step('clear selection', async () => page.getByRole('button', { name: 'Clear selection' }).click());
   await step('select both anchors', async () => page.getByRole('button', { name: 'Compare Zimbabwe and Singapore' }).click());
-  await step('straight line only', async () => page.getByRole('radio', { name: 'Straight line', exact: true }).click());
-  await step('log only', async () => page.getByRole('radio', { name: 'Logarithmic', exact: true }).click());
-  await step('both models', async () => page.getByRole('radio', { name: 'Both models' }).click());
+  await step('straight line active model', async () => page.getByRole('radio', { name: 'Straight line', exact: true }).click());
+  await step('logarithmic active model', async () => page.getByRole('radio', { name: 'Logarithmic', exact: true }).click());
+  await step('show both curves', async () => page.getByRole('checkbox', { name: 'Show both curves' }).check());
   await step('linear axis', async () => page.getByRole('radio', { name: 'Linear x axis' }).click());
   await step('log axis', async () => page.getByRole('radio', { name: 'Log x axis' }).click());
 
@@ -266,10 +267,14 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
 });
 
 await run('mobile', { width: 375, height: 812 }, async (page, step) => {
+  await step('open the globe from the poster', async () => {
+    await page.getByRole('button', { name: 'Open the globe' }).click();
+    await page.waitForSelector('.stage canvas', { state: 'attached', timeout: 30000 });
+  });
   await step('search and select', async () => {
     await page.getByPlaceholder('Type a country name').fill('Zimb');
     await page.waitForTimeout(200);
-    await page.locator('.search-hits [role="option"] button').first().click();
+    await page.locator('.search-hits [role="option"]').first().click();
     await page.waitForTimeout(500);
   });
   await step('scroll the page', async () => {

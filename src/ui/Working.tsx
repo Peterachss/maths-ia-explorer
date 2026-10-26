@@ -6,10 +6,14 @@ const L = ({ children }: { children: React.ReactNode }) => <p className="work-li
 /** Every formula, substitution and result, computed from the data on this page. */
 export function Working({ analysis: A }: { analysis: Analysis }) {
   const lg = A.log, ln = A.linear, g = A.gap, inv = A.inverse;
+  const active = A.model;
+  const fit = active === 'log' ? lg : ln;
+  const modelName = active === 'log' ? 'logarithmic' : 'straight-line';
   return (
     <div className="working">
-      <details open>
-        <summary>Logarithmic model by least squares</summary>
+      <p className="work-active">Derived quantities below use the active <strong>{modelName}</strong> model. Both least-squares fits are shown so the comparison stays inspectable.</p>
+      <details open={active === 'log'}>
+        <summary>Logarithmic model by least squares {active === 'log' && <span className="pill pill-active">Active</span>}</summary>
         <math display="block"><mi>y</mi><mo>=</mo><mi>a</mi><mi>ln</mi><mo>&#x2061;</mo><mi>x</mi><mo>+</mo><mi>b</mi></math>
         <L>Let X = ln x. n = {lg.n}, X̄ = {num(lg.meanU, 4)}, ȳ = {num(lg.meanY, 3)}.</L>
         <L>Sxx = Σ(Xᵢ − X̄)² = {num(lg.sxx, 3)}, Syy = Σ(yᵢ − ȳ)² = {num(lg.syy, 2)}, Sxy = Σ(Xᵢ − X̄)(yᵢ − ȳ) = {num(lg.sxy, 3)}</L>
@@ -19,9 +23,13 @@ export function Working({ analysis: A }: { analysis: Analysis }) {
         <L>Test: t = r√(n − 2) ÷ √(1 − r²) = {num(A.logTest.t, 2)} on {A.logTest.df} degrees of freedom, p &lt; 0.001.</L>
         <L>Doubling x adds a ln 2 = {num(lg.a * Math.LN2, 3)} years.</L>
       </details>
-      <details>
-        <summary>Straight line model</summary>
-        <L>a = Sxy ÷ Sxx = {ln.a.toExponential(4)}, b = {num(ln.b, 3)}, r = {num(ln.r, 4)}, r² = {num(ln.r2, 4)}, SSE = {num(ln.sse, 1)}</L>
+      <details open={active === 'linear'}>
+        <summary>Straight-line model by least squares {active === 'linear' && <span className="pill pill-active">Active</span>}</summary>
+        <math display="block"><mi>y</mi><mo>=</mo><mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi></math>
+        <L>n = {ln.n}, x̄ = {dollars(ln.meanU)}, ȳ = {num(ln.meanY, 3)}.</L>
+        <L>Sxx = Σ(xᵢ − x̄)² = {num(ln.sxx, 3)}, Syy = Σ(yᵢ − ȳ)² = {num(ln.syy, 2)}, Sxy = Σ(xᵢ − x̄)(yᵢ − ȳ) = {num(ln.sxy, 3)}</L>
+        <L>a = Sxy ÷ Sxx = {num(ln.a, 8)}, b = ȳ − a x̄ = {num(ln.b, 4)}</L>
+        <L>r = Sxy ÷ √(Sxx Syy) = {num(ln.r, 4)}, r² = {num(ln.r2, 4)}, SSE = {num(ln.sse, 1)}, residual SE = {num(ln.se, 3)} years</L>
       </details>
       {g && inv && (
         <>
@@ -34,17 +42,29 @@ export function Working({ analysis: A }: { analysis: Analysis }) {
           </details>
           <details>
             <summary>Rate of change</summary>
-            <math display="block"><mfrac><mrow><mi>dy</mi></mrow><mrow><mi>dx</mi></mrow></mfrac><mo>=</mo><mfrac><mi>a</mi><mi>x</mi></mfrac><mo>,</mo><mspace width="1em" /><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>y</mi></mrow><mrow><mi>d</mi><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mo>−</mo><mfrac><mi>a</mi><msup><mi>x</mi><mn>2</mn></msup></mfrac><mo>&lt;</mo><mn>0</mn></math>
+            {active === 'log' ? (
+              <math display="block"><mfrac><mrow><mi>dy</mi></mrow><mrow><mi>dx</mi></mrow></mfrac><mo>=</mo><mfrac><mi>a</mi><mi>x</mi></mfrac><mo>,</mo><mspace width="1em" /><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>y</mi></mrow><mrow><mi>d</mi><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mo>−</mo><mfrac><mi>a</mi><msup><mi>x</mi><mn>2</mn></msup></mfrac><mo>&lt;</mo><mn>0</mn></math>
+            ) : (
+              <math display="block"><mfrac><mrow><mi>dy</mi></mrow><mrow><mi>dx</mi></mrow></mfrac><mo>=</mo><mi>a</mi><mo>,</mo><mspace width="1em" /><mfrac><mrow><msup><mi>d</mi><mn>2</mn></msup><mi>y</mi></mrow><mrow><mi>d</mi><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mn>0</mn></math>
+            )}
             <L>Zimbabwe: {num(g.slopeLow, 6)} years per $1 = {num(g.per1000Low, 3)} years per $1,000. Exact change for +$1,000: {num(g.exact1000Low, 3)} years.</L>
             <L>Singapore: {num(g.slopeHigh, 6)} years per $1 = {num(g.per1000High, 4)} years per $1,000. Exact change for +$1,000: {num(g.exact1000High, 4)} years.</L>
-            <L>Ratio = x(Singapore) ÷ x(Zimbabwe) = {num(g.slopeRatio, 2)}</L>
+            <L>Ratio = {active === 'log' ? 'x(Singapore) ÷ x(Zimbabwe)' : '1, because the straight line has one slope'} = {num(g.slopeRatio, 2)}</L>
           </details>
           <details>
             <summary>GDP per capita for Singapore's life expectancy</summary>
-            <math display="block"><mi>x</mi><mo>=</mo><msup><mi>e</mi><mrow><mo>(</mo><mi>y</mi><mo>−</mo><mi>b</mi><mo>)</mo><mo>/</mo><mi>a</mi></mrow></msup></math>
-            <L>x = e^(({num(inv.targetLife, 3)} − {num(lg.b, 4)}) ÷ {num(lg.a, 4)}) = {dollars(inv.requiredX)}, which is {num(inv.multipleOfLow, 1)} times Zimbabwe's GDP per capita.</L>
-            <L>With the rounded 83.6 years the same formula gives {dollars(lg.inverse(83.6))}. The IA's figure uses the unrounded 83.595.</L>
+            {active === 'log' ? (
+              <math display="block"><mi>x</mi><mo>=</mo><msup><mi>e</mi><mrow><mo>(</mo><mi>y</mi><mo>−</mo><mi>b</mi><mo>)</mo><mo>/</mo><mi>a</mi></mrow></msup></math>
+            ) : (
+              <math display="block"><mi>x</mi><mo>=</mo><mfrac><mrow><mi>y</mi><mo>−</mo><mi>b</mi></mrow><mi>a</mi></mfrac></math>
+            )}
+            <L>x = {active === 'log' ? `e^((${num(inv.targetLife, 3)} − ${num(lg.b, 4)}) ÷ ${num(lg.a, 4)})` : `(${num(inv.targetLife, 3)} − ${num(ln.b, 4)}) ÷ ${num(ln.a, 8)}`} = {dollars(inv.requiredX)}, which is {num(inv.multipleOfLow, 1)} times Zimbabwe's GDP per capita.</L>
+            {active === 'log' && <L>With the rounded 83.6 years the same formula gives {dollars(lg.inverse(83.6))}. The IA's figure uses the unrounded 83.595.</L>}
             {A.xOnY && <L>Comparison only: the regression line of ln x on y has slope {num(A.xOnY.slope, 4)} and intercept {num(A.xOnY.intercept, 4)} and gives {dollars(A.xOnY.requiredX)}. It minimises horizontal distances, so it is a different calculation from reading the y on ln x model in reverse.</L>}
+          </details>
+          <details>
+            <summary>Sensitivity: refit without Nigeria and Chad</summary>
+            <L>The current fit is {modelName} with {fit.n} countries. The Reliability chapter refits the same model to the 40 countries that remain when Nigeria and Chad are excluded, and reports the change in slope, r, residual standard error, reproduced gap and inverse prediction.</L>
           </details>
         </>
       )}

@@ -20,7 +20,8 @@ const chapters = ['data', 'models', 'use', 'reliability'] as const;
 await mkdir(out, { recursive: true });
 
 async function axeSweep() {
-  const browser = await chromium.launch();
+  // The CI image may not have Playwright's bundled Chromium; use installed Chrome.
+  const browser = await chromium.launch({ channel: 'chrome' });
   const results: Record<string, unknown> = {};
   for (const size of widths) {
     const context = await browser.newContext({ viewport: { width: size.width, height: size.height } });

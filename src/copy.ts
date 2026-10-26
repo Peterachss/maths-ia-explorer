@@ -4,8 +4,6 @@ export const copy = {
   brand: 'Maths AA SL · Internal Assessment',
   subtitle:
     'How well do straight and curved models link income to life expectancy across 42 countries in 2019?',
-  answer:
-    'In 2019, the logarithmic model explains 77% of the variation in life expectancy across these 42 countries. The straight line explains 55%. The model reproduces 18.9 of the 22.5-year gap between Zimbabwe and Singapore.',
   chapters: [
     { id: 'data', no: '01', title: 'Data', purpose: 'What did I measure, and for which countries?' },
     { id: 'models', no: '02', title: 'Models', purpose: 'Which model fits better, and how much of the gap does it explain?' },
@@ -32,7 +30,6 @@ export const copy = {
     anchors: 'Compare Zimbabwe and Singapore',
     linear: 'Straight line',
     log: 'Logarithmic',
-    both: 'Both models',
     linearAxis: 'Linear x axis',
     logAxis: 'Log x axis',
     showWorking: 'Show working',
@@ -216,7 +213,7 @@ export const copy = {
     ],
     checks: [
       '42 rows, 42 unique ISO3 codes, no missing values.',
-      'Live World Bank pull: maximum GDP difference 0.00 percent; maximum life-expectancy difference 0.000 years.',
+      'Live World Bank pull: maximum GDP difference 0.0004 percent; maximum life-expectancy difference 0.000463 years.',
       '11 printed IA anchors pass in scripts/anchor_check.mjs.',
       'Automated tests pass, including the data contract.',
       'A separate Python implementation recomputes every statistic in scripts/crosscheck.py.',

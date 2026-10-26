@@ -4,6 +4,8 @@ import type { Analysis } from '../math';
 import { dollars, num, signed } from '../math';
 import { useStore } from '../store';
 
+const modelName = (analysis: Analysis) => (analysis.model === 'log' ? 'logarithmic' : 'straight-line');
+
 export function FitTable({ analysis }: { analysis: Analysis }) {
   const rows = [
     { name: 'Straight line', f: analysis.linear },
@@ -24,9 +26,10 @@ export function FitTable({ analysis }: { analysis: Analysis }) {
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={r.name} className={analysis.better === r.f.kind ? 'best' : ''}>
+            <tr key={r.name} className={[analysis.model === r.f.kind ? 'active' : '', analysis.better === r.f.kind ? 'best' : ''].filter(Boolean).join(' ')}>
               <th scope="row">
                 {r.name}
+                {analysis.model === r.f.kind && <span className="pill pill-active">Active</span>}
                 {analysis.better === r.f.kind && <span className="pill">Better fit</span>}
               </th>
               <td>{num(r.f.r, 3)}</td>
@@ -79,12 +82,12 @@ export function SummaryTable({ analysis }: { analysis: Analysis }) {
 
 /** A visually hidden table that mirrors the whole 3D scene for screen readers. */
 export function AccessibleData({ countries, analysis }: { countries: Country[]; analysis: Analysis }) {
-  const fit = analysis.better === 'log' ? analysis.log : analysis.linear;
+  const fit = analysis.model === 'log' ? analysis.log : analysis.linear;
   const { selected, select } = useStore();
   return (
     <div className="visually-hidden">
       <table className="data">
-        <caption>All 42 countries: GDP per capita, life expectancy, model value and residual</caption>
+        <caption>All {countries.length} countries: GDP per capita, life expectancy, {modelName(analysis)} model value and residual</caption>
         <thead>
           <tr>
             <th scope="col">Country</th>
@@ -116,7 +119,6 @@ export function AccessibleData({ countries, analysis }: { countries: Country[]; 
   );
 }
 
-
 type SortKey = 'name' | 'incomeGroup' | 'incomeGroup2019' | 'gdp' | 'life' | 'residual';
 
 /** Sortable country table. Numbers are monospace and right aligned; selections persist. */
@@ -125,7 +127,7 @@ export function CountryTable({ countries, analysis }: { countries: Country[]; an
   const [dir, setDir] = useState<1 | -1>(-1);
   const selected = useStore((s) => s.selected);
   const select = useStore((s) => s.select);
-  const fit = analysis.better === 'log' ? analysis.log : analysis.linear;
+  const fit = analysis.model === 'log' ? analysis.log : analysis.linear;
   const rows = countries.map((c) => ({ ...c, residual: c.life - fit.predict(c.gdp) }));
   const sorted = [...rows].sort((a, b) => {
     const av = a[key];
@@ -143,7 +145,7 @@ export function CountryTable({ countries, analysis }: { countries: Country[]; an
   return (
     <div className="table-scroll" tabIndex={0} role="region" aria-label="All countries table">
       <table className="data country-table">
-        <caption>All {rows.length} countries, sorted by {key === 'life' ? 'life expectancy' : key}. Click a row to select it.</caption>
+        <caption>All {rows.length} countries, sorted by {key === 'life' ? 'life expectancy' : key}. Residuals follow the {modelName(analysis)} model. Select a country with its name button or by clicking the row.</caption>
         <thead><tr>
           {head('Country', 'name')}
           {head('Group today', 'incomeGroup')}
@@ -153,16 +155,28 @@ export function CountryTable({ countries, analysis }: { countries: Country[]; an
           {head('Residual', 'residual', 'right')}
         </tr></thead>
         <tbody>
-          {sorted.map((c) => (
-            <tr key={c.iso3} className={selected.includes(c.iso3) ? 'selected' : ''} onClick={() => select(c.iso3)}>
-              <th scope="row">{c.name}</th>
-              <td>{c.incomeGroup}</td>
-              <td>{c.incomeGroup2019}</td>
-              <td>{dollars(c.gdp)}</td>
-              <td>{c.life.toFixed(1)}</td>
-              <td>{signed(c.residual, 1)}</td>
-            </tr>
-          ))}
+          {sorted.map((c) => {
+            const isSel = selected.includes(c.iso3);
+            return (
+              <tr key={c.iso3} className={isSel ? 'selected' : ''} onClick={() => select(c.iso3)}>
+                <th scope="row">
+                  <button
+                    type="button"
+                    className="row-select"
+                    aria-pressed={isSel}
+                    onClick={(event) => { event.stopPropagation(); select(c.iso3); }}
+                  >
+                    {c.name}
+                  </button>
+                </th>
+                <td>{c.incomeGroup}</td>
+                <td>{c.incomeGroup2019}</td>
+                <td>{dollars(c.gdp)}</td>
+                <td>{c.life.toFixed(1)}</td>
+                <td>{signed(c.residual, 1)}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

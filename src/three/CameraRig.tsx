@@ -1,6 +1,6 @@
 import { useEffect, useRef, type RefObject } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Vector3 } from 'three';
+import { Vector3, type PerspectiveCamera } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { angleBetween, latLon, slerp } from '../geo/project';
 import { prefersReducedMotion } from '../reducedMotion';
@@ -55,8 +55,14 @@ export function CameraRig({
     const first = pts[0]!;
     const toDir = (pts.length > 1 ? slerp(first, pts[1]!, 0.5) : first).clone().normalize();
     const spread = pts.length > 1 ? angleBetween(first, pts[1]!) : 0;
-    const portrait = typeof window !== 'undefined' && window.innerWidth < 860;
-    const toDist = Math.min(6.2, 4.2 + spread * 1.5) * (portrait ? 0.86 : 1);
+    // Fit the sphere to the narrower of the two fields of view. A fixed
+    // distance cropped the globe horizontally in the tall desktop stage.
+    const perspective = camera as PerspectiveCamera;
+    const vFov = (perspective.fov * Math.PI) / 180;
+    const hFov = 2 * Math.atan(Math.tan(vFov / 2) * perspective.aspect);
+    const fitFov = Math.min(vFov, hFov);
+    const radius = 1.24 + spread * 0.16;
+    const toDist = Math.min(7.4, Math.max(3.2, radius / Math.sin(fitFov / 2)));
     const fromDir = camera.position.clone().normalize();
     zoomTarget.current = null;
     if (prefersReducedMotion() || focus.key === 0) {

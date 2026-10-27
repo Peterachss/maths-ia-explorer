@@ -1031,7 +1031,7 @@ body {
 
 .search-hits {
   top: calc(100% + 3px);
-  padding: 3px;
+  padding: 3px 3px 10px;
   background: var(--surface-0);
   border: 1px solid var(--line-2);
   border-radius: 2px;
@@ -1062,6 +1062,20 @@ body {
   font-family: var(--font-mono);
   font-size: 9.5px;
   letter-spacing: 0.08em;
+}
+
+.search-hits .search-empty {
+  display: block;
+  padding: 11px 10px;
+  color: var(--text-2);
+  font-size: 12.5px;
+  line-height: 1.45;
+  cursor: default;
+}
+
+.search-hits .search-empty:hover {
+  background: transparent;
+  color: var(--text-2);
 }
 
 .button-row {

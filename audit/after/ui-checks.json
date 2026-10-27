@@ -188,7 +188,7 @@
     "1024x768": {
       "bodyWidth": 1024,
       "viewportWidth": 1024,
-      "docHeight": 17737,
+      "docHeight": 17658,
       "viewportHeight": 768,
       "small": [],
       "checkboxTargets": [
@@ -372,7 +372,7 @@
     "768x1024": {
       "bodyWidth": 768,
       "viewportWidth": 768,
-      "docHeight": 17859,
+      "docHeight": 17780,
       "viewportHeight": 1024,
       "small": [],
       "checkboxTargets": [
@@ -556,7 +556,7 @@
     "375x812": {
       "bodyWidth": 375,
       "viewportWidth": 375,
-      "docHeight": 18658,
+      "docHeight": 18651,
       "viewportHeight": 812,
       "small": [],
       "checkboxTargets": [
@@ -769,7 +769,7 @@
     "pressed": "true",
     "preview": {
       "label": "Chad",
-      "top": 354
+      "top": 356
     }
   },
   "failures": []

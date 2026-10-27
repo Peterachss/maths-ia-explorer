@@ -150,6 +150,32 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
     await page.waitForTimeout(600);
   });
 
+  await step('search by ISO code and select with the keyboard', async () => {
+    const search = page.getByPlaceholder('Type a country name');
+    await search.fill('ZWE');
+    await page.waitForTimeout(200);
+    const active = await search.getAttribute('aria-activedescendant');
+    if (!active?.includes('ZWE')) throw new Error(`ISO search did not activate ZWE: ${active}`);
+    await search.press('ArrowDown');
+    await search.press('Enter');
+    await page.waitForTimeout(600);
+    const chips = (await page.locator('.chip').allInnerTexts()).join(' ');
+    if (!chips.includes('Zimbabwe')) throw new Error(`keyboard search did not select Zimbabwe: ${chips}`);
+    if ((await search.inputValue()) !== '') throw new Error('keyboard search did not clear the input');
+  });
+
+  await step('search shows a no-match state', async () => {
+    const search = page.getByPlaceholder('Type a country name');
+    await search.fill('zzzz');
+    await page.waitForTimeout(200);
+    const empty = page.locator('.search-empty');
+    if (!(await empty.isVisible())) throw new Error('no-match state is not visible');
+    if (!/No countries match/.test(await empty.innerText())) throw new Error('no-match copy is missing');
+    await search.press('Escape');
+    if ((await search.inputValue()) !== '') throw new Error('Escape did not clear the search');
+    if (await page.locator('.search-hits').count()) throw new Error('Escape left the results open');
+  });
+
   await step('clear selection', async () => page.getByRole('button', { name: 'Clear selection' }).click());
   await step('select both anchors', async () => page.getByRole('button', { name: 'Compare Zimbabwe and Singapore' }).click());
   await step('straight line active model', async () => page.getByRole('radio', { name: 'Straight line', exact: true }).click());

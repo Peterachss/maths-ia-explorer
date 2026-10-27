@@ -13,7 +13,9 @@ export function SearchBox({ countries }: { countries: Country[] }) {
   const [active, setActive] = useState(0);
   const select = useStore((s) => s.select);
   const hits = useMemo(
-    () => (q.trim() ? countries.filter((c) => c.name.toLowerCase().includes(q.trim().toLowerCase())).slice(0, 6) : []),
+    () => q.trim() ? countries.filter((c) =>
+      c.name.toLowerCase().includes(q.trim().toLowerCase()) ||
+      c.iso3.toLowerCase().includes(q.trim().toLowerCase())).slice(0, 6) : [],
     [q, countries]
   );
   useEffect(() => setActive(0), [q]);
@@ -22,11 +24,14 @@ export function SearchBox({ countries }: { countries: Country[] }) {
     select(iso3);
     setQ('');
     setOpen(false);
+    setActive(0);
   };
-  const expanded = open && hits.length > 0;
+  const expanded = open && Boolean(q.trim());
 
   return (
-    <div className="search">
+    <div className="search" onBlur={(e) => {
+      if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpen(false);
+    }}>
       <label htmlFor={id} className="visually-hidden">{copy.controls.search}</label>
       <Search size={18} strokeWidth={1.6} aria-hidden="true" />
       <input
@@ -39,12 +44,9 @@ export function SearchBox({ countries }: { countries: Country[] }) {
         aria-expanded={expanded}
         aria-controls={listId}
         aria-autocomplete="list"
-        aria-activedescendant={expanded ? `${id}-opt-${hits[active]?.iso3 ?? hits[0]?.iso3}` : undefined}
+        aria-activedescendant={expanded && hits[active] ? `${id}-opt-${hits[active].iso3}` : undefined}
         onChange={(e) => { setQ(e.target.value); setOpen(true); }}
         onFocus={() => setOpen(true)}
-        onBlur={(e) => {
-          if (!e.currentTarget.parentElement?.contains(e.relatedTarget as Node | null)) setOpen(false);
-        }}
         onKeyDown={(e) => {
           if (e.key === 'ArrowDown' && hits.length) {
             e.preventDefault();
@@ -54,10 +56,9 @@ export function SearchBox({ countries }: { countries: Country[] }) {
             e.preventDefault();
             setOpen(true);
             setActive((i) => Math.max(0, i - 1));
-          } else if (e.key === 'Enter' && expanded) {
+          } else if (e.key === 'Enter' && expanded && hits[active]) {
             e.preventDefault();
-            const hit = hits[active] ?? hits[0];
-            if (hit) choose(hit.iso3);
+            choose(hits[active].iso3);
           } else if (e.key === 'Escape') {
             setQ('');
             setOpen(false);
@@ -81,6 +82,11 @@ export function SearchBox({ countries }: { countries: Country[] }) {
               <span className="hit-iso">{c.iso3}</span>
             </li>
           ))}
+          {hits.length === 0 && (
+            <li className="search-empty" role="presentation">
+              No countries match “{q}”. Try a country name or code.
+            </li>
+          )}
         </ul>
       )}
     </div>

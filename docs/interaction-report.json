@@ -17,6 +17,14 @@
           "ok": true
         },
         {
+          "label": "search by ISO code and select with the keyboard",
+          "ok": true
+        },
+        {
+          "label": "search shows a no-match state",
+          "ok": true
+        },
+        {
           "label": "clear selection",
           "ok": true
         },

@@ -27,11 +27,11 @@ Final checks:
 | `scripts/interaction-test.mjs` | PASS against local and live builds: 25 desktop + 7 mobile steps, 0 console, page, request or HTTP errors. Covers the globe surface pick, drag guard, search, toggles, bowl, section index, selection reveal, deep-link reload, resize and data-error path. |
 | GitHub Pages base path | PASS. `BASE_PATH=/maths-ia-explorer/` build serves every asset; the CSS is inlined and the poster returns 200. Live checks at four widths have no failed requests. |
 | axe via `scripts/audit.ts` | 16/16 width/chapter combinations, 0 violations. |
-| Lighthouse desktop | 100 performance, 100 accessibility, 100 best practices, 100 SEO. |
-| Lighthouse mobile | 98 performance, 100 accessibility, 100 best practices, 100 SEO. |
+| Lighthouse desktop | 99 performance, 100 accessibility, 100 best practices, 100 SEO. |
+| Lighthouse mobile | 96 performance, 100 accessibility, 100 best practices, 100 SEO. |
 | Console | Clean after excluding Chromium's GL ReadPixels driver warning. |
 
-The one deliberately blocked item is KaTeX (B11). The light panel is held for this release (D2), with the near-black colour reserved for the stage; a dark-panel alternative remains a follow-up option. The internal D1 tokenisation and F1 chart-frame refactors remain partial and do not affect a rendered style or interaction.
+The one deliberately blocked item is KaTeX (B11). The warm-paper panel is settled by R5, with the near-black colour reserved for the stage; the remote black-console commit was rejected in the merge. The internal D1 tokenisation and F1 chart-frame refactors remain partial and do not affect a rendered style or interaction.
 
 ## Branch and commits
 
@@ -93,7 +93,7 @@ The detailed evidence and commit for every ID is in `PROGRESS.md`; this is the c
 | C5 | done | Selection shared by globe, scatter, table and context; ZWE/SGP visible initially. |
 | C6 | done | Landing answer before the chapters. |
 | D1 | partial | Tokens exist; some literal colours and paddings remain. |
-| D2 | held | Light panel retained for this release; near-black stage. Optional dark-panel follow-up recorded. |
+| D2 | settled | Warm-paper panel retained beside the near-black stage; settled by R5 during the merge. |
 | D3 | done | System mono numerals; no new font dependency. |
 | D4 | done | Pointer/keyboard splitter, 560–760px, ARIA separator and 44px effective hit area; verified by `check:ui`. |
 | D5 | done | Desktop frame, solid chrome, light reading surface. |
@@ -281,13 +281,13 @@ The screenshot and audit loops were repeated after layout fixes, so the G estima
 
 | Item | State | Resolution |
 |---|---|---|
-| D2 light panel vs near-black | Held | Keep the light panel and dark stage for this release; dark-panel alternative remains a follow-up. |
+| D2 light panel vs near-black | Settled | Warm-paper panel and dark stage retained; R5 records why the remote black-console commit was rejected. |
 | B11 KaTeX | Blocked | Native MathML; KaTeX would exceed the 50 kB gzipped rule. |
 | D1 tokenisation | Partial | Tokens exist, but some literal colours/paddings remain in `app.css`. |
 | D4 panel resizer | Done | Pointer/keyboard splitter from 560–760px, ARIA separator and 44px hit area. |
 | F1 shared chart frame | Partial | Shared export/table plumbing exists; a single SVG frame abstraction does not. |
 | F4 chart keyboard points | Done | Scatter has roving arrow-key point navigation and Enter/Space selection; other charts use keyboard-accessible data tables. |
-| D2 alternate | Not built | A near-black panel or light/dark preference was not built because it would reverse the earlier approved collage direction. |
+| D2 alternate | Not built | The `8ba8bce` black-console alternative was rejected in the merge (R5); a light/dark preference remains a possible follow-up. |
 | Data pull | Restricted | `data:all` is not run; individual checks pass. Appendix A is authoritative. |
 | Screen-reader testing | UNVERIFIED | axe and keyboard checks were run; no NVDA/JAWS/VoiceOver session was recorded. |
 | Physical-device testing | UNVERIFIED | Playwright viewport and touch-target checks only; no physical phone/tablet run. |
@@ -339,9 +339,9 @@ CHROME_PATH="$HOME/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/G
 
 ## Closing status
 
-`main` contains the complete rebuild, the country-stats reveal, the globe surface pick and the release evidence. The canonical build is published at https://peterachss.github.io/maths-ia-explorer/; https://maths-ia-explorer.surge.sh/ is a verified mirror. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1), the shared chart-frame abstraction (F1), and the optional dark-panel direction (D2). D4 and F4 are no longer partial.
+`main` contains the complete rebuild, the country-stats reveal, the globe surface pick and the release evidence. The canonical build is published at https://peterachss.github.io/maths-ia-explorer/; https://maths-ia-explorer.surge.sh/ is a verified mirror. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1) and the shared chart-frame abstraction (F1). D2 is settled by R5, and D4 and F4 are no longer partial.
 
-Release complete. The published build passed the build, 46 unit tests, 11 data anchors, live data verification, 68 statistic checks, the 25/7 interaction sweep, UI checks at four widths, screenshots, axe and Lighthouse before publication. The live GitHub Pages URL, deep link, drag guard and page-scroll lock were checked again after upload.
+Release complete. The published build passed the build, 46 unit tests, 11 data anchors, live data verification, 68 statistic checks, the 27/8 interaction sweep, UI checks at four widths, screenshots, axe and Lighthouse before publication. The live GitHub Pages URL, deep link, drag guard and page-scroll lock were checked again after upload.
 
 ## Post-release fixes, 23 October 2026
 

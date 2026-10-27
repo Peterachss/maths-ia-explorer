@@ -6,7 +6,7 @@ Last update: 27 October 2026
 
 Release: published at https://peterachss.github.io/maths-ia-explorer/ (canonical). https://maths-ia-explorer.surge.sh/ is a verified mirror.
 
-Build status: `npm run build` passes; `npm test` passes 46/46; the interaction sweep passes 25 desktop and 8 mobile steps; `check:ui` passes at all four widths, desktop page scroll stays at y=0; axe 16/16 clean; final redesign Lighthouse desktop 97/100/100/100, mobile 96/100/100/100 (the desktop trace includes the 4K globe; the mobile trace is the poster path).
+Build status: `npm run build` passes; `npm test` passes 46/46; the interaction sweep passes 27 desktop and 8 mobile steps; `check:ui` passes at all four widths, desktop page scroll stays at y=0; axe 16/16 clean; final redesign Lighthouse desktop 99/100/100/100, mobile 96/100/100/100 (the desktop trace includes the 4K globe; the mobile trace is the poster path).
 
 | ID | Status | Evidence | Commit |
 |---|---|---|---|
@@ -46,7 +46,7 @@ Build status: `npm run build` passes; `npm test` passes 46/46; the interaction s
 | C5 | done | Selection is shared by globe, scatter, table and context bar; default ZWE/SGP labels visible on first paint. | `d22452a` |
 | C6 | done | Landing answer states the 42-country, 2019, logarithmic result before the chapters. | `d22452a` |
 | D1 | partial | Tokens cover palette, type, spacing and motion; some literal colours/paddings remain in `src/styles/app.css`. Logged in `DECISIONS.md` D1. | `d22452a` |
-| D2 | open | Light analytics panel held for this release; near-black used for the stage. Owner can choose a dark panel in a follow-up. | `421fdda` |
+| D2 | settled | Warm-paper panel beside the near-black stage; settled by R5 after the remote black-console commit was rejected in the merge. | `f4035e6` |
 | D3 | done | Mono numerals via `--font-mono`; no extra webfont. | `d22452a` |
 | D4 | done | Pointer/keyboard splitter, 560–760px, ARIA separator, 44px hit area; hidden below 1201px. `npm run check:ui` verifies ArrowLeft 648→672. | `421fdda` |
 | D5 | done | Desktop stage/panel frame with solid chrome and light reading surface. | `d22452a` |
@@ -87,7 +87,7 @@ Build status: `npm run build` passes; `npm test` passes 46/46; the interaction s
 - The GitHub Pages build exposed a real `BASE_PATH` bug: `optimize-dist.mjs` could not find the stylesheet under `/maths-ia-explorer/`, so CSS stayed external and the poster resolved to `/assets/textures/earth-poster.jpg` (404). The script now strips `BASE_PATH` before inlining; the live build has no failed requests.
 - Build, unit tests, anchors, live verification and 68 statistic checks pass after the final UI change.
 - B16 fixed the reported post-scroll glitch: the screen-reader-only tables were absolutely positioned without a top/left anchor, so their static positions in the long reading column extended `documentElement.scrollHeight` from 900 to 9489 at 1440×900. The page could scroll the 100dvh app upward and leave a black band. They are now anchored at 0,0 with `clip-path`; desktop document height equals the viewport and the page cannot scroll. `check:ui` now covers this, and the four-width screenshots were regenerated.
-- Remaining internal partials: D1 tokenisation and F1 shared chart-frame abstraction. Neither changes a rendered style or a user interaction. Known blocker: B11 KaTeX. Held owner choice: D2 light panel.
+- Remaining internal partials: D1 tokenisation and F1 shared chart-frame abstraction. Neither changes a rendered style or a user interaction. Known blocker: B11 KaTeX. D2 is settled by R5 (warm-paper panel).
 - `data:fetch`/`data:all` deliberately not run; see `DECISIONS.md`.
 - The owner authorized publication on 22 October 2026. `main` was pushed normally (no force-push) and GitHub Actions run 39887371851 built and deployed the site in 69 seconds. The canonical release is https://peterachss.github.io/maths-ia-explorer/; Surge remains a mirror.
 - Live verification at 1440×900, 1024×768, 768×1024 and 375×812: no failed requests or console errors; 7 charts and 93 data rows; `?c=THA%2CKEN` restores Thailand and Kenya; canonical URL is GitHub Pages. At 1440 the document stays 900px, page scroll remains y=0 and the stage tabs stay visible after the panel scrolls; stacked widths scroll normally. The drag guard preserves Zimbabwe and Singapore after an 80 px orbit drag. Evidence: `audit/live/github-checks.json`, `audit/live/ui-checks.json`, `docs/interaction-report.json` and `audit/live/github-*.png`.
@@ -104,7 +104,7 @@ The owner reported two defects on the published build: a red and blue glitch at 
 
 ## Redesign, 26-27 October 2026
 
-Branch: `main`, on top of `75cf6df`. The redesign is one normal commit group, `R1`; nothing was force-pushed.
+Branch: `main`, on top of `75cf6df`, then merged with `origin/main` at `8ba8bce`. The redesign is one normal commit group, `R1`; nothing was force-pushed.
 
 Scope: a full app-screen redesign of the published explorer while keeping the React/Vite/Three.js stack, the 42-row dataset, the regression code and every working interaction. The `design-taste-frontend` and `impeccable` skills were used.
 
@@ -115,5 +115,7 @@ Scope: a full app-screen redesign of the published explorer while keeping the Re
 - **Mobile and tablet.** Sticky contents bar with a native section select. 44px targets, compact one-line bowl controls, and a stage that grows to 48dvh only when the bowl tab is active. The phone poster is a circular, shaded hemisphere; the stage gap badge is hidden below 640px because the headline immediately below states the same gap.
 - **Accessibility.** Darkened the small-text tokens to meet WCAG AA without changing the coral rules or chart accents. axe reports 0 violations across all 16 width/chapter combinations. The keyboard scatter, skip link, reduced motion and WebGL fallback checks still pass.
 - **Data.** Both CSV copies were re-hashed (`0b0a1624...f37f66d`), the full-precision values were recomputed independently, and no data value changed. The log fit remains `y = 5.927678825 ln x + 16.024564`, r2 = 0.768662883; the observed gap is 22.535 years and the predicted gap 18.879168 years (83.777093%).
-- **Verification.** `npm test` 46/46, `data:verify-stats` 68/68, `data:anchor` 11/11, `check:ui` at all four widths, interaction sweep 25 desktop and 8 mobile steps, axe 16/16 clean, build passing. Final Lighthouse: desktop 97/100/100/100 and mobile 96/100/100/100. The desktop trace includes the 4K globe and the 4K texture; the mobile trace is the 180 KiB poster path. Screenshots: `audit/after/`; chart set: `audit/charts/`; before set: `audit/baseline/`; audits: `audit/after-redesign/`.
-- **Remaining limitation.** The mobile 3D scene is opt-in and still costs roughly 1-3 seconds of main-thread work when opened on a mid-range phone. The report itself, not the globe, is now the main mobile cost (seven SVG charts). The panel remains light (D2).
+- **Verification.** `npm test` 46/46, `data:verify-stats` 68/68, `data:anchor` 11/11, `check:ui` at all four widths, interaction sweep 27 desktop and 8 mobile steps, axe 16/16 clean, build passing. Final Lighthouse: desktop 99/100/100/100 and mobile 96/100/100/100. The desktop trace includes the 4K globe and the 4K texture; the mobile trace is the 180 KiB poster path. Screenshots: `audit/after/`; chart set: `audit/charts/`; before set: `audit/baseline/`; audits: `audit/after-redesign/`.
+- **Remaining limitation.** The mobile 3D scene is opt-in and still costs roughly 1-3 seconds of main-thread work when opened on a mid-range phone. The report itself, not the globe, is now the main mobile cost (seven SVG charts). The panel is warm paper by decision R5.
+
+**Merge reconciliation, 27 October 2026.** `origin/main` advanced five commits while the redesign was in progress: `4cc983d` (full precision and citations), `3fdc3f3` (readability and keyboard search), `f07a287` (small labels), `b766466` (globe tabs and selected names) and `8ba8bce` (black analysis console). The merge kept the redesign's warm-paper shell and ported the remote keyboard search, ISO-code matching, no-match state, larger citation text and table-row padding. The black-console commit was rejected because it changed only tokens and a short override block, while the remote screenshots and `docs/DESIGN.md` still specified the light console; keeping it would also have made the dark `.panel .btn.primary` rule override the light button. The remote one-off `scripts/ui-refinement-check.mjs` was replaced by two maintained interaction steps. The merge also fixed two mojibake context separators (`Â·` to `·`). Post-merge checks: 46 tests, 68 statistics, 11 anchors, 27 desktop + 8 mobile interactions, 0 axe violations at 16 width/chapter combinations, Lighthouse desktop 99 / mobile 96.

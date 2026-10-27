@@ -83,7 +83,7 @@ The seven editorial issues in `docs/IA_RECONCILIATION.md` were fixed in a revise
 - `docs/audit.json`: the DOM measurements and contrast ratios.
 - `docs/crosscheck.json`: the independent recomputation of every statistic.
 - `docs/IA_RECONCILIATION.md`: the side by side comparison with the written IA.
-- `docs/interaction-report.json`: the 25 desktop + 7 mobile interaction run.
+- `docs/interaction-report.json`: the 27 desktop + 8 mobile interaction run.
 - `audit/live/ui-checks.json`: the live four-width UI, keyboard, reduced-motion and WebGL checks.
 - `audit/live/github-checks.json`: live canonical URL, deep link, scroll-lock and drag-guard measurements.
 - `audit/live/b18-e8-checks.json`: the live B18/E8 texture, rail and deep-link checks.

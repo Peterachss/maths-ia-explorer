@@ -23,8 +23,8 @@ Final checks:
 | `npm run data:verify` | PASS. All source, provenance and cross-check assertions. |
 | `npm run data:verify-live` | PASS. 42 rows, 84 values re-downloaded; GDP max absolute difference $0.0049; life max absolute difference 0.000463 years; public CSV byte-identical. |
 | `npm run data:verify-stats` | PASS. 68 statistic checks. |
-| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 42/42 checkbox labels at least 44px, splitter ArrowLeft 648→672, scatter BDI→TCD + Enter, selection reveal shows Chad, skip link, reduced motion and WebGL fallback pass. Desktop document height equals the viewport and page scroll stays at y=0; stacked widths still page-scroll. Re-run against the live GitHub Pages URL: `audit/live/ui-checks.json`. |
-| `scripts/interaction-test.mjs` | PASS against local and live builds: 25 desktop + 7 mobile steps, 0 console, page, request or HTTP errors. Covers the globe surface pick, drag guard, search, toggles, bowl, section index, selection reveal, deep-link reload, resize and data-error path. |
+| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 43 checkbox labels at least 44px, splitter ArrowLeft 763→787, scatter BDI→TCD + Enter, selection reveal shows Chad, skip link, reduced motion and WebGL fallback pass. Desktop document height equals the viewport and page scroll stays at y=0; stacked widths still page-scroll. Re-run against the live GitHub Pages URL: `audit/live/ui-checks.json`. |
+| `scripts/interaction-test.mjs` | PASS against local and live builds: 27 desktop + 8 mobile steps, 0 console, page, request or HTTP errors. Covers the globe surface pick, drag guard, search (including ISO codes and the no-match state), toggles, bowl, section index, selection reveal, deep-link reload, resize and data-error path. |
 | GitHub Pages base path | PASS. `BASE_PATH=/maths-ia-explorer/` build serves every asset; the CSS is inlined and the poster returns 200. Live checks at four widths have no failed requests. |
 | axe via `scripts/audit.ts` | 16/16 width/chapter combinations, 0 violations. |
 | Lighthouse desktop | 99 performance, 100 accessibility, 100 best practices, 100 SEO. |
@@ -312,7 +312,7 @@ The live build was checked after upload:
 
 - `https://peterachss.github.io/maths-ia-explorer/` returns HTTP 200; the entry JS, CSS (inlined), fonts, textures, `robots.txt` and `sitemap.xml` all load without a failed request. GitHub Actions run 39887371851 passed the build and deploy jobs.
 - `npm run check:ui` was re-run with `URL=https://peterachss.github.io/maths-ia-explorer/`: no overflow, no page errors, all 44px targets, splitter, scatter keyboard, selection reveal, reduced motion and WebGL fallback pass. Output: `audit/live/ui-checks.json`.
-- The interaction sweep passed 25 desktop and 7 mobile steps against the live URL. `docs/interaction-report.json` records the run.
+- The interaction sweep passed 27 desktop and 8 mobile steps against the live URL. `docs/interaction-report.json` records the run.
 - Live four-width evidence: `audit/live/github-checks.json` and `audit/live/github-1440.png`, `github-1024.png`, `github-768.png`, `github-375.png`. The `?c=THA%2CKEN` deep link restores Thailand and Kenya; an 80 px orbit drag leaves Zimbabwe and Singapore selected; 1440 page scroll stays at y=0 while the stage tabs remain visible.
 - Surge remains a mirror at `https://maths-ia-explorer.surge.sh/`.
 

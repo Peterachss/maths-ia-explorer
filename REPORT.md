@@ -27,8 +27,8 @@ Final checks:
 | `scripts/interaction-test.mjs` | PASS against local and live builds: 27 desktop + 8 mobile steps, 0 console, page, request or HTTP errors. Covers the globe surface pick, drag guard, search (including ISO codes and the no-match state), toggles, bowl, section index, selection reveal, deep-link reload, resize and data-error path. |
 | GitHub Pages base path | PASS. `BASE_PATH=/maths-ia-explorer/` build serves every asset; the CSS is inlined and the poster returns 200. Live checks at four widths have no failed requests. |
 | axe via `scripts/audit.ts` | 16/16 width/chapter combinations, 0 violations. |
-| Lighthouse desktop | 99 performance, 100 accessibility, 100 best practices, 100 SEO. |
-| Lighthouse mobile | 96 performance, 100 accessibility, 100 best practices, 100 SEO. |
+| Lighthouse desktop | 84 performance, 100 accessibility, 100 best practices, 100 SEO (desktop performance ranged 78–99 across repeats). |
+| Lighthouse mobile | 93 performance, 100 accessibility, 100 best practices, 100 SEO (mobile ranged 93–96). |
 | Console | Clean after excluding Chromium's GL ReadPixels driver warning. |
 
 The one deliberately blocked item is KaTeX (B11). The warm-paper panel is settled by R5, with the near-black colour reserved for the stage; the remote black-console commit was rejected in the merge. The internal D1 tokenisation and F1 chart-frame refactors remain partial and do not affect a rendered style or interaction.
@@ -222,7 +222,7 @@ Extras:
 - [1440 full page](audit/after/1440-full.png)
 - [375 full page](audit/after/375-full.png)
 - [1024 WebGL-off fallback](audit/after/1024-webgl-off.png)
-- Machine-readable checks: [axe.json](audit/after/axe.json), [lighthouse desktop](audit/after/lighthouse-desktop.json), [lighthouse mobile](audit/after/lighthouse-mobile.json), [console.json](audit/after/console.json), [ui-checks.json](audit/after/ui-checks.json).
+- Machine-readable checks: [axe.json](audit/after-redesign/axe.json), [lighthouse desktop](audit/after-redesign/lighthouse-desktop.json), [lighthouse mobile](audit/after-redesign/lighthouse-mobile.json), [console.json](audit/after/console.json), [ui-checks.json](audit/after/ui-checks.json).
 
 The images were opened and inspected. Fixes made during the screenshot loop included: chapter headings hidden under sticky chrome at 1024/768, the mobile section select lagging one chapter behind, the bowl controls covering the bowl at tablet widths, missing selected labels because the canvas was remounted immediately before capture, the bowl title colliding with the mobile tabs, the Singapore label touching the zoom plate at 375px, and the splitter hit area.
 
@@ -230,20 +230,20 @@ The images were opened and inspected. Fixes made during the screenshot loop incl
 
 ### Lighthouse
 
-Run through Playwright's Chromium, with `CHROME_PATH` pointing at the pinned browser because installed Chrome 150 exceeded the 30-second navigation timeout.
+Run through Lighthouse's `chrome-launcher` against the installed Chrome 150, with a fresh headless profile for each form factor.
 
 | Category | Desktop | Mobile |
 |---|---|---|
-| Performance | 100 | 98 |
+| Performance | 84 | 93 |
 | Accessibility | 100 | 100 |
 | Best practices | 100 | 100 |
 | SEO | 100 | 100 |
 
-Metrics: desktop FCP 0.3s, LCP 0.5s, TBT 0ms, CLS 0; mobile FCP 1.4s, LCP 2.3s, TBT 50ms, CLS 0. Total page weight 170 KiB. The extra `agentic-browsing` category is 50 in both runs; it is an experimental Lighthouse category, not one of the four requested categories and it does not affect the scores above.
+Metrics from the latest full-suite run: desktop FCP 0.4s, LCP 0.9s, TBT 340ms, CLS 0; mobile FCP 1.6s, LCP 2.5s, TBT 230ms, CLS 0. Total page weight 1.9 MB desktop (including the 4K globe texture) and 180 KiB mobile. Desktop performance ranged 78–99 across repeated runs as the deferred r3f/4K mount moved in and out of the trace; mobile ranged 93–96. The extra `agentic-browsing` category is 50 in both runs; it is an experimental Lighthouse category, not one of the four requested categories and it does not affect the scores above.
 
 ### axe
 
-0 violations across the 16 combinations of four widths and four chapters; raw results are in `audit/after/axe.json`.
+0 violations across the 16 combinations of four widths and four chapters; raw results are in `audit/after-redesign/axe.json`.
 
 ### Keyboard, motion and fallback
 

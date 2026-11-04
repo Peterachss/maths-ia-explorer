@@ -10,7 +10,7 @@
     "test": "vitest run",
     "data:fetch": "node scripts/fetch_worldbank.mjs 2019",
     "data:anchor": "node scripts/anchor_check.mjs",
-    "data:cross": "python3 scripts/crosscheck.py",
+    "data:cross": "node scripts/crosscheck.mjs",
     "data:verify": "node scripts/verify_sources.mjs",
     "data:verify-live": "vite-node scripts/verify-data.ts",
     "data:verify-stats": "vite-node scripts/verify-stats.ts",

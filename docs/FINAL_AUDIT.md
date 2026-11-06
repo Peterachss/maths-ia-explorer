@@ -55,6 +55,10 @@ Two items remain explicitly **UNVERIFIED**: physical-device testing (iOS Safari 
 - Build: CSS 80.60 kB / 15.74 kB gzipped. JS: app 112.89 kB, React 145.99 kB, r3f 153.40 kB, Three.js 666.65 kB, map 108.82 kB, d3 47.61 kB, vendor 10.90 kB before JavaScript gzip. The 3D chunks are lazy loaded.
 - Mobile keeps the poster until “Open the globe”; the scene costs roughly 1–3 seconds of main-thread work on a mid-range phone.
 
+## Live deployment
+
+GitHub Pages run 42253556050 passed for commit `d34138a`. The live site at 1440, 1024, 768 and 375 showed the black panel, 14px badge clearance, the deep link restoring Thailand and Kenya, working clipboard copy, full-screen charts, and no console, request or HTTP errors. The live interaction sweep passed 31 desktop and 11 mobile steps. The live axe sweep returned 0 violations across 16 combinations; live Lighthouse measured desktop 100/100/100/100 and mobile 98/100/100/100 (single run). The Surge mirror passed the same width, deep-link, copy and full-screen checks. Evidence: `audit/live/black-release/checks.json`, `audit/live/black-release/interaction-report.json`, `audit/live/surge/checks.json`.
+
 ## Base path and deployment
 
 `BASE_PATH=/maths-ia-explorer/ npm run build` was served from a subpath and checked at all four widths: no failed requests, 4K texture at 1440 and 1024, poster at 768 and 375, deep link `?c=THA%2CKEN` restores Thailand and Kenya. GitHub Pages is canonical; Surge is the mirror. Deployment is a normal push to `main`, never a force-push.

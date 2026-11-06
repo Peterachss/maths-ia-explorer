@@ -1,0 +1,34 @@
+
+> maths-ia-explorer@1.0.0 audit
+> tsx scripts/audit.ts audit/black-release
+
+1440-data: 0 violations
+1440-models: 0 violations
+1440-use: 0 violations
+1440-reliability: 0 violations
+1024-data: 0 violations
+1024-models: 0 violations
+1024-use: 0 violations
+1024-reliability: 0 violations
+768-data: 0 violations
+768-models: 0 violations
+768-use: 0 violations
+768-reliability: 0 violations
+375-data: 0 violations
+375-models: 0 violations
+375-use: 0 violations
+375-reliability: 0 violations
+lighthouse desktop: {
+  performance: 100,
+  accessibility: 100,
+  'best-practices': 100,
+  seo: 100,
+  'agentic-browsing': 100
+}
+lighthouse mobile: {
+  performance: 98,
+  accessibility: 100,
+  'best-practices': 100,
+  seo: 100,
+  'agentic-browsing': 100
+}

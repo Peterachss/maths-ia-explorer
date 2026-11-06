@@ -1,0 +1,21 @@
+{
+  "desktop": {
+    "performance": 100,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100,
+    "lighthouseVersion": "13.5.0",
+    "fetchTime": "2026-11-06T16:45:49.864Z",
+    "finalUrl": "https://peterachss.github.io/maths-ia-explorer/"
+  },
+  "mobile": {
+    "performance": 98,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100,
+    "lighthouseVersion": "13.5.0",
+    "fetchTime": "2026-11-06T16:46:00.717Z",
+    "finalUrl": "https://peterachss.github.io/maths-ia-explorer/"
+  },
+  "note": "Live GitHub Pages run 42253556050 at commit d34138a, 6 November 2026. Single-run scores: desktop 100, mobile 98; all four reported categories. The new agentic-browsing category is not part of the four reported categories."
+}

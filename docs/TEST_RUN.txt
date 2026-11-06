@@ -56,7 +56,7 @@ npm run check:ui
 
 ## Interaction sweep
 
-node scripts/interaction-test.mjs http://127.0.0.1:4181/
+node scripts/interaction-test.mjs https://peterachss.github.io/maths-ia-explorer/
   desktop: 31 steps, 0 problems
   mobile: 11 steps, 0 problems
   data error path: shows the message

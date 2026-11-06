@@ -2,7 +2,7 @@
 
 **Release:** all-black console, 6 November 2026
 **Branch:** `main`, on top of `da24f24` (release commit `b9c594a`)
-**Live site:** https://peterachss.github.io/maths-ia-explorer/ (canonical)
+**Live site:** https://peterachss.github.io/maths-ia-explorer/ (canonical; GitHub Pages run 42253556050)
 **Mirror:** https://maths-ia-explorer.surge.sh/
 
 This is the companion page for the IB Mathematics AA SL Internal Assessment comparing GDP per capita with life expectancy for 42 countries in 2019. It fits a straight line and a logarithmic curve, shows the Singapore–Zimbabwe gap, and lets the reader interrogate the model without changing the IA's data.
@@ -25,7 +25,7 @@ The release is rebased onto the upstream `da24f24` hierarchy pass rather than re
 | Keyboard | Search wraps, supports Home/End, Enter/Escape, `aria-activedescendant`, selected tags and no-match. |
 | Accessibility | axe 0 violations across 16 width/chapter combinations; skip link, 44px targets, reduced motion and WebGL fallback pass. |
 | Performance | Lighthouse desktop 100/100/100/100 (final run; 84 on the preceding run); mobile 97/100/100/100. Mobile keeps the poster until the reader opts into 3D. |
-| Deployment | Normal push to `main`; no force-push. GitHub Pages is canonical, Surge is the mirror. |
+| Deployment | Published from `d34138a`; GitHub Pages run 42253556050 passed. Normal push, no force-push. GitHub Pages is canonical, Surge is the verified mirror. |
 
 ## Release changes
 
@@ -53,7 +53,7 @@ All commands were run on 6 November 2026 on macOS with Node 22 and the bundled P
 | Live World Bank values | `npm run data:verify-live` | PASS. 42 rows, 84 values re-downloaded. Max GDP difference $0.0049; max life difference 0.000463 years. |
 | Rendered statistics | `npm run data:verify-stats` | PASS. 68 checks. |
 | Four-width UI | `npm run check:ui` | PASS. All four widths; panel black; contrast; badge clearance; 43 checkbox labels ≥44px; 7 full-screen controls; 2 copy controls; reduced motion; WebGL off. |
-| Interaction sweep | `node scripts/interaction-test.mjs URL` | PASS. 31 desktop steps + 11 mobile steps; data-error path; no console, page, request or HTTP errors. |
+| Interaction sweep | `node scripts/interaction-test.mjs https://peterachss.github.io/maths-ia-explorer/` | PASS. 31 desktop steps + 11 mobile steps; data-error path; no console, page, request or HTTP errors. |
 | Accessibility | `npm run audit` (axe phase) | PASS. 16/16 width/chapter combinations, 0 violations. |
 | Lighthouse | `npm run audit` (Lighthouse phase) | Desktop 100/100/100/100 (final run; 84 on the preceding run); mobile 97/100/100/100. Single run, not a guarantee. |
 | GitHub Pages base path | `BASE_PATH=/maths-ia-explorer/ npm run build` then static subpath server | PASS. No failed requests at four widths; 4K at 1440/1024; poster at 768/375; `?c=THA%2CKEN` restores Thailand and Kenya. |
@@ -69,7 +69,7 @@ Evidence lives in `audit/black-release/`:
 - `1024-webgl-off.png` — WebGL-disabled fallback.
 - `console.json` — clean console log from the matrix.
 
-`docs/screens/` contains the curated black screenshots used by the README and this report. `docs/interaction-report.json` is the machine-readable interaction transcript.
+`docs/screens/` contains the curated black screenshots used by the README and this report. `audit/live/black-release/interaction-report.json` is the live machine-readable interaction transcript (the top-level `docs/interaction-report.json` now records the live run).
 
 ## Data and mathematics
 
@@ -104,4 +104,6 @@ No data value or IA number changed. The authoritative values remain Appendix A i
 
 ## Deployment
 
-The release is a normal commit on `main`, pushed without force. GitHub Actions builds with `BASE_PATH=/maths-ia-explorer/` and deploys GitHub Pages. The Surge mirror is rebuilt from the normal root build. Live verification and the release run ID are recorded in `PROGRESS.md` and `audit/live/` after deployment.
+The release is a normal commit on `main`, pushed without force. GitHub Actions builds with `BASE_PATH=/maths-ia-explorer/` and deploys GitHub Pages. The Surge mirror is rebuilt from the normal root build.
+
+GitHub Pages run 42253556050 passed for `d34138a`. Live checks at 1440, 1024, 768 and 375 confirmed the black panel (`rgb(8, 10, 13)`), 14px badge clearance, the deep link, clipboard copy, full-screen charts, and no console, request or HTTP errors. The live interaction sweep passed 31 desktop and 11 mobile steps; the live axe sweep returned 0 violations across 16 combinations, and live Lighthouse measured desktop 100/100/100/100 and mobile 98/100/100/100 (single run). Evidence is in `audit/live/black-release/`. The Surge mirror passed the same width, deep-link, copy and full-screen checks; evidence is in `audit/live/surge/`.

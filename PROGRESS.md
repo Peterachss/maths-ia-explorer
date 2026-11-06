@@ -4,15 +4,15 @@ Branch: `main` (rebased onto `da24f24`)
 
 Last update: 6 November 2026
 
-Release: https://peterachss.github.io/maths-ia-explorer/ (canonical); https://maths-ia-explorer.surge.sh/ is the mirror. The all-black release is verified locally and staged for publication; see H5 for live evidence.
+Release: https://peterachss.github.io/maths-ia-explorer/ (canonical, GitHub Pages run 42253556050); https://maths-ia-explorer.surge.sh/ is the verified mirror. The all-black release is published; live evidence is in `audit/live/black-release/` and `audit/live/surge/`.
 
-Build status: `npm run build` passes; `npm test` passes 46/46; the interaction sweep passes 31 desktop and 11 mobile steps; `check:ui` passes at all four widths, desktop page scroll stays at y=0; axe 16/16 clean; Lighthouse desktop 100/100/100/100, mobile 97/100/100/100 (the desktop trace includes the 4K globe; the mobile trace is the poster path). The GitHub Pages base path serves every asset with no failed request and restores `?c=THA%2CKEN`.
+Build status: `npm run build` passes; `npm test` passes 46/46; the interaction sweep passes 31 desktop and 11 mobile steps; `check:ui` passes at all four widths, desktop page scroll stays at y=0; axe 16/16 clean; Lighthouse desktop 100/100/100/100, mobile 97/100/100/100 (the desktop trace includes the 4K globe; the mobile trace is the poster path). The GitHub Pages base path serves every asset with no failed request and restores `?c=THA%2CKEN`. The live GitHub Pages release and the Surge mirror both pass four-width/deep-link/copy/full-screen checks.
 
 ## Black release, 6 November 2026
 
 **Upstream reconciliation.** While this release was being prepared, `origin/main` advanced to `da24f24` (`feat(ui): elevate UI hierarchy, typography, and contrast...`). The release was rebased onto it rather than overwriting it. The hierarchy pass is preserved: chapter numbers, chapter kickers, card meta and the rail numeral removed; the masthead meta now sits below the title; KPI values precede their labels; and the rail groups are plain words. `black.css` loads last and themes that structure without restoring the removed elements. The copy-view control moved into the new masthead meta row and stays right-aligned when the metadata is hidden at 375px.
 
-Branch: `main`, on top of `da24f24`. The release keeps R1's three-column layout, 152 px contents rail, 8K-capable Earth asset, seven charts and `SensitivityChart`; it replaces the reading surfaces with black and adds the requested utility fixes. Nothing is forced or pushed yet.
+Branch: `main`, on top of `da24f24`. The release keeps R1's three-column layout, 152 px contents rail, 8K-capable Earth asset, seven charts and `SensitivityChart`; it replaces the reading surfaces with black and adds the requested utility fixes. Published as `d34138a`; GitHub Pages build and deploy run 42253556050 passed, and the Surge mirror was rebuilt from the normal root build.
 
 - **B19 — black console.** `src/styles/black.css` loads last and overrides every reading surface, card, table, rail, masthead, control and mobile chrome. Selected/primary controls remain light intentionally (primary button ink 17.2:1). The panel is `rgb(8, 10, 13)`.
 - **B20 — gap badge.** The badge uses Instrument Sans for its headline, keeps the measured number in mono, and shows `Income model 18.9 yrs · 83.8% of gap`. It clears the tabs by 14 px at all four widths.
@@ -95,7 +95,7 @@ Branch: `main`, on top of `da24f24`. The release keeps R1's three-column layout,
 | H2 | done | `docs/DESIGN.md` reconciled with shipped textures, panel widths, stage heights and type. | `9a9fa4b` |
 | H3 | done | Before/after screenshot index and final audit artefacts under `audit/`. | `fe27549` |
 | H4 | done | GitHub Pages release at https://peterachss.github.io/maths-ia-explorer/; canonical and OG URLs, `BASE_PATH` build and sitemap match. `optimize-dist.mjs` now strips `BASE_PATH` before inlining CSS, so the poster and styles no longer 404. Workflow run 39887371851 passed; live checks at 1440/1024/768/375, deep link `?c=THA%2CKEN`, page-scroll lock and drag guard recorded in `audit/live/`. | `57df98f` |
-| H5 | in progress | Black release publication: GitHub Pages workflow, live four-width checks, deep link, copy, full-screen and Surge mirror pending. | pending |
+| H5 | done | GitHub Pages run 42253556050 passed for `d34138a`: 1440/1024/768/375, deep link `?c=THA%2CKEN`, copy links, full-screen controls, no console/request/HTTP errors. Live evidence: `audit/live/black-release/checks.json`, `interaction-report.json` (31 desktop + 11 mobile), `axe.json` (16/16, 0 violations), `lighthouse-*.json` (desktop 100, mobile 98); Surge mirror rebuilt and checked in `audit/live/surge/checks.json`. | `d34138a` |
 
 ## Checkpoint
 

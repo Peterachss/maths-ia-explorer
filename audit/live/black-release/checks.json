@@ -1,0 +1,164 @@
+{
+  "base": "https://peterachss.github.io/maths-ia-explorer/",
+  "checkedAt": "2026-11-06T16:38:51.717Z",
+  "widths": {
+    "1440x900": {
+      "title": "Life Expectancy Explorer",
+      "panelBg": "rgb(8, 10, 13)",
+      "bodyWidth": 1440,
+      "viewport": 1440,
+      "docHeight": 900,
+      "gapClearance": 14,
+      "gapText": "22.5\nyears apart\nZimbabwe to Singapore\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "copyViews": 2,
+      "fullscreen": {
+        "attempted": true,
+        "opened": true,
+        "error": null
+      },
+      "copyVisible": true,
+      "textures": [
+        {
+          "status": 200,
+          "file": "earth-day-4k.jpg"
+        }
+      ],
+      "errors": [],
+      "failed": [],
+      "http": [],
+      "deep": {
+        "search": "?c=THA%2CKEN",
+        "chips": [
+          "Thailand",
+          "Kenya"
+        ],
+        "selected": "Selected: Thailand vs Kenya"
+      },
+      "copy": {
+        "ok": true,
+        "text": "https://peterachss.github.io/maths-ia-explorer/?c=THA%2CKEN",
+        "error": null
+      },
+      "deepErrors": []
+    },
+    "1024x768": {
+      "title": "Life Expectancy Explorer",
+      "panelBg": "rgb(8, 10, 13)",
+      "bodyWidth": 1024,
+      "viewport": 1024,
+      "docHeight": 17835,
+      "gapClearance": 14,
+      "gapText": "22.5\nyears apart\nZimbabwe to Singapore\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "copyViews": 2,
+      "fullscreen": {
+        "attempted": true,
+        "opened": true,
+        "error": null
+      },
+      "copyVisible": true,
+      "textures": [
+        {
+          "status": 200,
+          "file": "earth-day-4k.jpg"
+        }
+      ],
+      "errors": [],
+      "failed": [],
+      "http": [],
+      "deep": {
+        "search": "?c=THA%2CKEN",
+        "chips": [
+          "Thailand",
+          "Kenya"
+        ],
+        "selected": "Selected: Thailand vs Kenya"
+      },
+      "copy": {
+        "ok": true,
+        "text": "https://peterachss.github.io/maths-ia-explorer/?c=THA%2CKEN",
+        "error": null
+      },
+      "deepErrors": []
+    },
+    "768x1024": {
+      "title": "Life Expectancy Explorer",
+      "panelBg": "rgb(8, 10, 13)",
+      "bodyWidth": 768,
+      "viewport": 768,
+      "docHeight": 17957,
+      "gapClearance": 14,
+      "gapText": "22.5\nyears apart\nZimbabwe to Singapore\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "copyViews": 2,
+      "fullscreen": {
+        "attempted": true,
+        "opened": true,
+        "error": null
+      },
+      "copyVisible": true,
+      "textures": [
+        {
+          "status": 200,
+          "file": "earth-poster.jpg"
+        }
+      ],
+      "errors": [],
+      "failed": [],
+      "http": [],
+      "deep": {
+        "search": "?c=THA%2CKEN",
+        "chips": [
+          "Thailand",
+          "Kenya"
+        ],
+        "selected": "Selected: Thailand vs Kenya"
+      },
+      "copy": {
+        "ok": true,
+        "text": "https://peterachss.github.io/maths-ia-explorer/?c=THA%2CKEN",
+        "error": null
+      },
+      "deepErrors": []
+    },
+    "375x812": {
+      "title": "Life Expectancy Explorer",
+      "panelBg": "rgb(8, 10, 13)",
+      "bodyWidth": 375,
+      "viewport": 375,
+      "docHeight": 19183,
+      "gapClearance": 14,
+      "gapText": "22.5\nyears apart\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "copyViews": 2,
+      "fullscreen": {
+        "attempted": false,
+        "opened": false,
+        "error": null
+      },
+      "copyVisible": true,
+      "textures": [
+        {
+          "status": 200,
+          "file": "earth-poster.jpg"
+        }
+      ],
+      "errors": [],
+      "failed": [],
+      "http": [],
+      "deep": {
+        "search": "?c=THA%2CKEN",
+        "chips": [
+          "Thailand",
+          "Kenya"
+        ],
+        "selected": "Selected: Thailand vs Kenya"
+      },
+      "copy": {
+        "ok": true,
+        "text": "https://peterachss.github.io/maths-ia-explorer/?c=THA%2CKEN",
+        "error": null
+      },
+      "deepErrors": []
+    }
+  },
+  "pass": true,
+  "notes": []
+}

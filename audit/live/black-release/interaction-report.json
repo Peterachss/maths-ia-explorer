@@ -1,0 +1,205 @@
+{
+  "url": "https://peterachss.github.io/maths-ia-explorer/",
+  "runs": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "steps": [
+        {
+          "label": "map surface picks the nearest country",
+          "ok": true
+        },
+        {
+          "label": "search Singapore",
+          "ok": true
+        },
+        {
+          "label": "search by ISO code and select with the keyboard",
+          "ok": true
+        },
+        {
+          "label": "search wraps, supports Home/End and marks selected countries",
+          "ok": true
+        },
+        {
+          "label": "search shows a no-match state",
+          "ok": true
+        },
+        {
+          "label": "clear selection",
+          "ok": true
+        },
+        {
+          "label": "select both anchors",
+          "ok": true
+        },
+        {
+          "label": "straight line active model",
+          "ok": true
+        },
+        {
+          "label": "logarithmic active model",
+          "ok": true
+        },
+        {
+          "label": "show both curves",
+          "ok": true
+        },
+        {
+          "label": "linear axis",
+          "ok": true
+        },
+        {
+          "label": "log axis",
+          "ok": true
+        },
+        {
+          "label": "click a scatter point",
+          "ok": true
+        },
+        {
+          "label": "chart full screen enters and exits",
+          "ok": true
+        },
+        {
+          "label": "chart export downloads the chart, not the toolbar icon",
+          "ok": true
+        },
+        {
+          "label": "open working",
+          "ok": true
+        },
+        {
+          "label": "close working",
+          "ok": true
+        },
+        {
+          "label": "exclude the two outliers",
+          "ok": true
+        },
+        {
+          "label": "include everyone",
+          "ok": true
+        },
+        {
+          "label": "open country checklist",
+          "ok": true
+        },
+        {
+          "label": "toggle one country",
+          "ok": true
+        },
+        {
+          "label": "change tool sliders",
+          "ok": true
+        },
+        {
+          "label": "bowl tab",
+          "ok": true
+        },
+        {
+          "label": "bowl sliders",
+          "ok": true
+        },
+        {
+          "label": "snap to least squares",
+          "ok": true
+        },
+        {
+          "label": "back to globe",
+          "ok": true
+        },
+        {
+          "label": "section index follows the gap",
+          "ok": true
+        },
+        {
+          "label": "country selection reveals the preview",
+          "ok": true
+        },
+        {
+          "label": "scroll to the end",
+          "ok": true
+        },
+        {
+          "label": "deep link reload",
+          "ok": true
+        },
+        {
+          "label": "copy the current view link",
+          "ok": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "steps": [
+        {
+          "label": "open the globe from the poster",
+          "ok": true
+        },
+        {
+          "label": "search and select",
+          "ok": true
+        },
+        {
+          "label": "gap badge stays below the tabs with model context",
+          "ok": true
+        },
+        {
+          "label": "copy the mobile view link",
+          "ok": true
+        },
+        {
+          "label": "chart fullscreen stays hidden on the phone",
+          "ok": true
+        },
+        {
+          "label": "scroll the page",
+          "ok": true
+        },
+        {
+          "label": "toggle models",
+          "ok": true
+        },
+        {
+          "label": "open working",
+          "ok": true
+        },
+        {
+          "label": "section select follows the gap",
+          "ok": true
+        },
+        {
+          "label": "country selection reveals the preview",
+          "ok": true
+        },
+        {
+          "label": "resize to tablet and back",
+          "ok": true
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "pass": true,
+  "dataError": {
+    "hasMessage": true,
+    "visible": true,
+    "errors": [
+      "requestfailed: https://peterachss.github.io/maths-ia-explorer/data/sample42.csv net::ERR_FAILED",
+      "console: Failed to load resource: net::ERR_FAILED"
+    ]
+  },
+  "webglFallback": {
+    "configured": true
+  }
+}

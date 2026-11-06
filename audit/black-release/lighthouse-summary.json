@@ -17,5 +17,5 @@
     "fetchTime": "2026-11-06T16:25:55.477Z",
     "finalUrl": "http://127.0.0.1:4181/"
   },
-  "note": "Final 6 November 2026 run after rebasing onto da24f24 and rebuilding the merged CSS. Single-run scores: desktop 100, mobile 97; the preceding desktop run scored 84 and desktop ranged 78\u2013100 across repeats depending on whether the deferred 4K globe mount landed inside the trace. The new agentic-browsing category is not part of the four reported categories."
+  "note": "Final local 6 November 2026 run after rebasing onto da24f24 and rebuilding the merged CSS. Single-run scores: desktop 100, mobile 97; the preceding desktop run scored 84 and desktop ranged 78\u2013100 across repeats depending on whether the deferred 4K globe mount landed inside the trace. The new agentic-browsing category is not part of the four reported categories."
 }

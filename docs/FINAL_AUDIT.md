@@ -1,13 +1,13 @@
 # Final audit — black release
 
 **Date:** 6 November 2026
-**Build:** all-black console on R1, commit `dd805f3` plus the B19–B23 release commit
+**Build:** all-black console rebased onto `da24f24`; release commit `b9c594a`
 **Scope:** interface, accessibility, data integrity, base path, build and tests
 **Viewports:** 1440×900, 1024×768, 768×1024, 375×812
 
 ## Verdict
 
-PASS for the automated release criteria. The reading console is black at every rendered width, every IA value is unchanged, all four widths render without document overflow, all seven charts have export and full-screen controls, and the GitHub Pages base path loads without a failed request.
+PASS for the automated release criteria. The upstream `da24f24` hierarchy pass is preserved, the reading console is black at every rendered width, every IA value is unchanged, all four widths render without document overflow, all seven charts have export and full-screen controls, and the GitHub Pages base path loads without a failed request.
 
 Two items remain explicitly **UNVERIFIED**: physical-device testing (iOS Safari / Android Chrome) and a manual screen-reader pass. They are limits of this machine, not observed failures. B11 KaTeX remains blocked by the 50 kB gzipped dependency rule; native MathML is shipped.
 
@@ -52,7 +52,7 @@ Two items remain explicitly **UNVERIFIED**: physical-device testing (iOS Safari 
 - Lighthouse desktop: 100 performance, 100 accessibility, 100 best practices, 100 SEO (final run; 84 on the preceding run).
 - Lighthouse mobile: 97 / 100 / 100 / 100.
 - Desktop trace includes the deferred 4K globe; mobile is the poster path. Desktop varied 78–100 across repeated runs depending on when the deferred mount landed in the trace.
-- Build: CSS 83.14 kB / 16.29 kB gzipped. JS: app 114.62 kB, React 145.99 kB, r3f 153.40 kB, Three.js 666.65 kB, map 108.82 kB, d3 47.61 kB, vendor 10.90 kB before JavaScript gzip. The 3D chunks are lazy loaded.
+- Build: CSS 80.60 kB / 15.74 kB gzipped. JS: app 112.89 kB, React 145.99 kB, r3f 153.40 kB, Three.js 666.65 kB, map 108.82 kB, d3 47.61 kB, vendor 10.90 kB before JavaScript gzip. The 3D chunks are lazy loaded.
 - Mobile keeps the poster until “Open the globe”; the scene costs roughly 1–3 seconds of main-thread work on a mid-range phone.
 
 ## Base path and deployment

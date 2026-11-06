@@ -21,68 +21,68 @@
       {
         "tag": "A",
         "text": "Reference 1",
-        "w": 20,
-        "h": 13
+        "w": 16,
+        "h": 14
       },
       {
         "tag": "A",
         "text": "Reference 2",
-        "w": 20,
-        "h": 13
+        "w": 16,
+        "h": 14
       },
       {
         "tag": "BUTTON",
         "text": "Sources and checks",
-        "w": 95,
-        "h": 16
-      },
-      {
-        "tag": "A",
-        "text": "Natural Earth Populated Places",
-        "w": 199,
-        "h": 13
+        "w": 118,
+        "h": 20
       },
       {
         "tag": "A",
         "text": "GDP",
-        "w": 20,
-        "h": 13
+        "w": 24,
+        "h": 14
       },
       {
         "tag": "A",
         "text": "life expectancy",
-        "w": 99,
-        "h": 13
+        "w": 76,
+        "h": 14
       },
       {
         "tag": "A",
         "text": "Natural Earth Populated Places",
-        "w": 198,
-        "h": 18
+        "w": 212,
+        "h": 19
       },
       {
         "tag": "A",
         "text": "Reference 8",
-        "w": 20,
-        "h": 13
+        "w": 16,
+        "h": 14
       },
       {
         "tag": "A",
         "text": "Preston (1975)",
-        "w": 98,
-        "h": 18
+        "w": 105,
+        "h": 19
       },
       {
         "tag": "A",
         "text": "Reference 5",
-        "w": 20,
-        "h": 13
+        "w": 16,
+        "h": 14
       },
       {
         "tag": "INPUT",
         "text": "Show both curves",
         "w": 18,
         "h": 18
+      },
+      {
+        "tag": "g",
+        "text": "Zimbabwe: residual -5.44 years, selected",
+        "w": 12,
+        "h": 53
       }
     ]
   },
@@ -106,50 +106,56 @@
       {
         "tag": "A",
         "text": "Reference 1",
-        "w": 20,
-        "h": 13
+        "w": 16,
+        "h": 14
       },
       {
         "tag": "A",
         "text": "Reference 2",
-        "w": 20,
-        "h": 13
+        "w": 16,
+        "h": 14
       },
       {
         "tag": "BUTTON",
         "text": "Sources and checks",
-        "w": 91,
-        "h": 15
+        "w": 109,
+        "h": 18
       },
       {
         "tag": "A",
         "text": "Natural Earth Populated Places",
-        "w": 199,
-        "h": 13
+        "w": 156,
+        "h": 14
       },
       {
         "tag": "A",
         "text": "GDP",
-        "w": 20,
-        "h": 13
+        "w": 24,
+        "h": 14
+      },
+      {
+        "tag": "A",
+        "text": "life expectancy",
+        "w": 76,
+        "h": 14
       },
       {
         "tag": "A",
         "text": "Reference 8",
-        "w": 20,
-        "h": 13
+        "w": 16,
+        "h": 14
       },
       {
         "tag": "A",
         "text": "Preston (1975)",
-        "w": 95,
-        "h": 16
+        "w": 98,
+        "h": 18
       },
       {
         "tag": "A",
         "text": "Reference 5",
-        "w": 20,
-        "h": 13
+        "w": 16,
+        "h": 14
       },
       {
         "tag": "INPUT",
@@ -166,14 +172,8 @@
       {
         "tag": "BUTTON",
         "text": "Working",
-        "w": 50,
-        "h": 20
-      },
-      {
-        "tag": "INPUT",
-        "text": "Burundi",
-        "w": 20,
-        "h": 20
+        "w": 56,
+        "h": 22
       }
     ]
   },

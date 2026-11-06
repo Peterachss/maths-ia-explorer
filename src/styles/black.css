@@ -231,6 +231,7 @@ table.data tr.best > *:first-child {
   height: 36px;
   min-width: 44px;
   min-height: 44px;
+  margin-left: auto;
   border-color: var(--line-1);
 }
 

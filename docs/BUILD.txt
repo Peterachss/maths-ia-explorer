@@ -1,5 +1,5 @@
 Life Expectancy Explorer — build record
-Release: all-black console (B19–B23)
+Release: all-black console (B19–B23) on upstream da24f24
 Date: 6 November 2026
 Command: BASE_PATH=/maths-ia-explorer/ npm run build
 Result: PASS
@@ -16,22 +16,23 @@ computing gzip size...
 dist/index.html                                                     2.05 kB │ gzip:   0.72 kB
 dist/assets/instrument-sans-latin-ext-wght-normal-B5bTHO_g.woff2   11.14 kB
 dist/assets/instrument-sans-latin-wght-normal-BbzFLZTg.woff2       30.09 kB
-dist/assets/index-Ck9jgkxf.css                                     83.18 kB │ gzip:  16.30 kB
-dist/assets/ModelStage-nODj3wvO.js                                  2.23 kB │ gzip:   1.09 kB │ map:     6.01 kB
+dist/assets/index-4iSimiV3.css                                     80.64 kB │ gzip:  15.75 kB
+dist/assets/ModelStage-C5lakdsD.js                                  2.23 kB │ gzip:   1.09 kB │ map:     6.01 kB
 dist/assets/vendor-D6IQdEyd.js                                     10.92 kB │ gzip:   3.60 kB │ map:    30.56 kB
-dist/assets/Stage-BXkmhybT.js                                      12.78 kB │ gzip:   4.99 kB │ map:    47.28 kB
+dist/assets/Stage-V8epNk3R.js                                      12.78 kB │ gzip:   4.99 kB │ map:    47.28 kB
 dist/assets/d3-Dbn3Qhaw.js                                         47.61 kB │ gzip:  18.46 kB │ map:   224.05 kB
 dist/assets/geo-NurYNIKo.js                                       108.82 kB │ gzip:  39.91 kB │ map:    13.32 kB
-dist/assets/index-DHIJ7Ojy.js                                     114.67 kB │ gzip:  33.74 kB │ map:   277.77 kB
+dist/assets/index-B7GxBJUs.js                                     112.94 kB │ gzip:  33.42 kB │ map:   275.35 kB
 dist/assets/react-DCO4km40.js                                     145.99 kB │ gzip:  47.15 kB │ map:   357.22 kB
 dist/assets/r3f-xXSP4MAt.js                                       153.40 kB │ gzip:  49.73 kB │ map:   494.27 kB
 dist/assets/three-CUaW6Xg9.js                                     666.65 kB │ gzip: 172.43 kB │ map: 2,170.70 kB
-✓ built in 3.57s
+✓ built in 3.40s
 optimised dist/index.html: CSS inlined, deferred 3D preloads removed
 
 Notes:
-- The normal root build (`npm run build`) passes with CSS 83.14 kB / 16.29 kB gzipped.
+- The normal root build (`npm run build`) passes with CSS 80.60 kB / 15.74 kB gzipped.
 - The GitHub Pages build sets BASE_PATH=/maths-ia-explorer/; CSS is inlined and the deferred 3D preloads are removed by scripts/optimize-dist.mjs.
+- The release is rebased onto da24f24, which removes chapter numbers, kickers, card metadata and the rail numeral. Those hierarchy changes are preserved; black.css only themes the resulting structure.
 - The 3D chunks (Stage, r3f, three) remain lazy-loaded.
 - No data files are generated or modified by the build.
 - The base-path run served every asset with no failed requests; evidence: audit/black-release/basepath-checks.json.

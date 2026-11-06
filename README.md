@@ -8,7 +8,9 @@ Mirror: https://maths-ia-explorer.surge.sh/
 
 An interactive companion to a Mathematics AA SL Internal Assessment. It asks how well a straight line and a logarithmic curve describe the link between income and life expectancy across 42 countries in 2019. The interface is a photoreal globe beside an all-black reading console: the map sets the scene, and the panel carries the argument.
 
-Current release: 6 November 2026. The four-width UI and interaction evidence is in `audit/black-release/`.
+Current release: 6 November 2026, rebased onto the upstream hierarchy pass (`da24f24`) and verified at all four widths. The four-width UI, interaction and accessibility evidence is in `audit/black-release/`.
+
+The all-black layer keeps the upstream hierarchy: no chapter numbers or repeated metadata, a title-first masthead, and KPI values above their labels. It changes the surfaces and ink, not the argument or a single data value.
 
 The app is built around the student's own 42 rows, not a demonstration dataset. Every number in the interface is recomputed in the browser from `data/sample42.csv` and checked against the values printed in the written IA.
 

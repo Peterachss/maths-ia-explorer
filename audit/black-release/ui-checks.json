@@ -201,7 +201,7 @@
     "1024x768": {
       "bodyWidth": 1024,
       "viewportWidth": 1024,
-      "docHeight": 17703,
+      "docHeight": 17835,
       "viewportHeight": 768,
       "small": [],
       "checkboxTargets": [
@@ -403,7 +403,7 @@
     "768x1024": {
       "bodyWidth": 768,
       "viewportWidth": 768,
-      "docHeight": 17825,
+      "docHeight": 17957,
       "viewportHeight": 1024,
       "small": [],
       "checkboxTargets": [
@@ -597,7 +597,7 @@
       "panelContrast": 17.6,
       "sectionNav": {
         "jumpBottom": 556,
-        "headingTop": 579,
+        "headingTop": 580,
         "clearance": 24
       },
       "errors": 0
@@ -605,7 +605,7 @@
     "375x812": {
       "bodyWidth": 375,
       "viewportWidth": 375,
-      "docHeight": 18767,
+      "docHeight": 19183,
       "viewportHeight": 812,
       "small": [],
       "checkboxTargets": [
@@ -836,7 +836,7 @@
     "pressed": "true",
     "preview": {
       "label": "Chad",
-      "top": 388
+      "top": 406
     }
   },
   "failures": []

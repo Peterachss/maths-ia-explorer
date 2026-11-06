@@ -1,7 +1,7 @@
 # Release report — Life Expectancy Explorer
 
 **Release:** all-black console, 6 November 2026
-**Branch:** `main`, on top of `dd805f3`
+**Branch:** `main`, on top of `da24f24` (release commit `b9c594a`)
 **Live site:** https://peterachss.github.io/maths-ia-explorer/ (canonical)
 **Mirror:** https://maths-ia-explorer.surge.sh/
 
@@ -10,6 +10,8 @@ This is the companion page for the IB Mathematics AA SL Internal Assessment comp
 ## Result
 
 The four-chapter report, photoreal globe, least-squares bowl and seven charts are unchanged in structure. The reading console is now black throughout, with light surfaces only on selected or primary controls. The gap badge has its own typographic voice and model context and no longer collides with the stage tabs. Chart export, chart full-screen, copy-view links and keyboard search were repaired or added.
+
+The release is rebased onto the upstream `da24f24` hierarchy pass rather than replacing it. Chapter numbers, chapter kickers, card metadata and the rail numeral are intentionally gone; the masthead metadata sits below the title, KPI values precede their labels, and the rail uses plain chapter words. `black.css` loads last and themes that structure; it does not restore the removed elements.
 
 | Area | Result |
 |---|---|
@@ -43,7 +45,7 @@ All commands were run on 6 November 2026 on macOS with Node 22 and the bundled P
 
 | Check | Command | Result |
 |---|---|---|
-| Type-check and build | `npm run build` | PASS. CSS 83.14 kB / 16.29 kB gzipped; 3D chunks lazy. |
+| Type-check and build | `npm run build` | PASS. CSS 80.60 kB / 15.74 kB gzipped; 3D chunks lazy. |
 | Unit and contract tests | `npm test` | PASS. 5 files, 46 tests. |
 | Anchor values | `npm run data:anchor` | PASS. 11/11 anchors. |
 | Independent cross-check | `npm run data:cross` | PASS. Writes `docs/crosscheck.json`. |
@@ -90,7 +92,7 @@ No data value or IA number changed. The authoritative values remain Appendix A i
 - 44px targets for non-inline controls; skip link first; keyboard search and roving scatter points; visible focus; reduced motion disables camera flight, idle rotation, reveal and CSS transitions.
 - No horizontal document overflow at any required width.
 - 3D is deferred: desktop/tablet mount on idle; phones keep a 30 KiB poster and mount after “Open the globe”. If WebGL is unavailable, the stage reports why and the seven charts/tables remain.
-- Bundle: app 114.62 kB, React 145.99 kB, React Three Fiber 153.40 kB, Three.js 666.65 kB, map 108.82 kB, d3 47.61 kB, shared vendor 10.90 kB, CSS 83.14 kB (16.29 kB gzipped) before minified gzip for JS. 3D chunks are lazy-loaded.
+- Bundle: app 112.89 kB, React 145.99 kB, React Three Fiber 153.40 kB, Three.js 666.65 kB, map 108.82 kB, d3 47.61 kB, shared vendor 10.90 kB, CSS 80.60 kB (15.74 kB gzipped) before minified gzip for JS. 3D chunks are lazy-loaded.
 
 ## Known limitations
 

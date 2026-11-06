@@ -1,6 +1,6 @@
 # Progress
 
-Branch: `main` (`rebuild/nasa-grade` merged)
+Branch: `main` (rebased onto `da24f24`)
 
 Last update: 6 November 2026
 
@@ -10,7 +10,9 @@ Build status: `npm run build` passes; `npm test` passes 46/46; the interaction s
 
 ## Black release, 6 November 2026
 
-Branch: `main`, on top of `dd805f3`. The release keeps R1's three-column layout, 152 px contents rail, 8K-capable Earth asset, seven charts and `SensitivityChart`; it replaces the reading surfaces with black and adds the requested utility fixes. Nothing is forced or pushed yet.
+**Upstream reconciliation.** While this release was being prepared, `origin/main` advanced to `da24f24` (`feat(ui): elevate UI hierarchy, typography, and contrast...`). The release was rebased onto it rather than overwriting it. The hierarchy pass is preserved: chapter numbers, chapter kickers, card meta and the rail numeral removed; the masthead meta now sits below the title; KPI values precede their labels; and the rail groups are plain words. `black.css` loads last and themes that structure without restoring the removed elements. The copy-view control moved into the new masthead meta row and stays right-aligned when the metadata is hidden at 375px.
+
+Branch: `main`, on top of `da24f24`. The release keeps R1's three-column layout, 152 px contents rail, 8K-capable Earth asset, seven charts and `SensitivityChart`; it replaces the reading surfaces with black and adds the requested utility fixes. Nothing is forced or pushed yet.
 
 - **B19 — black console.** `src/styles/black.css` loads last and overrides every reading surface, card, table, rail, masthead, control and mobile chrome. Selected/primary controls remain light intentionally (primary button ink 17.2:1). The panel is `rgb(8, 10, 13)`.
 - **B20 — gap badge.** The badge uses Instrument Sans for its headline, keeps the measured number in mono, and shows `Income model 18.9 yrs · 83.8% of gap`. It clears the tabs by 14 px at all four widths.
@@ -50,22 +52,22 @@ Branch: `main`, on top of `dd805f3`. The release keeps R1's three-column layout,
 | B15 | done | One basemap credit used in the map, sources and imagery sections. | `d22452a` |
 | B16 | done | Visually hidden tables no longer escape the reading panel or extend the page; desktop stays 100dvh with page scroll locked at y=0, stacked layouts still scroll normally. `check:ui` asserts both. | `745cd09` |
 | B17 | done | Globe surface click picks the nearest country within 7 degrees; beam clicks still select exactly; drags over 8 px and far-side beams cannot select or hover. Hint text names the behaviour. The original live run covered 25 desktop and 7 mobile steps; the black release expanded the same script to 31 desktop + 11 mobile steps. | `57df98f` |
-| B19 | done | All-black console. `src/styles/black.css` is loaded after `redesign.css`; every panel surface, card, table, rail, masthead and mobile chrome is black. Only selected/primary controls stay light. Panel `rgb(8, 10, 13)`; 17.6:1 primary, 11.3:1 body, 4.8:1 smallest functional. Evidence: `audit/black-release/ui-checks.json`, `audit/black-release/*.png`. | B19–B23 |
-| B20 | done | Gap badge rebuilt in Instrument Sans with measured number and model context: observed 22.5 years, income model 18.9 years, 83.8% of the gap. Clears the Globe/bowl tabs by 14 px at 1440/1024/768/375. Evidence: `ui-checks.json`, `375-landing.png`, interaction step. | B19–B23 |
-| B21 | done | Chart fullscreen and export repair: 7 fullscreen controls, export targets the chart SVG rather than the toolbar icon, and SVG/PNG exports carry a `#0d1015` backdrop. Evidence: `interaction-test.mjs` (export menu, PNG decode, fullscreen), `check:ui`. | B19–B23 |
-| B22 | done | Copy-view link in the desktop masthead and mobile contents row; copies current `c`, `x` and `m` state and announces success. Evidence: interaction sweep desktop/mobile copy steps; 2 controls at 1440. | B19–B23 |
-| B23 | done | Keyboard search wraps with ArrowUp/Down, supports Home/End, Enter and Escape, exposes `aria-activedescendant`, tags selected countries and announces no matches. Evidence: 31 desktop + 11 mobile interaction steps; `check:ui` search checks. | B19–B23 |
-| C1 | done | Four numbered chapters, section observer, progress rail and mobile chapter select. | `d22452a` |
+| B19 | done | All-black console. `src/styles/black.css` is loaded after `redesign.css`; every panel surface, card, table, rail, masthead and mobile chrome is black. Only selected/primary controls stay light. Panel `rgb(8, 10, 13)`; 17.6:1 primary, 11.3:1 body, 4.8:1 smallest functional. Evidence: `audit/black-release/ui-checks.json`, `audit/black-release/*.png`. | `b9c594a` |
+| B20 | done | Gap badge rebuilt in Instrument Sans with measured number and model context: observed 22.5 years, income model 18.9 years, 83.8% of the gap. Clears the Globe/bowl tabs by 14 px at 1440/1024/768/375. Evidence: `ui-checks.json`, `375-landing.png`, interaction step. | `b9c594a` |
+| B21 | done | Chart fullscreen and export repair: 7 fullscreen controls, export targets the chart SVG rather than the toolbar icon, and SVG/PNG exports carry a `#0d1015` backdrop. Evidence: `interaction-test.mjs` (export menu, PNG decode, fullscreen), `check:ui`. | `b9c594a` |
+| B22 | done | Copy-view link in the desktop masthead and mobile contents row; copies current `c`, `x` and `m` state and announces success. Evidence: interaction sweep desktop/mobile copy steps; 2 controls at 1440. | `b9c594a` |
+| B23 | done | Keyboard search wraps with ArrowUp/Down, supports Home/End, Enter and Escape, exposes `aria-activedescendant`, tags selected countries and announces no matches. Evidence: 31 desktop + 11 mobile interaction steps; `check:ui` search checks. | `b9c594a` |
+| C1 | done | Four chapters, section observer, progress rail and mobile chapter select. The visible numbers were removed by the `da24f24` hierarchy pass; the chapter order and narrative remain. | `d22452a` |
 | C2 | done | Shared section template: number, title, question, body, source line, calculation disclosure. | `d22452a` |
 | C3 | done | Sticky context bar with sample, equation, r², selection and limits. | `d22452a` |
 | C4 | done | Glossary disclosure covers residual, SSE, r², interpolation, extrapolation, PPP and residual standard error. | `d22452a` |
 | C5 | done | Selection is shared by globe, scatter, table and context bar; default ZWE/SGP labels visible on first paint. | `d22452a` |
 | C6 | done | Landing answer states the 42-country, 2019, logarithmic result before the chapters. | `d22452a` |
 | D1 | partial | Tokens cover palette, type, spacing and motion; some literal colours/paddings remain in `src/styles/app.css`. Logged in `DECISIONS.md` D1. | `d22452a` |
-| D2 | done | All-black console, settled by R6. R5's warm-paper panel is historical; the black layer preserves R1's layout, rail, globe and charts. Light surfaces remain only on selected/primary controls. | B19–B23 |
+| D2 | done | All-black console, settled by R6. R5's warm-paper panel is historical; the black layer preserves R1's layout, rail, globe and charts. Light surfaces remain only on selected/primary controls. | `b9c594a` |
 | D3 | done | Mono numerals via `--font-mono`; no extra webfont. | `d22452a` |
 | D4 | done | Pointer/keyboard splitter, 560–760px, ARIA separator, 44px hit area; hidden below 1201px. `npm run check:ui` verifies ArrowLeft 648→672. | `421fdda` |
-| D5 | done | Desktop stage/panel frame with solid black chrome and a black reading console. | B19–B23 |
+| D5 | done | Desktop stage/panel frame with solid black chrome and a black reading console. | `b9c594a` |
 | D6 | done | Shared button, chip, segmented, card, disclosure and table components. | `d22452a` |
 | D7 | done | Motion timings, reduced-motion override, no scroll hijack. | `d22452a` |
 | D8 | done | Lucide icons only; no icon font. | `d22452a` |
@@ -75,7 +77,7 @@ Branch: `main`, on top of `dd805f3`. The release keeps R1's three-column layout,
 | E4 | done | Selected labels are clamped in the stage; phone labels lift 12px clear of the zoom plate; ZWE/SGP visible at 1440 and 375. | `421fdda` |
 | E5 | done | Legend ticks use sample min/max; selected markers and arc. | `d22452a` |
 | E6 | done | Bowl axes, contours, minimum, colour bar, shadow and snap control; tablet strip layout fixed. | `d22452a` |
-| E7 | done | WebGL-off run: 0 canvases, fallback text, 7 charts, 0 page errors, `audit/black-release/1024-webgl-off.png`. | B19–B23 |
+| E7 | done | WebGL-off run: 0 canvases, fallback text, 7 charts, 0 page errors, `audit/black-release/1024-webgl-off.png`. | `b9c594a` |
 | F1 | partial | Shared chart export/data-table plumbing; a single shared SVG frame abstraction is not complete. | `d22452a` |
 | F2 | done | Axes, units, hairlines and mono ticks. | `d22452a` |
 | F3 | done | Direct model labels and selected-country labels. | `d22452a` |
@@ -83,12 +85,12 @@ Branch: `main`, on top of `dd805f3`. The release keeps R1's three-column layout,
 | F5 | done | Model labels and confidence band. | `d22452a` |
 | F6 | done | Residual histogram. | `d22452a` |
 | F7 | done | Extrapolation shading. | `d22452a` |
-| F8 | done | PNG, SVG and CSV export via `ChartExport.tsx`; corrected chart-SVG selection, dark export background and fullscreen controls. | B19–B23 |
+| F8 | done | PNG, SVG and CSV export via `ChartExport.tsx`; corrected chart-SVG selection, dark export background and fullscreen controls. | `b9c594a` |
 | F9 | done | Sortable `CountryTable`; every sort button and row has a 44px target. | `d22452a` |
 | G1 | done | 44px targets for non-inline controls; chips 44px; checkbox labels 44px; splitter 44px effective hit area. Inline prose/citation exception documented. Phone globe 45dvh; tablet 52dvh. | `421fdda` |
 | G2 | done | Skip link is first Tab target and moves focus to `#main-content`; reduced motion true, animation `1e-05s`, scroll behaviour `auto`. | `fe27549` |
-| G3 | done | Lighthouse desktop 100/100/100/100; mobile 97/100/100/100 (performance/accessibility/best-practices/SEO) on the final black build; desktop scored 84 on the preceding run. | B19–B23 |
-| G4 | done | axe 0 violations across 16 width/chapter combinations; console clean; WebGL fallback clean. Evidence: `audit/black-release/axe.json`. | B19–B23 |
+| G3 | done | Lighthouse desktop 100/100/100/100; mobile 97/100/100/100 (performance/accessibility/best-practices/SEO) on the final black build; desktop scored 84 on the preceding run. | `b9c594a` |
+| G4 | done | axe 0 violations across 16 width/chapter combinations; console clean; WebGL fallback clean. Evidence: `audit/black-release/axe.json`. | `b9c594a` |
 | H1 | done | `REPORT.md` with ID table, source status, data diffs, screenshot index, audits, timings, decisions. | `9a9fa4b` |
 | H2 | done | `docs/DESIGN.md` reconciled with shipped textures, panel widths, stage heights and type. | `9a9fa4b` |
 | H3 | done | Before/after screenshot index and final audit artefacts under `audit/`. | `fe27549` |

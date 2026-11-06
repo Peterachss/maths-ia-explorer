@@ -1,7 +1,7 @@
 # Final audit — black release
 
 **Date:** 6 November 2026
-**Build:** all-black console rebased onto `da24f24`; release commit `b9c594a`
+**Build:** all-black console rebased onto `da24f24`; release commit `d34138a`
 **Scope:** interface, accessibility, data integrity, base path, build and tests
 **Viewports:** 1440×900, 1024×768, 768×1024, 375×812
 

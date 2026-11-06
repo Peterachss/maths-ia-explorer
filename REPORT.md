@@ -1,7 +1,7 @@
 # Release report — Life Expectancy Explorer
 
 **Release:** all-black console, 6 November 2026
-**Branch:** `main`, on top of `da24f24` (release commit `b9c594a`)
+**Branch:** `main`, on top of `da24f24` (release commit `d34138a`)
 **Live site:** https://peterachss.github.io/maths-ia-explorer/ (canonical; GitHub Pages run 42253556050)
 **Mirror:** https://maths-ia-explorer.surge.sh/
 

@@ -5,15 +5,13 @@
 // Usage: node scripts/interaction-test.mjs [url]
 
 import { chromium } from 'playwright';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 
 const url = process.argv[2] ?? 'http://localhost:4173/';
 const out = 'docs/screens';
 await mkdir(out, { recursive: true });
 
-// Use the installed Chrome. The bundled Playwright browser is not installed
-// in this checkout.
-const browser = await chromium.launch({ channel: 'chrome' });
+const browser = await chromium.launch();
 const report = { url, runs: [], pass: true };
 
 function watch(page, label) {
@@ -33,7 +31,11 @@ function watch(page, label) {
 }
 
 async function run(name, viewport, body) {
-  const page = await browser.newPage({ viewport });
+  const context = await browser.newContext({
+    viewport,
+    permissions: ['clipboard-read', 'clipboard-write']
+  });
+  const page = await context.newPage();
   page.setDefaultTimeout(8000);
   const w = watch(page, name);
   const steps = [];
@@ -63,6 +65,7 @@ async function run(name, viewport, body) {
     report.runs.push({ name, viewport, steps, errors: w.errors });
   } finally {
     await page.close();
+    await context.close();
   }
 }
 
@@ -164,6 +167,29 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
     if ((await search.inputValue()) !== '') throw new Error('keyboard search did not clear the input');
   });
 
+  await step('search wraps, supports Home/End and marks selected countries', async () => {
+    const search = page.getByPlaceholder('Type a country name');
+    await search.fill('a');
+    await page.waitForTimeout(250);
+    const ids = await page.locator('.search-hits [role="option"]').evaluateAll((els) => els.map((el) => el.id));
+    if (ids.length < 2) throw new Error(`expected multiple search hits, got ${ids.length}`);
+    await search.press('End');
+    let active = await search.getAttribute('aria-activedescendant');
+    if (active !== ids.at(-1)) throw new Error(`End did not activate the last hit: ${active}`);
+    await search.press('Home');
+    active = await search.getAttribute('aria-activedescendant');
+    if (active !== ids[0]) throw new Error(`Home did not activate the first hit: ${active}`);
+    await search.press('ArrowUp');
+    active = await search.getAttribute('aria-activedescendant');
+    if (active !== ids.at(-1)) throw new Error(`ArrowUp did not wrap from the first to the last hit: ${active}`);
+    await search.press('Escape');
+    await search.fill('Zimb');
+    await page.waitForTimeout(200);
+    const tag = await page.locator('.search-hits .hit-tag').innerText().catch(() => '');
+    if (tag.toLowerCase() !== 'selected') throw new Error(`selected country has no tag: ${JSON.stringify(tag)}`);
+    await search.press('Escape');
+  });
+
   await step('search shows a no-match state', async () => {
     const search = page.getByPlaceholder('Type a country name');
     await search.fill('zzzz');
@@ -188,6 +214,38 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
     const dots = page.locator('figure.chart circle');
     await dots.nth(2).click({ force: true });
     await page.waitForTimeout(400);
+  });
+
+  await step('chart full screen enters and exits', async () => {
+    const figure = page.locator('.chart-gap');
+    await figure.scrollIntoViewIfNeeded();
+    const button = figure.locator('.chart-fullscreen');
+    await button.click();
+    await page.waitForTimeout(500);
+    const entered = await page.evaluate(() => Boolean(document.fullscreenElement));
+    if (!entered) throw new Error('chart did not enter full screen');
+    await button.click();
+    await page.waitForTimeout(500);
+    const exited = await page.evaluate(() => Boolean(document.fullscreenElement));
+    if (exited) throw new Error('chart did not exit full screen');
+  });
+
+  await step('chart export downloads the chart, not the toolbar icon', async () => {
+    const figure = page.locator('.chart-gap');
+    await figure.scrollIntoViewIfNeeded();
+    await figure.locator('.export > summary').click();
+    const [download] = await Promise.all([
+      page.waitForEvent('download'),
+      figure.locator('.export-menu button').filter({ hasText: 'SVG' }).click()
+    ]);
+    if (download.suggestedFilename() !== 'zimbabwe-singapore-gap.svg') {
+      throw new Error(`unexpected export name: ${download.suggestedFilename()}`);
+    }
+    const path = await download.path();
+    if (!path) throw new Error('export download has no path');
+    const text = await readFile(path, 'utf8');
+    if (!text.includes('Observed gap')) throw new Error('exported SVG is not the chart');
+    if (!text.includes('fill="#0d1015"')) throw new Error('exported SVG has no dark background');
   });
 
   await step('open working', async () => {
@@ -290,6 +348,16 @@ await run('desktop', { width: 1440, height: 900 }, async (page, step) => {
     const again = await page.evaluate(() => location.search);
     if (again !== search) throw new Error(`share link changed on reload: ${search} -> ${again}`);
   });
+
+  await step('copy the current view link', async () => {
+    const expected = page.url();
+    await page.locator('.masthead-actions .copy-view').click();
+    await page.waitForTimeout(200);
+    const copied = await page.evaluate(() => navigator.clipboard.readText());
+    if (copied !== expected) throw new Error(`clipboard has ${JSON.stringify(copied)}, expected ${JSON.stringify(expected)}`);
+    const status = await page.locator('.masthead-actions [role="status"]').innerText();
+    if (!/Link copied/.test(status)) throw new Error(`copy status missing: ${JSON.stringify(status)}`);
+  });
 });
 
 await run('mobile', { width: 375, height: 812 }, async (page, step) => {
@@ -302,6 +370,31 @@ await run('mobile', { width: 375, height: 812 }, async (page, step) => {
     await page.waitForTimeout(200);
     await page.locator('.search-hits [role="option"]').first().click();
     await page.waitForTimeout(500);
+  });
+  await step('gap badge stays below the tabs with model context', async () => {
+    const badge = page.locator('.map-gap');
+    if (!(await badge.isVisible())) throw new Error('gap badge is hidden on mobile');
+    const metrics = await page.evaluate(() => {
+      const gap = document.querySelector('.map-gap')?.getBoundingClientRect();
+      const tabs = document.querySelector('.stage-tabs')?.getBoundingClientRect();
+      return {
+        clearance: gap && tabs ? Math.round(gap.top - tabs.bottom) : null,
+        text: document.querySelector('.map-gap')?.innerText ?? ''
+      };
+    });
+    if (metrics.clearance === null || metrics.clearance < 10) throw new Error(`badge clearance ${metrics.clearance}`);
+    if (!/Income model/.test(metrics.text)) throw new Error('badge model context missing');
+  });
+  await step('copy the mobile view link', async () => {
+    const expected = page.url();
+    await page.locator('.section-jump .copy-view').click();
+    await page.waitForTimeout(200);
+    const copied = await page.evaluate(() => navigator.clipboard.readText());
+    if (copied !== expected) throw new Error(`clipboard has ${JSON.stringify(copied)}, expected ${JSON.stringify(expected)}`);
+  });
+  await step('chart fullscreen stays hidden on the phone', async () => {
+    const visible = await page.locator('.chart-fullscreen:visible').count();
+    if (visible) throw new Error(`${visible} fullscreen controls visible on phone`);
   });
   await step('scroll the page', async () => {
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.45));

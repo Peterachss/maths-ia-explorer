@@ -3,9 +3,9 @@
     "viewport": 1440,
     "scrollWidth": 1440,
     "overflow": false,
-    "interactive": 174,
+    "interactive": 228,
     "unnamed": [],
-    "svgs": 37,
+    "svgs": 33,
     "svgUnlabelled": 0,
     "imgs": 0,
     "imgNoAlt": 0,
@@ -15,43 +15,43 @@
       {
         "tag": "DIV",
         "text": "Resize the reading panel",
-        "w": 8,
+        "w": 6,
         "h": 900
       },
       {
         "tag": "A",
         "text": "Reference 1",
-        "w": 16,
-        "h": 11
+        "w": 20,
+        "h": 13
       },
       {
         "tag": "A",
         "text": "Reference 2",
-        "w": 16,
-        "h": 11
+        "w": 20,
+        "h": 13
       },
       {
         "tag": "BUTTON",
         "text": "Sources and checks",
-        "w": 104,
+        "w": 95,
         "h": 16
       },
       {
         "tag": "A",
         "text": "Natural Earth Populated Places",
-        "w": 173,
+        "w": 199,
         "h": 13
       },
       {
         "tag": "A",
         "text": "GDP",
-        "w": 17,
+        "w": 20,
         "h": 13
       },
       {
         "tag": "A",
         "text": "life expectancy",
-        "w": 87,
+        "w": 99,
         "h": 13
       },
       {
@@ -63,8 +63,8 @@
       {
         "tag": "A",
         "text": "Reference 8",
-        "w": 16,
-        "h": 11
+        "w": 20,
+        "h": 13
       },
       {
         "tag": "A",
@@ -75,14 +75,14 @@
       {
         "tag": "A",
         "text": "Reference 5",
-        "w": 16,
-        "h": 11
+        "w": 20,
+        "h": 13
       },
       {
-        "tag": "BUTTON",
-        "text": "Working",
-        "w": 50,
-        "h": 19
+        "tag": "INPUT",
+        "text": "Show both curves",
+        "w": 18,
+        "h": 18
       }
     ]
   },
@@ -94,9 +94,9 @@
     "viewport": 375,
     "scrollWidth": 375,
     "overflow": false,
-    "interactive": 174,
+    "interactive": 228,
     "unnamed": [],
-    "svgs": 37,
+    "svgs": 33,
     "svgUnlabelled": 0,
     "imgs": 0,
     "imgNoAlt": 0,
@@ -106,72 +106,72 @@
       {
         "tag": "A",
         "text": "Reference 1",
-        "w": 16,
-        "h": 11
+        "w": 20,
+        "h": 13
       },
       {
         "tag": "A",
         "text": "Reference 2",
-        "w": 16,
-        "h": 11
+        "w": 20,
+        "h": 13
       },
       {
         "tag": "BUTTON",
         "text": "Sources and checks",
-        "w": 104,
-        "h": 16
-      },
-      {
-        "tag": "A",
-        "text": "GDP",
-        "w": 17,
-        "h": 13
-      },
-      {
-        "tag": "A",
-        "text": "life expectancy",
-        "w": 87,
-        "h": 13
+        "w": 91,
+        "h": 15
       },
       {
         "tag": "A",
         "text": "Natural Earth Populated Places",
-        "w": 198,
-        "h": 18
+        "w": 199,
+        "h": 13
+      },
+      {
+        "tag": "A",
+        "text": "GDP",
+        "w": 20,
+        "h": 13
       },
       {
         "tag": "A",
         "text": "Reference 8",
-        "w": 16,
-        "h": 11
+        "w": 20,
+        "h": 13
       },
       {
         "tag": "A",
         "text": "Preston (1975)",
-        "w": 98,
-        "h": 18
+        "w": 95,
+        "h": 16
       },
       {
         "tag": "A",
         "text": "Reference 5",
-        "w": 16,
-        "h": 11
+        "w": 20,
+        "h": 13
+      },
+      {
+        "tag": "INPUT",
+        "text": "Show both curves",
+        "w": 18,
+        "h": 18
+      },
+      {
+        "tag": "g",
+        "text": "Zimbabwe: residual -5.44 years, selected",
+        "w": 7,
+        "h": 32
       },
       {
         "tag": "BUTTON",
         "text": "Working",
         "w": 50,
-        "h": 19
-      },
-      {
-        "tag": "INPUT",
-        "text": "Burundi",
-        "w": 20,
         "h": 20
       },
       {
         "tag": "INPUT",
-        "text": "Chad",
+        "text": "Burundi",
         "w": 20,
         "h": 20
       }
@@ -182,13 +182,13 @@
     "scrollBehaviour": "auto"
   },
   "contrast": {
-    "paper-0 on ink-1": 17.2,
-    "paper-1 on ink-1": 11.37,
-    "paper-2 on ink-1": 6.3,
-    "paper-2 on ink-2": 5.66,
-    "thread-text on ink-1": 8.03,
-    "model-log on ink-1": 11.49,
-    "model-linear on ink-1": 7.4,
-    "white on primary": 4.51
+    "primary on panel": 17.57,
+    "body on panel": 11.29,
+    "secondary on panel": 6.82,
+    "tertiary on panel": 4.78,
+    "context on surface": 6.56,
+    "coral ink on panel": 9.7,
+    "positive ink on pill": 12,
+    "primary button ink": 17.16
   }
 }

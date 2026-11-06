@@ -1,5 +1,5 @@
 {
-  "url": "http://localhost:4173/",
+  "url": "http://127.0.0.1:4181/",
   "runs": [
     {
       "name": "desktop",
@@ -18,6 +18,10 @@
         },
         {
           "label": "search by ISO code and select with the keyboard",
+          "ok": true
+        },
+        {
+          "label": "search wraps, supports Home/End and marks selected countries",
           "ok": true
         },
         {
@@ -54,6 +58,14 @@
         },
         {
           "label": "click a scatter point",
+          "ok": true
+        },
+        {
+          "label": "chart full screen enters and exits",
+          "ok": true
+        },
+        {
+          "label": "chart export downloads the chart, not the toolbar icon",
           "ok": true
         },
         {
@@ -115,6 +127,10 @@
         {
           "label": "deep link reload",
           "ok": true
+        },
+        {
+          "label": "copy the current view link",
+          "ok": true
         }
       ],
       "errors": []
@@ -132,6 +148,18 @@
         },
         {
           "label": "search and select",
+          "ok": true
+        },
+        {
+          "label": "gap badge stays below the tabs with model context",
+          "ok": true
+        },
+        {
+          "label": "copy the mobile view link",
+          "ok": true
+        },
+        {
+          "label": "chart fullscreen stays hidden on the phone",
           "ok": true
         },
         {
@@ -167,7 +195,7 @@
     "hasMessage": true,
     "visible": true,
     "errors": [
-      "requestfailed: http://localhost:4173/data/sample42.csv net::ERR_FAILED",
+      "requestfailed: http://127.0.0.1:4181/data/sample42.csv net::ERR_FAILED",
       "console: Failed to load resource: net::ERR_FAILED"
     ]
   },

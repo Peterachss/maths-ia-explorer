@@ -10,12 +10,16 @@ export function MapChrome({
   countries,
   view,
   onReset,
-  gap
+  gap,
+  predictedGap,
+  percentReproduced
 }: {
   countries: Country[];
   view: RefObject<ViewCommand>;
   onReset: () => void;
   gap?: number;
+  predictedGap?: number;
+  percentReproduced?: number;
 }) {
   const selected = useStore((s) => s.selected);
   const lives = countries.map((c) => c.life);
@@ -52,9 +56,18 @@ export function MapChrome({
       </div>
 
       {gap !== undefined && (
-        <p className="map-gap" aria-label={`Observed gap ${gap.toFixed(1)} years`}>
-          <strong>{gap.toFixed(1)} years apart</strong>
+        <p
+          className="map-gap"
+          aria-label={`Observed gap ${gap.toFixed(1)} years${predictedGap !== undefined && percentReproduced !== undefined ? `; the income model predicts ${predictedGap.toFixed(1)} years, ${percentReproduced.toFixed(1)} percent of the gap` : ''}`}
+        >
+          <strong><span className="map-gap-number">{gap.toFixed(1)}</span> years apart</strong>
           <span>Zimbabwe to Singapore</span>
+          {predictedGap !== undefined && percentReproduced !== undefined && (
+            <span className="map-gap-model">
+              <i aria-hidden="true" />
+              Income model <b>{predictedGap.toFixed(1)} yrs</b> · <b>{percentReproduced.toFixed(1)}%</b> of gap
+            </span>
+          )}
         </p>
       )}
 

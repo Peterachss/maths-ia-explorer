@@ -6,7 +6,7 @@ import { chromium } from 'playwright';
 import { writeFile } from 'node:fs/promises';
 
 const url = process.argv[2] ?? 'http://localhost:4173/';
-const browser = await chromium.launch({ channel: 'chrome' });
+const browser = await chromium.launch();
 const results = {};
 
 for (const [name, width, height] of [
@@ -87,14 +87,14 @@ function ratio(a, b) {
   return Number(((l1 + 0.05) / (l2 + 0.05)).toFixed(2));
 }
 results.contrast = {
-  'paper-0 on ink-1': ratio('#f4f7fb', '#0f141b'),
-  'paper-1 on ink-1': ratio('#c2ccd8', '#0f141b'),
-  'paper-2 on ink-1': ratio('#8b98a8', '#0f141b'),
-  'paper-2 on ink-2': ratio('#8b98a8', '#171f28'),
-  'thread-text on ink-1': ratio('#ff8a70', '#0f141b'),
-  'model-log on ink-1': ratio('#ffc247', '#0f141b'),
-  'model-linear on ink-1': ratio('#5aa7ff', '#0f141b'),
-  'white on primary': ratio('#ffffff', '#1a73e8')
+  'primary on panel': ratio('#f4f1ea', '#080a0d'),
+  'body on panel': ratio('#c8c3b9', '#080a0d'),
+  'secondary on panel': ratio('#9c978e', '#080a0d'),
+  'tertiary on panel': ratio('#817c73', '#080a0d'),
+  'context on surface': ratio('#9c978e', '#0d1015'),
+  'coral ink on panel': ratio('#ff9b84', '#080a0d'),
+  'positive ink on pill': ratio('#b7f0e2', '#102a26'),
+  'primary button ink': ratio('#090b0e', '#f2efe8')
 };
 
 await writeFile('docs/audit.json', JSON.stringify(results, null, 2) + '\n', 'utf8');

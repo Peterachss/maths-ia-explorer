@@ -32,4 +32,4 @@ Instrument Sans is self-hosted through Fontsource and bundled by Vite. There is 
 
 ## Accessibility
 
-White on the primary blue is 4.51:1, above the 4.5:1 AA threshold for normal text. Primary text on the panel is 17.2:1, body text is 11.37:1 and secondary text is 6.3:1. The focus ring uses `#6cb2ff` and is visible on both graphite and white surfaces.
+Primary text on the black panel is 17.6:1, body text is 11.3:1, secondary text is 6.8:1 and the smallest functional label is 4.8:1. Selected light controls use dark ink at 17.2:1. The focus ring remains visible on both black and light surfaces. The black release (R6) changed surfaces and ink, not the type family or size scale.

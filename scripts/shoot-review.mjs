@@ -1,17 +1,20 @@
 // Mobile review shots: hero, the sticky section index, a model section and the bowl.
 import { chromium } from 'playwright';
 
-const browser = await chromium.launch({ channel: 'chrome' });
-const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 375, height: 812 }, deviceScaleFactor: 2 });
 const errors = [];
 page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
 page.on('pageerror', (e) => errors.push(String(e)));
-await page.goto('http://localhost:4173/', { waitUntil: 'networkidle' });
+await page.goto(process.argv[2] ?? process.env.URL ?? 'http://127.0.0.1:4173/', { waitUntil: 'networkidle' });
 await page.waitForTimeout(2000);
 await page.screenshot({ path: 'docs/screens/mobile-hero.png' });
 
 await page.getByRole('button', { name: 'Compare Zimbabwe and Singapore' }).click();
 await page.waitForTimeout(1600);
+await page.locator('.poster-open').click().catch(() => undefined);
+await page.waitForSelector('.stage canvas', { state: 'attached', timeout: 30000 }).catch(() => undefined);
+await page.waitForTimeout(1400);
 
 const go = async (heading, name) => {
   await page.evaluate((h) => {

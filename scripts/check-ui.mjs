@@ -2,10 +2,13 @@
 // reduced motion and the no-WebGL fallback. Usage:
 //   node scripts/check-ui.mjs audit/after/ui-checks.json
 // Requires `npm run preview` (or URL=...).
-import { writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { dirname } from 'node:path';
 import { chromium } from 'playwright';
 
 const out = process.argv[2] ?? 'audit/after/ui-checks.json';
+const shotDir = dirname(out);
+await mkdir(shotDir, { recursive: true });
 const base = process.env.URL ?? 'http://127.0.0.1:4173/';
 const sizes = [
   [1440, 900],
@@ -20,8 +23,16 @@ const fail = (message) => {
   failures.push(message);
   console.log(`FAIL  ${message}`);
 };
+const luminance = (colour) => {
+  const channels = (colour.match(/\d+(?:\.\d+)?/g) ?? []).slice(0, 3).map(Number);
+  const [r, g, b] = channels.map((value) => {
+    const c = value / 255;
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
 
-const browser = await chromium.launch({ channel: 'chrome' });
+const browser = await chromium.launch();
 for (const [width, height] of sizes) {
   const context = await browser.newContext({ viewport: { width, height } });
   const page = await context.newPage();
@@ -58,6 +69,11 @@ for (const [width, height] of sizes) {
       const r = label?.getBoundingClientRect();
       return r ? { width: Math.round(r.width), height: Math.round(r.height) } : null;
     });
+    const gap = document.querySelector('.map-gap')?.getBoundingClientRect();
+    const tabs = document.querySelector('.stage-tabs')?.getBoundingClientRect();
+    const gapStrong = document.querySelector('.map-gap strong');
+    const panel = document.querySelector('.panel');
+    const card = document.querySelector('.card');
     return {
       bodyWidth: document.body.scrollWidth,
       viewportWidth: document.documentElement.clientWidth,
@@ -65,7 +81,16 @@ for (const [width, height] of sizes) {
       viewportHeight: innerHeight,
       small,
       checkboxTargets,
-      charts: document.querySelectorAll('.chart').length
+      charts: document.querySelectorAll('.chart').length,
+      mapGap: gap && tabs
+        ? { top: Math.round(gap.top), tabsBottom: Math.round(tabs.bottom), clearance: Math.round(gap.top - tabs.bottom) }
+        : null,
+      gapFont: gapStrong ? getComputedStyle(gapStrong).fontFamily : null,
+      gapText: document.querySelector('.map-gap')?.innerText ?? null,
+      panelBackground: panel ? getComputedStyle(panel).backgroundColor : null,
+      panelText: card ? getComputedStyle(card).color : null,
+      copyViews: document.querySelectorAll('.copy-view').length,
+      fullscreenButtons: document.querySelectorAll('.chart-fullscreen').length
     };
   });
   if (state.bodyWidth !== state.viewportWidth) fail(`${width}: horizontal overflow ${state.bodyWidth} > ${state.viewportWidth}`);
@@ -94,6 +119,51 @@ for (const [width, height] of sizes) {
   const badLabels = state.checkboxTargets.filter((r) => !r || r.height < 44);
   if (badLabels.length) fail(`${width}: ${badLabels.length} checkbox labels under 44px`);
   else pass(`${width}: ${state.checkboxTargets.length} checkbox labels are at least 44px tall`);
+  if (!state.mapGap || state.mapGap.clearance < 10) {
+    fail(`${width}: gap badge collides with the stage tabs ${JSON.stringify(state.mapGap)}`);
+  } else {
+    pass(`${width}: gap badge clears the stage tabs by ${state.mapGap.clearance}px`);
+  }
+  if (!state.gapFont || /mono/i.test(state.gapFont)) {
+    fail(`${width}: gap badge still uses the monospace face (${state.gapFont})`);
+  } else {
+    pass(`${width}: gap badge uses the interface face`);
+  }
+  if (!state.gapText || !/Income model/.test(state.gapText)) {
+    fail(`${width}: gap badge has no model context (${JSON.stringify(state.gapText)})`);
+  } else {
+    pass(`${width}: gap badge carries the income-model context`);
+  }
+  const panelLuminance = luminance(state.panelBackground);
+  const panelContrast = (Math.max(panelLuminance, luminance(state.panelText)) + 0.05) / (Math.min(panelLuminance, luminance(state.panelText)) + 0.05);
+  state.panelLuminance = Number(panelLuminance.toFixed(4));
+  state.panelContrast = Number(panelContrast.toFixed(1));
+  if (panelLuminance > 0.01 || panelContrast < 7) {
+    fail(`${width}: reading panel is not black/high-contrast enough (${state.panelBackground}, ${panelContrast.toFixed(1)}:1)`);
+  } else {
+    pass(`${width}: black reading panel, ${panelContrast.toFixed(1)}:1 text contrast`);
+  }
+  if (state.copyViews < 1) fail(`${width}: no copy-view control found`);
+  else pass(`${width}: ${state.copyViews} copy-view controls present`);
+  if (width > 640 && state.fullscreenButtons < 7) fail(`${width}: only ${state.fullscreenButtons} chart fullscreen controls`);
+  else if (width > 640) pass(`${width}: ${state.fullscreenButtons} chart fullscreen controls present`);
+  if (width <= 1200) {
+    await page.selectOption('#section-jump', 'h-models');
+    await page.waitForTimeout(1500);
+    const sectionNav = await page.evaluate(() => {
+      const jump = document.querySelector('.section-jump')?.getBoundingClientRect();
+      const heading = document.querySelector('#h-models')?.getBoundingClientRect();
+      return jump && heading
+        ? { jumpBottom: Math.round(jump.bottom), headingTop: Math.round(heading.top), clearance: Math.round(heading.top - jump.bottom) }
+        : null;
+    });
+    state.sectionNav = sectionNav;
+    if (!sectionNav || sectionNav.clearance < 8) {
+      fail(`${width}: section heading lands under the sticky jump ${JSON.stringify(sectionNav)}`);
+    } else {
+      pass(`${width}: section heading clears the sticky jump by ${sectionNav.clearance}px`);
+    }
+  }
   results.widths[`${width}x${height}`] = { ...state, errors: errors.length };
   await context.close();
 }
@@ -186,7 +256,7 @@ for (const [width, height] of sizes) {
 await browser.close();
 
 {
-  const noGl = await chromium.launch({ channel: 'chrome', args: ['--disable-webgl', '--disable-gpu'] });
+  const noGl = await chromium.launch({ args: ['--disable-webgl', '--disable-gpu'] });
   const page = await noGl.newPage({ viewport: { width: 1024, height: 768 } });
   const errors = [];
   page.on('pageerror', (error) => errors.push(String(error)));
@@ -203,7 +273,7 @@ await browser.close();
   } else {
     fail(`WebGL off: ${JSON.stringify(results.webglOff)}`);
   }
-  await page.screenshot({ path: 'audit/after/1024-webgl-off.png' });
+  await page.screenshot({ path: `${shotDir}/1024-webgl-off.png` });
   await noGl.close();
 }
 

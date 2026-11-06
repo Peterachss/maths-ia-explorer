@@ -1,0 +1,130 @@
+{
+  "base": "http://127.0.0.1:4182/maths-ia-explorer/",
+  "widths": {
+    "1440x900": {
+      "title": "Life Expectancy Explorer",
+      "panelBg": "rgb(8, 10, 13)",
+      "bodyWidth": 1440,
+      "viewport": 1440,
+      "docHeight": 900,
+      "gapClearance": 14,
+      "gapText": "22.5\nyears apart\nZimbabwe to Singapore\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "copyViews": 2,
+      "fullscreen": 7,
+      "bad": [],
+      "texture": [
+        {
+          "status": 200,
+          "url": "earth-day-4k.jpg"
+        },
+        {
+          "status": 200,
+          "url": "earth-poster.jpg"
+        },
+        {
+          "status": 304,
+          "url": "earth-day-4k.jpg"
+        }
+      ],
+      "deep": {
+        "search": "?c=THA%2CKEN",
+        "chips": [
+          "Thailand",
+          "Kenya"
+        ]
+      }
+    },
+    "1024x768": {
+      "title": "Life Expectancy Explorer",
+      "panelBg": "rgb(8, 10, 13)",
+      "bodyWidth": 1024,
+      "viewport": 1024,
+      "docHeight": 17703,
+      "gapClearance": 14,
+      "gapText": "22.5\nyears apart\nZimbabwe to Singapore\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "copyViews": 2,
+      "fullscreen": 7,
+      "bad": [],
+      "texture": [
+        {
+          "status": 200,
+          "url": "earth-day-4k.jpg"
+        },
+        {
+          "status": 200,
+          "url": "earth-poster.jpg"
+        },
+        {
+          "status": 304,
+          "url": "earth-day-4k.jpg"
+        }
+      ],
+      "deep": {
+        "search": "?c=THA%2CKEN",
+        "chips": [
+          "Thailand",
+          "Kenya"
+        ]
+      }
+    },
+    "768x1024": {
+      "title": "Life Expectancy Explorer",
+      "panelBg": "rgb(8, 10, 13)",
+      "bodyWidth": 768,
+      "viewport": 768,
+      "docHeight": 17825,
+      "gapClearance": 14,
+      "gapText": "22.5\nyears apart\nZimbabwe to Singapore\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "copyViews": 2,
+      "fullscreen": 7,
+      "bad": [],
+      "texture": [
+        {
+          "status": 200,
+          "url": "earth-poster.jpg"
+        },
+        {
+          "status": 304,
+          "url": "earth-poster.jpg"
+        }
+      ],
+      "deep": {
+        "search": "?c=THA%2CKEN",
+        "chips": [
+          "Thailand",
+          "Kenya"
+        ]
+      }
+    },
+    "375x812": {
+      "title": "Life Expectancy Explorer",
+      "panelBg": "rgb(8, 10, 13)",
+      "bodyWidth": 375,
+      "viewport": 375,
+      "docHeight": 18767,
+      "gapClearance": 14,
+      "gapText": "22.5\nyears apart\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "copyViews": 2,
+      "fullscreen": 7,
+      "bad": [],
+      "texture": [
+        {
+          "status": 200,
+          "url": "earth-poster.jpg"
+        },
+        {
+          "status": 304,
+          "url": "earth-poster.jpg"
+        }
+      ],
+      "deep": {
+        "search": "?c=THA%2CKEN",
+        "chips": [
+          "Thailand",
+          "Kenya"
+        ]
+      }
+    }
+  },
+  "pass": true
+}

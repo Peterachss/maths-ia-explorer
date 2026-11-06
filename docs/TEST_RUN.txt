@@ -1,20 +1,96 @@
-# Test transcript (ANSI colour codes removed)
+Life Expectancy Explorer — test record
+Release: all-black console (B19–B23)
+Date: 6 November 2026
+Environment: macOS, Node 22.23.4, Vitest 2.1.9, bundled Playwright Chromium 1248
 
-> maths-ia-explorer@1.0.0 test
-> vitest run
+## npm test
 
+ RUN  v2.1.9 /Users/s07492/maths-ia-explorer
 
- RUN  v2.1.9 C:/Users/peter/OneDrive/Desktop/PETER _ CLAUDE/Maths IA Explorer/maths-ia-explorer
-
- OK src/math/bowl.test.ts (4 tests) 6ms
- OK src/data/data.contract.test.ts (7 tests) 34ms
- OK src/math/regression.test.ts (15 tests) 11ms
- OK src/math/crosscheck.test.ts (3 tests) 11ms
- OK src/math/ia.contract.test.ts (17 tests) 8ms
+ ✓ src/data/data.contract.test.ts (7 tests) 9ms
+ ✓ src/math/bowl.test.ts (4 tests) 2ms
+ ✓ src/math/regression.test.ts (15 tests) 4ms
+ ✓ src/math/crosscheck.test.ts (3 tests) 4ms
+ ✓ src/math/ia.contract.test.ts (17 tests) 5ms
 
  Test Files  5 passed (5)
       Tests  46 passed (46)
-   Start at  14:24:18
-   Duration  789ms (transform 340ms, setup 0ms, collect 683ms, tests 71ms, environment 1ms, prepare 1.05s)
+   Duration  624ms
 
-Result: 46 of 46 tests pass.
+## Data checks
+
+npm run data:anchor
+  11/11 anchors pass.
+
+npm run data:cross
+  Running scripts/crosscheck.py with python3
+  Wrote docs/crosscheck.json
+
+npm run data:verify
+  19/19 source and data checks pass. All rows, codes, ranges, metadata,
+  saved pull and cross-check assertions pass.
+
+npm run data:verify-live
+  PASS  42 rows, 84 values re-downloaded from the World Bank API (2019).
+  PASS  GDP max absolute difference 0.0049 dollars; life max absolute difference 0.000463 years.
+  PASS  Every row carries country- and year-specific API URLs.
+  PASS  public/data/sample42.csv is byte-identical to data/sample42.csv.
+
+npm run data:verify-stats
+  PASS  68 statistic checks match the values printed on the site.
+
+## UI checks
+
+npm run check:ui
+  PASS  all four widths (1440, 1024, 768, 375)
+  PASS  black reading panel, 17.6:1 text contrast
+  PASS  no horizontal overflow; stacked page scroll normal
+  PASS  all non-inline targets at least 44px; 43 checkbox labels at least 44px
+  PASS  gap badge clears the stage tabs by 14px
+  PASS  gap badge uses the interface face and carries the income-model context
+  PASS  2 copy-view controls; 7 chart fullscreen controls
+  PASS  section headings clear the sticky jump by 24/24/26px at 1024/768/375
+  PASS  keyboard skip link; splitter; scatter keyboard (BDI → TCD); selection reveal
+  PASS  reduced motion and WebGL-off fallback
+  All UI checks pass; evidence written to audit/black-release/ui-checks.json
+
+## Interaction sweep
+
+node scripts/interaction-test.mjs http://127.0.0.1:4181/
+  desktop: 31 steps, 0 problems
+  mobile: 11 steps, 0 problems
+  data error path: shows the message
+  PASS: no errors in any interaction
+  Transcript: docs/interaction-report.json
+
+## Accessibility and Lighthouse
+
+npm run audit (axe phase)
+  1440/1024/768/375 × data/models/use/reliability: 16 combinations
+  0 violations.
+
+Lighthouse (bundled Chromium)
+  desktop: performance 100, accessibility 100, best-practices 100, SEO 100 (final run; 84 on the preceding run)
+  mobile:  performance 97, accessibility 100, best-practices 100, SEO 100
+
+## GitHub Pages base path
+
+BASE_PATH=/maths-ia-explorer/ npm run build
+Static subpath server at http://127.0.0.1:4182/maths-ia-explorer/
+  1440×900, 1024×768, 768×1024, 375×812: no failed requests
+  4K texture at 1440 and 1024; poster at 768 and 375
+  Deep link ?c=THA%2CKEN restores Thailand and Kenya
+  Evidence: audit/black-release/basepath-checks.json
+
+## Four-width screenshots
+
+npm run shots:release
+  captured 1440, 1024, 768, 375
+  console clean
+  Matrix: audit/black-release/
+  Curated: docs/screens/
+
+## Not run
+
+npm run data:fetch / npm run data:all — deliberately excluded because the
+fetch step can overwrite the authoritative Appendix A values.

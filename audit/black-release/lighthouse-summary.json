@@ -1,0 +1,21 @@
+{
+  "desktop": {
+    "performance": 100,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100,
+    "lighthouseVersion": "13.5.0",
+    "fetchTime": "2026-11-06T16:07:59.096Z",
+    "finalUrl": "http://127.0.0.1:4181/"
+  },
+  "mobile": {
+    "performance": 97,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100,
+    "lighthouseVersion": "13.5.0",
+    "fetchTime": "2026-11-06T16:08:07.811Z",
+    "finalUrl": "http://127.0.0.1:4181/"
+  },
+  "note": "Final 6 November 2026 run after the final CSS build. Single-run scores: desktop 100, mobile 97; the preceding desktop run scored 84 and desktop ranged 78\u2013100 across repeats depending on whether the deferred 4K globe mount landed inside the trace. The new agentic-browsing category is not part of the four reported categories."
+}

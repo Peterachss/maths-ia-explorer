@@ -3,11 +3,11 @@
 import { chromium } from 'playwright';
 import { mkdir } from 'node:fs/promises';
 
-const url = process.argv[2] ?? 'http://localhost:4173/';
+const url = process.argv[2] ?? process.env.URL ?? 'http://127.0.0.1:4173/';
 const out = 'docs/screens';
 await mkdir(out, { recursive: true });
 
-const browser = await chromium.launch({ channel: 'chrome' });
+const browser = await chromium.launch();
 
 async function shoot(name, width, height, fullPage) {
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
@@ -17,7 +17,7 @@ async function shoot(name, width, height, fullPage) {
   });
   page.on('pageerror', (e) => errors.push(String(e)));
   await page.goto(url, { waitUntil: 'networkidle' });
-  await page.waitForTimeout(2500);
+  await page.waitForTimeout(3500);
   await page.screenshot({ path: `${out}/${name}.png`, fullPage });
   console.log(name, errors.length ? `console errors: ${errors.join(' | ')}` : 'no console errors');
   await page.close();

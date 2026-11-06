@@ -1,10 +1,12 @@
 import { Fragment, useEffect, useMemo, useRef, useState, lazy, Suspense, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import {
   Box,
+  Check,
   ChevronDown,
   ChevronRight,
   Earth as EarthIcon,
-  Globe2
+  Globe2,
+  Link2
 } from 'lucide-react';
 import type { Country } from './data/schema';
 import { loadCountries } from './data/load';
@@ -63,6 +65,38 @@ function Citation({ n }: { n: number }) {
 
 function Question({ children }: { children: ReactNode }) {
   return <p className="section-question">{children}</p>;
+}
+
+function CopyViewLink({ className = 'copy-view' }: { className?: string }) {
+  const [copied, setCopied] = useState(false);
+  const timer = useRef<number | null>(null);
+  useEffect(() => () => {
+    if (timer.current !== null) window.clearTimeout(timer.current);
+  }, []);
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      if (timer.current !== null) window.clearTimeout(timer.current);
+      timer.current = window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      setCopied(false);
+    }
+  };
+  return (
+    <>
+      <button
+        type="button"
+        className={className}
+        onClick={copyLink}
+        aria-label={copied ? 'Link copied' : 'Copy link to this view'}
+        title={copied ? 'Link copied' : 'Copy link to this view'}
+      >
+        {copied ? <Check size={15} strokeWidth={2} aria-hidden="true" /> : <Link2 size={15} strokeWidth={1.8} aria-hidden="true" />}
+      </button>
+      <span className="visually-hidden" role="status">{copied ? 'Link copied to the clipboard' : ''}</span>
+    </>
+  );
 }
 
 function KeyResult({ value, unit, source = 'computed' }: { value: string; unit?: string; source?: string }) {
@@ -229,6 +263,7 @@ function SectionJump() {
         ))}
       </select>
       <ChevronDown size={15} strokeWidth={1.8} aria-hidden="true" />
+      <CopyViewLink />
     </div>
   );
 }
@@ -439,7 +474,14 @@ export function App() {
           <div className="stage-fallback" role="alert"><p>{copy.errors.webgl}</p></div>
         )}
         {stage === 'globe' && gl && (
-          <MapChrome countries={countries} view={view} gap={g?.observedGap} onReset={() => useStore.getState().flyTo(selected.length ? selected : ['ZWE', 'SGP'])} />
+          <MapChrome
+            countries={countries}
+            view={view}
+            gap={g?.observedGap}
+            predictedGap={g?.predictedGap}
+            percentReproduced={g?.percentReproduced}
+            onReset={() => useStore.getState().flyTo(selected.length ? selected : ['ZWE', 'SGP'])}
+          />
         )}
         {stage === 'model' && <BowlControls bowl={bowl} a={a} c={c} setA={setBowlA} setC={setBowlC} kind={bowlKind} />}
       </div>
@@ -469,10 +511,13 @@ export function App() {
               <h1>{copy.title}</h1>
               <p className="masthead-sub">{copy.subtitle}</p>
             </div>
-            <div className="masthead-meta">
-              <span>Maths AA SL Internal Assessment</span>
-              <span aria-hidden="true">·</span>
-              <span>World Bank WDI 2019</span>
+            <div className="masthead-actions">
+              <p className="masthead-meta">
+                <span>Maths AA SL Internal Assessment</span>
+                <span aria-hidden="true">·</span>
+                <span>World Bank WDI 2019</span>
+              </p>
+              <CopyViewLink />
             </div>
           </header>
 

@@ -12,6 +12,7 @@ export function SearchBox({ countries }: { countries: Country[] }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const select = useStore((s) => s.select);
+  const selected = useStore((s) => s.selected);
   const hits = useMemo(
     () => q.trim() ? countries.filter((c) =>
       c.name.toLowerCase().includes(q.trim().toLowerCase()) ||
@@ -42,23 +43,35 @@ export function SearchBox({ countries }: { countries: Country[] }) {
         autoComplete="off"
         role="combobox"
         aria-expanded={expanded}
-        aria-controls={listId}
+        aria-controls={expanded ? listId : undefined}
+        aria-haspopup="listbox"
         aria-autocomplete="list"
         aria-activedescendant={expanded && hits[active] ? `${id}-opt-${hits[active].iso3}` : undefined}
         onChange={(e) => { setQ(e.target.value); setOpen(true); }}
         onFocus={() => setOpen(true)}
         onKeyDown={(e) => {
-          if (e.key === 'ArrowDown' && hits.length) {
+          if (!hits.length) {
+            if (e.key === 'Escape') { setQ(''); setOpen(false); }
+            return;
+          }
+          if (e.key === 'ArrowDown') {
             e.preventDefault();
             setOpen(true);
-            setActive((i) => Math.min(hits.length - 1, i + 1));
-          } else if (e.key === 'ArrowUp' && hits.length) {
+            setActive((i) => (i + 1) % hits.length);
+          } else if (e.key === 'ArrowUp') {
             e.preventDefault();
             setOpen(true);
-            setActive((i) => Math.max(0, i - 1));
-          } else if (e.key === 'Enter' && expanded && hits[active]) {
+            setActive((i) => (i - 1 + hits.length) % hits.length);
+          } else if (e.key === 'Home') {
             e.preventDefault();
-            choose(hits[active].iso3);
+            setActive(0);
+          } else if (e.key === 'End') {
+            e.preventDefault();
+            setActive(hits.length - 1);
+          } else if (e.key === 'Enter') {
+            e.preventDefault();
+            const hit = hits[active] ?? hits[0];
+            if (hit) choose(hit.iso3);
           } else if (e.key === 'Escape') {
             setQ('');
             setOpen(false);
@@ -79,7 +92,10 @@ export function SearchBox({ countries }: { countries: Country[] }) {
               onClick={() => choose(c.iso3)}
             >
               <span>{c.name}</span>
-              <span className="hit-iso">{c.iso3}</span>
+              <span className="hit-meta">
+                {selected.includes(c.iso3) && <span className="hit-tag">Selected</span>}
+                <span className="hit-iso">{c.iso3}</span>
+              </span>
             </li>
           ))}
           {hits.length === 0 && (

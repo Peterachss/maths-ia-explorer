@@ -1,348 +1,105 @@
-# Rebuild report — Life Expectancy Explorer
+# Release report — Life Expectancy Explorer
 
-Branch: `rebuild/nasa-grade` merged to `main`
+**Release:** all-black console, 6 November 2026
+**Branch:** `main`, on top of `dd805f3`
+**Live site:** https://peterachss.github.io/maths-ia-explorer/ (canonical)
+**Mirror:** https://maths-ia-explorer.surge.sh/
 
-Final verification: 23 October 2026
-
-Live site: https://peterachss.github.io/maths-ia-explorer/ (canonical). Mirror: https://maths-ia-explorer.surge.sh/.
-
-Site: the companion page for the IB Maths AA SL Internal Assessment comparing GDP per capita with life expectancy for 42 countries in 2019.
+This is the companion page for the IB Mathematics AA SL Internal Assessment comparing GDP per capita with life expectancy for 42 countries in 2019. It fits a straight line and a logarithmic curve, shows the Singapore–Zimbabwe gap, and lets the reader interrogate the model without changing the IA's data.
 
 ## Result
 
-The page is now a four-chapter report around a working 3D globe and least-squares bowl. Every rendered statistic is checked against `data/sample42.csv`; every source is in the S1–S12 register; every chapter and both 3D views have screenshots at the four required widths.
+The four-chapter report, photoreal globe, least-squares bowl and seven charts are unchanged in structure. The reading console is now black throughout, with light surfaces only on selected or primary controls. The gap badge has its own typographic voice and model context and no longer collides with the stage tabs. Chart export, chart full-screen, copy-view links and keyboard search were repaired or added.
 
-Final checks:
-
-| Check | Result |
+| Area | Result |
 |---|---|
-| `npm run build` | PASS. Type-check, Vite build, CSS inlining and deferred-3D preload removal all complete. |
-| `npm test` | PASS. 5 files, 46 tests. |
-| `npm run data:anchor` | PASS. 11/11 anchors. |
-| `npm run data:cross` | PASS. Writes `docs/crosscheck.json`. |
-| `npm run data:verify` | PASS. All source, provenance and cross-check assertions. |
-| `npm run data:verify-live` | PASS. 42 rows, 84 values re-downloaded; GDP max absolute difference $0.0049; life max absolute difference 0.000463 years; public CSV byte-identical. |
-| `npm run data:verify-stats` | PASS. 68 statistic checks. |
-| `npm run check:ui` | PASS. No overflow, no page errors, all non-inline targets at least 44px, 43 checkbox labels at least 44px, splitter ArrowLeft 763→787, scatter BDI→TCD + Enter, selection reveal shows Chad, skip link, reduced motion and WebGL fallback pass. Desktop document height equals the viewport and page scroll stays at y=0; stacked widths still page-scroll. Re-run against the live GitHub Pages URL: `audit/live/ui-checks.json`. |
-| `scripts/interaction-test.mjs` | PASS against local and live builds: 27 desktop + 8 mobile steps, 0 console, page, request or HTTP errors. Covers the globe surface pick, drag guard, search (including ISO codes and the no-match state), toggles, bowl, section index, selection reveal, deep-link reload, resize and data-error path. |
-| GitHub Pages base path | PASS. `BASE_PATH=/maths-ia-explorer/` build serves every asset; the CSS is inlined and the poster returns 200. Live checks at four widths have no failed requests. |
-| axe via `scripts/audit.ts` | 16/16 width/chapter combinations, 0 violations. |
-| Lighthouse desktop | 84 performance, 100 accessibility, 100 best practices, 100 SEO (desktop performance ranged 78–99 across repeats). |
-| Lighthouse mobile | 93 performance, 100 accessibility, 100 best practices, 100 SEO (mobile ranged 93–96). |
-| Console | Clean after excluding Chromium's GL ReadPixels driver warning. |
+| Data | No IA value changed. Appendix A remains 42 rows, 84 values. |
+| Mathematics | Same log fit, r², gap and sensitivity values as the submitted IA. |
+| Theme | Panel `rgb(8, 10, 13)`; 17.6:1 primary, 11.3:1 body, 6.8:1 secondary, 4.8:1 smallest functional. Light selected controls use dark ink at 17.2:1. |
+| Layout | Verified at 1440×900, 1024×768, 768×1024 and 375×812. No horizontal page overflow. |
+| Badge | 14px clear of the Globe / Least squares bowl tabs at all four widths. Shows observed 22.5 years and income model 18.9 years · 83.8% of gap. |
+| Charts | Seven charts; seven full-screen controls; PNG/SVG/CSV export repaired with a dark export backdrop. |
+| Sharing | Desktop and mobile copy-view controls copy `c`, `x` and `m` state and announce success. |
+| Keyboard | Search wraps, supports Home/End, Enter/Escape, `aria-activedescendant`, selected tags and no-match. |
+| Accessibility | axe 0 violations across 16 width/chapter combinations; skip link, 44px targets, reduced motion and WebGL fallback pass. |
+| Performance | Lighthouse desktop 100/100/100/100 (final run; 84 on the preceding run); mobile 97/100/100/100. Mobile keeps the poster until the reader opts into 3D. |
+| Deployment | Normal push to `main`; no force-push. GitHub Pages is canonical, Surge is the mirror. |
 
-The one deliberately blocked item is KaTeX (B11). The warm-paper panel is settled by R5, with the near-black colour reserved for the stage; the remote black-console commit was rejected in the merge. The internal D1 tokenisation and F1 chart-frame refactors remain partial and do not affect a rendered style or interaction.
+## Release changes
 
-## Branch and commits
-
-| Commit | Contents |
-|---|---|
-| `b0d0e1c` | Pre-rebuild baseline. Used for the before screenshots only. |
-| `8df22f8` | `main` follow-up: reveal the country stats card on selection. Merged into the rebuild; the reveal breakpoint was adapted to the rebuild’s 1200px layout breakpoint. |
-| `728c879` | `B17`: select the nearest country when the globe surface is clicked, with a 7 degree radius, an 8 px drag guard and far-side beam guards. Ported onto the rebuilt globe. |
-| `855e291` | Live verification record for the surface pick. |
-| `57df98f` | Merge `origin/main`; keep the rebuilt globe/pillars and the surface pick; fix `BASE_PATH` CSS inlining and update the interaction sweep. |
-| `6f8698f` | `A1-A12`: sources, provenance, claims register and verification scripts. |
-| `d22452a` | `B1-G4`: chapters, layout, tokens, 3D, charts, mobile chrome, accessibility and performance work. |
-| `6e9e110` | `G1-G4`: first screenshot, axe and Lighthouse evidence set. |
-| `fe27549` | `G1-G4`: final touch-target and UI checks, final screenshots, before captures. |
-| `9a9fa4b` | `H`: `REPORT.md`, `PROGRESS.md`, `DECISIONS.md`, `docs/DESIGN.md`. |
-| `421fdda` | `D4/F4/G1/E4`: pointer/keyboard splitter, keyboard scatter points, splitter hit area, phone label clearance and refreshed evidence. |
-| `745cd09` | `B16`: anchor the visually hidden accessible tables so they cannot extend the document past the desktop 100dvh app; page-scroll regression checks added. |
-| `57df98f` release | Final docs and `main` push; GitHub Actions run 39887371851 deployed the canonical GitHub Pages build. No force-push was used. Surge is the mirror. |
-
-## ID table
-
-The detailed evidence and commit for every ID is in `PROGRESS.md`; this is the complete status table.
-
-| ID | Status | Evidence |
+| ID | Change | Evidence |
 |---|---|---|
-| A1 | done | Country/year API URLs on every row; live re-download of 84 values with max GDP difference $0.0049 and life difference 0.000463 years. |
-| A2 | done | FY2020/FY2027 income groups, fiscal-year wording, four changed countries. |
-| A3 | done | Preston (1975) DOI `10.1080/00324728.1975.10410201`, Crossref metadata checked. |
-| A4 | done | OWID further-reading URL; not used in a calculation. |
-| A5 | done | NASA Blue Marble Next Generation December 2004, exact file and credit. |
-| A6 | done | Natural Earth Admin 0 1:110m and Populated Places 1:10m; exact point release marked unverified. |
-| A7 | done | Five untraceable textures deleted; three Blue Marble derivatives remain. |
-| A8 | done | Approximate capital coordinates documented and excluded from the regression. |
-| A9 | done | Credits list shipped software; KaTeX explicitly not shipped. |
-| A10 | done | `CLAIMS.md` C01–C49. |
-| A11 | done | 68 statistic checks. |
-| A12 | done | References, citation markers, CSV download and cite block. |
-| B1 | done | Sticky context/nav chrome, hairline rules, scroll margins. |
-| B2 | done | Map chrome re-laid out into separate tabs, legend, tools and credit bands. |
-| B3 | done | Box labels above whiskers; 50–85 tick span. |
-| B4 | done | Extended, clipped scatter domain. |
-| B5 | done | Residual edge labels and histogram. |
-| B6 | done | Derivative domain and precision. |
-| B7 | done | Gap precision: 22.535 / 18.879 / 83.78%. |
-| B8 | done | Arc label clamped and readable. |
-| B9 | done | Poster and deferred canvas loading state. |
-| B10 | done | Shared segmented control. |
-| B11 | blocked | KaTeX exceeds the 50 kB gzipped rule; native MathML shipped. |
-| B12 | done | Intercept note removed. |
-| B13 | done | Mini globe removed; capital source retained. |
-| B14 | done | Open Graph/Twitter tags and 1200×630 image. |
-| B15 | done | One basemap credit shared by map, sources and imagery. |
-| B16 | done | Phantom page scroll fixed: visually hidden tables anchored in place; desktop document height equals the viewport, stacked layouts still scroll. |
-| B17 | done | Globe surface click selects the nearest country within 7 degrees; 8 px drag guard; far-side beams cannot hover or select; hint says “Click a country for its stats”. Interaction sweep 25/7 passes live. |
-| C1 | done | Four numbered chapters, observer, progress rail, mobile select. |
-| C2 | done | Shared section template. |
-| C3 | done | Context bar with sample, equation, r², selection and limits. |
-| C4 | done | Glossary. |
-| C5 | done | Selection shared by globe, scatter, table and context; ZWE/SGP visible initially. |
-| C6 | done | Landing answer before the chapters. |
-| D1 | partial | Tokens exist; some literal colours and paddings remain. |
-| D2 | settled | Warm-paper panel retained beside the near-black stage; settled by R5 during the merge. |
-| D3 | done | System mono numerals; no new font dependency. |
-| D4 | done | Pointer/keyboard splitter, 560–760px, ARIA separator and 44px effective hit area; verified by `check:ui`. |
-| D5 | done | Desktop frame, solid chrome, light reading surface. |
-| D6 | done | Shared buttons, chips, segmented controls, cards, disclosures, tables. |
-| D7 | done | Motion timings and reduced-motion override. |
-| D8 | done | Lucide only. |
-| E1 | done | Extruded pillars, back-face hiding, 80-year ghost. |
-| E2 | done | Blue Marble, runtime borders/graticule, atmosphere; no cloud/specular/normal textures. |
-| E3 | done | Hover, click, keyboard selection and reset. |
-| E4 | done | Selected labels visible at all four widths; phone labels lift 12px clear of the zoom plate. |
-| E5 | done | Sample min/max legend and selected markers. |
-| E6 | done | Bowl axes, contours, minimum, colour bar, shadow, snap control. |
-| E7 | done | WebGL fallback: 0 canvases, text fallback, 7 charts, 0 page errors. |
-| F1 | partial | Export/data-table plumbing shared; one SVG frame abstraction not complete. |
-| F2 | done | Axes, units, hairlines, mono ticks. |
-| F3 | done | Direct model and selected labels. |
-| F4 | done | Scatter roving tab stop, arrow/Home/End movement, Enter/Space selection and per-point names; other charts keep data tables. |
-| F5 | done | Model labels and confidence band. |
-| F6 | done | Residual histogram. |
-| F7 | done | Extrapolation shading. |
-| F8 | done | PNG, SVG and CSV export. |
-| F9 | done | Sortable country table with 44px targets. |
-| G1 | done | 44px non-inline targets; inline prose links documented as WCAG 2.5.8 exception; splitter has a 44px effective hit area. |
-| G2 | done | Skip link first in Tab order and moves focus to `#main-content`; reduced motion respected. |
-| G3 | done | Lighthouse scores above. |
-| G4 | done | axe clean, console clean, WebGL fallback clean. |
-| H1 | done | This report. |
-| H2 | done | `docs/DESIGN.md` reconciled with shipped assets and layout. |
-| H3 | done | Before/after and audit evidence in `audit/`. |
-| H4 | done | GitHub Pages canonical release; `BASE_PATH` CSS inlining fixed; live four-width, deep-link, page-scroll and drag-guard checks in `audit/live/`. |
+| B19 | All-black console. A final `src/styles/black.css` layer overrides every reading surface, card, table, rail, masthead and mobile chrome while preserving R1's layout, 152px contents rail, globe and charts. Selected/primary control surfaces remain light intentionally. | `audit/black-release/ui-checks.json`, `audit/black-release/1440-*.png`, `docs/screens/` |
+| B20 | Gap badge rebuilt in Instrument Sans with mono numerals and model context; moved below the tabs with 14px clearance at every width. | `ui-checks.json`, `375-landing.png`, interaction badge step |
+| B21 | Chart full-screen added; export now selects the chart SVG rather than the toolbar icon and paints `#0d1015` behind SVG/PNG output. | interaction export/full-screen steps, 7 controls in `check:ui` |
+| B22 | Copy-view link added to the desktop masthead and mobile contents row, including selected countries, axis and model. | interaction desktop/mobile copy steps; 2 controls at 1440 |
+| B23 | Keyboard search improved: wrapping arrows, Home/End, Enter/Escape, `aria-activedescendant`, selected-country tags, no-match announcement. | 31 desktop + 11 mobile interaction steps |
 
-## Source status
+The visual direction is recorded as R6 in `DECISIONS.md`; R5's warm-paper panel is historical and superseded. The earlier backup branch contains a different black implementation on an older base and is not shipped.
 
-| ID | Source | Status |
+## Verification
+
+All commands were run on 6 November 2026 on macOS with Node 22 and the bundled Playwright Chromium (revision 1248).
+
+| Check | Command | Result |
 |---|---|---|
-| S1 | World Bank GDP per capita, PPP, `NY.GDP.PCAP.PP.KD` | Verified. Indicator page 200; every row has a country/year API URL; live pull passes. |
-| S2 | World Bank life expectancy, `SP.DYN.LE00.IN` | Verified. Singapore 2019 API value 83.5951219512195; live pull passes. |
-| S3 | World Bank country and lending groups, FY2027 | Verified. All 42 current labels match the API classification. |
-| S4 | World Bank OGHIST, FY2020 column AH / FY2027 column AO | Verified. Nepal, Indonesia, the Philippines and Vietnam differ between July 2019 and July 2026. |
-| S5 | Preston (1975), *Population Studies* 29(2), 231–248 | Verified via Crossref; DOI resolves. |
-| S6 | NASA Blue Marble Next Generation, December 2004 | Verified; NASA page 200; the 21,600 × 10,800 master is rendered at 8K, 4K and 2K. |
-| S7 | Natural Earth Admin 0 Countries, 1:110m | Dataset and scale verified. Exact Natural Earth point release is **UNVERIFIED** because `world-atlas` does not print it; the site says this. |
-| S8 | Natural Earth Populated Places, 1:10m | Verified. Coordinates approximate; not in the regression. |
-| S9 | WHO, *Equity, social determinants and public health programmes* | Verified through stable IRIS record `10665/44289`; old health-topics URL returned 403. |
-| S10 | Our World in Data grapher | Verified, background reading only. |
-| S11 | Shipped software and licences | Verified from package metadata and project licences; KaTeX not bundled. |
-| S12 | Font and icon licences | Verified: OFL 1.1 and ISC. |
+| Type-check and build | `npm run build` | PASS. CSS 83.14 kB / 16.29 kB gzipped; 3D chunks lazy. |
+| Unit and contract tests | `npm test` | PASS. 5 files, 46 tests. |
+| Anchor values | `npm run data:anchor` | PASS. 11/11 anchors. |
+| Independent cross-check | `npm run data:cross` | PASS. Writes `docs/crosscheck.json`. |
+| Source and data checks | `npm run data:verify` | PASS. Appendix rows, provenance, ranges, metadata, saved pull and cross-check. |
+| Live World Bank values | `npm run data:verify-live` | PASS. 42 rows, 84 values re-downloaded. Max GDP difference $0.0049; max life difference 0.000463 years. |
+| Rendered statistics | `npm run data:verify-stats` | PASS. 68 checks. |
+| Four-width UI | `npm run check:ui` | PASS. All four widths; panel black; contrast; badge clearance; 43 checkbox labels ≥44px; 7 full-screen controls; 2 copy controls; reduced motion; WebGL off. |
+| Interaction sweep | `node scripts/interaction-test.mjs URL` | PASS. 31 desktop steps + 11 mobile steps; data-error path; no console, page, request or HTTP errors. |
+| Accessibility | `npm run audit` (axe phase) | PASS. 16/16 width/chapter combinations, 0 violations. |
+| Lighthouse | `npm run audit` (Lighthouse phase) | Desktop 100/100/100/100 (final run; 84 on the preceding run); mobile 97/100/100/100. Single run, not a guarantee. |
+| GitHub Pages base path | `BASE_PATH=/maths-ia-explorer/ npm run build` then static subpath server | PASS. No failed requests at four widths; 4K at 1440/1024; poster at 768/375; `?c=THA%2CKEN` restores Thailand and Kenya. |
+| Screenshot matrix | `npm run shots:release` | PASS. `landing`, `globe`, `data`, `models`, `use`, `reliability`, `bowl`, plus full-page 1440/375. Console clean. |
 
-Full URLs, versions, access dates and licence notes are in `SOURCES.md`.
+Evidence lives in `audit/black-release/`:
 
-## Data audit
+- `ui-checks.json` — four-width computed styles, contrast, clearances and counts.
+- `axe.json` — 16 combinations, 0 violations.
+- `lighthouse-desktop.json` and `lighthouse-mobile.json` — full reports.
+- `basepath-checks.json` — base-path network and deep-link evidence.
+- `1440-*`, `1024-*`, `768-*`, `375-*` — official four-width matrix.
+- `1024-webgl-off.png` — WebGL-disabled fallback.
+- `console.json` — clean console log from the matrix.
 
-### What changed
+`docs/screens/` contains the curated black screenshots used by the README and this report. `docs/interaction-report.json` is the machine-readable interaction transcript.
 
-- The 42 country rows and both IA value columns are unchanged. A column-by-column comparison against `b0d0e1c` found 0 changes to `name`, `region`, `gdp_pc_ppp` or `life_exp`.
-- Added `income_group_2019`, `gdp_source_url`, `life_source_url` and the country/year `source_url`. `indicator_code` and provenance text were updated.
-- No IA number was edited. Appendix A remains authoritative.
-- The live World Bank pull is verification only. `data:all` is not run because its first step (`data:fetch`) can overwrite the authoritative values; the individual checks are run instead.
+## Data and mathematics
 
-### Live diffs
+No data value or IA number changed. The authoritative values remain Appendix A in `data/sample42.csv`.
 
-| Quantity | Result |
-|---|---|
-| Rows / values | 42 / 84 |
-| GDP max absolute difference | $0.0049 |
-| Life max absolute difference | 0.000463 years |
-| Public CSV | byte-identical to `data/sample42.csv` |
-| Per-row source URLs | present for both indicators on all 42 rows |
+- n = 42, 2019.
+- Log fit: y = 5.927678825 ln x + 16.024564; r² = 0.768662883.
+- Observed Singapore − Zimbabwe gap: 22.535 years.
+- Model gap: 18.879168 years, 83.777093% of the observed gap.
+- Linear r²: 0.554885127.
+- Sensitivity excludes Nigeria and Chad: 40 countries, r = 0.925, 79.3276% of the gap reproduced.
+- Life expectancy range: 53.0–84.4 years; GDP range $1,055–$120,678.
 
-### Income groups
-
-Current FY2027 counts: Low 10, Lower middle 9, Upper middle 12, High 11.
-FY2020 (July 2019) counts: Low 11, Lower middle 11, Upper middle 9, High 11.
-
-The four differences between FY2020 and FY2027 are Nepal (Low → Lower middle), Indonesia, the Philippines and Vietnam (Lower middle → Upper middle). The data values for those countries did not change.
-
-### Statistics recomputed
-
-| Quantity | Value |
-|---|---|
-| Observations | 42 |
-| Log model | `y = 5.92768 ln x + 16.02456` |
-| Log r² | 0.7687 |
-| Log residual SE | 4.347 |
-| Linear r² | 0.5549 |
-| Observed gap | 22.535 years |
-| Predicted gap | 18.879 years |
-| Share of gap reproduced | 83.78% |
-| Income matching Singapore | $89,245 (interpolation) |
-| Reverse regression matching | $55,983 |
-| Sensitivity share without Nigeria and Chad | 79.33% |
-| Sensitivity log slope | 5.612855 |
-| Sensitivity r² | 0.8563 |
-| Zimbabwe life / Singapore life | 61.1 / 83.6 years |
-| Zimbabwe GDP / Singapore GDP | $4,994 / $120,678 |
-| Singapore ratio | 24.2× |
-
-All values are checked in `scripts/verify-stats.ts`; the full machine-readable regression is in `docs/crosscheck.json`.
-
-## Screenshots
-
-### Before and after
-
-The before set was captured from the pre-rebuild commit `b0d0e1c` in a detached worktree; the after set is from the final production build. The representative pair is at 1440×900 and 375×812.
-
-| Width | Before | After |
-|---|---|---|
-| 1440×900 | [before](audit/before/1440-landing.png) | [after](audit/after/1440-landing.png) |
-| 375×812 | [before](audit/before/375-landing.png) | [after](audit/after/375-landing.png) |
-
-The before images show the old dark panel and single-page section tabs. The after images show the four-chapter light panel, the selected-country labels, the context bar, the desktop splitter and the 44px chrome. The final after set was regenerated after the `421fdda` UI commit.
-
-### Required matrix
-
-Every chapter and both 3D views at 1440×900, 1024×768, 768×1024 and 375×812:
-
-| Width | Landing | Globe | Bowl | Data | Models | Use | Reliability |
-|---|---|---|---|---|---|---|---|
-| 1440 | [landing](audit/after/1440-landing.png) | [globe](audit/after/1440-globe.png) | [bowl](audit/after/1440-bowl.png) | [data](audit/after/1440-data.png) | [models](audit/after/1440-models.png) | [use](audit/after/1440-use.png) | [reliability](audit/after/1440-reliability.png) |
-| 1024 | [landing](audit/after/1024-landing.png) | [globe](audit/after/1024-globe.png) | [bowl](audit/after/1024-bowl.png) | [data](audit/after/1024-data.png) | [models](audit/after/1024-models.png) | [use](audit/after/1024-use.png) | [reliability](audit/after/1024-reliability.png) |
-| 768 | [landing](audit/after/768-landing.png) | [globe](audit/after/768-globe.png) | [bowl](audit/after/768-bowl.png) | [data](audit/after/768-data.png) | [models](audit/after/768-models.png) | [use](audit/after/768-use.png) | [reliability](audit/after/768-reliability.png) |
-| 375 | [landing](audit/after/375-landing.png) | [globe](audit/after/375-globe.png) | [bowl](audit/after/375-bowl.png) | [data](audit/after/375-data.png) | [models](audit/after/375-models.png) | [use](audit/after/375-use.png) | [reliability](audit/after/375-reliability.png) |
-
-Extras:
-
-- [1440 full page](audit/after/1440-full.png)
-- [375 full page](audit/after/375-full.png)
-- [1024 WebGL-off fallback](audit/after/1024-webgl-off.png)
-- Machine-readable checks: [axe.json](audit/after-redesign/axe.json), [lighthouse desktop](audit/after-redesign/lighthouse-desktop.json), [lighthouse mobile](audit/after-redesign/lighthouse-mobile.json), [console.json](audit/after/console.json), [ui-checks.json](audit/after/ui-checks.json).
-
-The images were opened and inspected. Fixes made during the screenshot loop included: chapter headings hidden under sticky chrome at 1024/768, the mobile section select lagging one chapter behind, the bowl controls covering the bowl at tablet widths, missing selected labels because the canvas was remounted immediately before capture, the bowl title colliding with the mobile tabs, the Singapore label touching the zoom plate at 375px, and the splitter hit area.
+`data:fetch` and `data:all` were deliberately not run because the fetch step can overwrite authoritative Appendix A values. Verification scripts were run individually against the shipped CSV and the saved World Bank pull.
 
 ## Accessibility and performance
 
-### Lighthouse
+- axe: 0 violations across 1440/1024/768/375 × Data/Models/Using the model/Reliability.
+- Primary text 17.6:1, body 11.3:1, secondary 6.8:1, smallest functional 4.8:1 on the black panel. Selected light controls use dark ink at 17.2:1.
+- 44px targets for non-inline controls; skip link first; keyboard search and roving scatter points; visible focus; reduced motion disables camera flight, idle rotation, reveal and CSS transitions.
+- No horizontal document overflow at any required width.
+- 3D is deferred: desktop/tablet mount on idle; phones keep a 30 KiB poster and mount after “Open the globe”. If WebGL is unavailable, the stage reports why and the seven charts/tables remain.
+- Bundle: app 114.62 kB, React 145.99 kB, React Three Fiber 153.40 kB, Three.js 666.65 kB, map 108.82 kB, d3 47.61 kB, shared vendor 10.90 kB, CSS 83.14 kB (16.29 kB gzipped) before minified gzip for JS. 3D chunks are lazy-loaded.
 
-Run through Lighthouse's `chrome-launcher` against the installed Chrome 150, with a fresh headless profile for each form factor.
+## Known limitations
 
-| Category | Desktop | Mobile |
-|---|---|---|
-| Performance | 84 | 93 |
-| Accessibility | 100 | 100 |
-| Best practices | 100 | 100 |
-| SEO | 100 | 100 |
+- Physical-device validation (iOS Safari, Android Chrome) and screen-reader validation are **UNVERIFIED** on this machine. Automated Chromium coverage is complete.
+- Mobile 3D is opt-in and still costs roughly 1–3 seconds of main-thread work on a mid-range phone. The report itself, not the globe, is the main mobile cost.
+- B11 KaTeX remains blocked by the 50 kB gzipped dependency rule; native MathML is shipped.
+- D1 is a partial tokenisation and F1 is a partial shared chart-frame abstraction. Neither changes a rendered style or interaction.
+- Lighthouse performance is a single-run observation; desktop ranged 78–100 across repeated runs depending on whether the deferred 4K globe mount landed inside the trace. Mobile scored 97 on the final run.
 
-Metrics from the latest full-suite run: desktop FCP 0.4s, LCP 0.9s, TBT 340ms, CLS 0; mobile FCP 1.6s, LCP 2.5s, TBT 230ms, CLS 0. Total page weight 1.9 MB desktop (including the 4K globe texture) and 180 KiB mobile. Desktop performance ranged 78–99 across repeated runs as the deferred r3f/4K mount moved in and out of the trace; mobile ranged 93–96. The extra `agentic-browsing` category is 50 in both runs; it is an experimental Lighthouse category, not one of the four requested categories and it does not affect the scores above.
+## Deployment
 
-### axe
-
-0 violations across the 16 combinations of four widths and four chapters; raw results are in `audit/after-redesign/axe.json`.
-
-### Keyboard, motion and fallback
-
-- First Tab lands on “Skip to the analysis”; Enter moves focus to `#main-content`.
-- The desktop splitter is a focusable separator: ArrowLeft grew the panel 648→672 in the final check.
-- The scatter has one roving tab stop; ArrowRight moved Burundi→Chad and Enter selected Chad in the final check.
-- The country stats card reveal was verified: selecting Chad moved the preview into view with the label “Chad”.
-- `prefers-reduced-motion: reduce` is true; the animation duration resolves to `1e-05s` and scroll behaviour to `auto`.
-- With WebGL disabled there are 0 canvases, the text fallback is shown, all 7 charts remain and there are no page errors.
-
-### Touch targets
-
-`npm run check:ui` reports all non-inline targets at least 44×44 at 1440, 1024, 768 and 375. This includes stage tabs, map tools, model/group segmented controls, primary and ghost buttons, chips, search, disclosures, export menu items, table sort buttons, table rows, range inputs and the splitter’s 44px effective hit area. The 42 checkboxes have 44px labels that are the click target.
-
-Inline prose links, citation markers and inline text buttons are left at type size under the WCAG 2.5.8 inline exception. This is recorded in `DECISIONS.md` rather than claimed as a 44px target.
-
-## Phase timings
-
-No stopwatch log was kept, so the active-time split is **UNVERIFIED** and approximate. The wall-clock interval is verified from the last pre-rebuild commit timestamp (`2026-10-21 13:35:09 +0700`) to the final verification (`2026-10-22 09:08 +0700`): about 19.6 hours including interruptions and repeated screenshot/audit runs.
-
-| Phase | Approx. active | Work |
-|---|---|---|
-| A | 3.0 h | Source register, live pull, anchors, cross-check, claims and 68 stats. |
-| B | 2.0 h | Interface bug fixes, map chrome, chart domains and loading. |
-| C | 1.5 h | Four chapters, template, context bar, glossary, selection and landing answer. |
-| D | 1.5 h | Tokens, mono numerals, frame, shared components, motion, icons. |
-| E | 2.0 h | Pillars, globe, labels, bowl, controls, fallback. |
-| F | 2.0 h | Chart frames, labels, band, histogram, export, sortable table. |
-| G | 2.5 h | Mobile/tablet layout, target sizes, keyboard/motion, axe and Lighthouse, screenshots. |
-| H | 0.75 h | Report, progress, decisions and design reconciliation. |
-
-The screenshot and audit loops were repeated after layout fixes, so the G estimate includes three full screenshot passes and three Lighthouse pairs.
-
-## Decisions and limitations
-
-| Item | State | Resolution |
-|---|---|---|
-| D2 light panel vs near-black | Settled | Warm-paper panel and dark stage retained; R5 records why the remote black-console commit was rejected. |
-| B11 KaTeX | Blocked | Native MathML; KaTeX would exceed the 50 kB gzipped rule. |
-| D1 tokenisation | Partial | Tokens exist, but some literal colours/paddings remain in `app.css`. |
-| D4 panel resizer | Done | Pointer/keyboard splitter from 560–760px, ARIA separator and 44px hit area. |
-| F1 shared chart frame | Partial | Shared export/table plumbing exists; a single SVG frame abstraction does not. |
-| F4 chart keyboard points | Done | Scatter has roving arrow-key point navigation and Enter/Space selection; other charts use keyboard-accessible data tables. |
-| D2 alternate | Not built | The `8ba8bce` black-console alternative was rejected in the merge (R5); a light/dark preference remains a possible follow-up. |
-| Data pull | Restricted | `data:all` is not run; individual checks pass. Appendix A is authoritative. |
-| Screen-reader testing | UNVERIFIED | axe and keyboard checks were run; no NVDA/JAWS/VoiceOver session was recorded. |
-| Physical-device testing | UNVERIFIED | Playwright viewport and touch-target checks only; no physical phone/tablet run. |
-| Exact Natural Earth release | UNVERIFIED | `world-atlas` does not print the point release; dataset and 1:110m scale are verified. |
-
-All other decisions, including the default Zimbabwe/Singapore selection, deferred 3D canvas, chunk splitting, system mono stack, tablet bowl layout, inline-link exception and Lighthouse browser workaround, are in `DECISIONS.md`.
-
-## Design summary
-
-The full design document is `docs/DESIGN.md`. The short version:
-
-- **World:** NASA Blue Marble Next Generation December 2004, atmosphere, runtime borders and graticule. The old cloud/specular/normal maps are gone. The imagery is illustrative, not a 2019 data layer, and the credit says so.
-- **Panel:** light analytics surface beside a near-black stage. Ink hairlines, one blue action colour, gold for the logarithmic fit, coral for the observed gap and selection, one sequential teal ramp for life expectancy.
-- **Type:** Instrument Sans for interface; system monospace for numbers. No second webfont.
-- **Layout:** desktop split view; below 1201px the stage is a sticky band and the report reads below it. The phone stage is 45dvh; the tablet stage is 52dvh so the bowl controls fit. Chapter headings use scroll margins that clear the stage, context bar and section select.
-- **Motion:** slow interruptible camera flights, one 14px section reveal, press-scale buttons, and a 2.8s deferred 3D canvas behind a poster. Reduced motion disables the flights, idle rotation, reveals and transitions.
-- **Charts:** seven hand-built SVG figures sharing the life-expectancy ramp, model colours and direct labels, with PNG/SVG/CSV export and hidden data tables.
-
-### Published build
-
-The live build was checked after upload:
-
-- `https://peterachss.github.io/maths-ia-explorer/` returns HTTP 200; the entry JS, CSS (inlined), fonts, textures, `robots.txt` and `sitemap.xml` all load without a failed request. GitHub Actions run 39887371851 passed the build and deploy jobs.
-- `npm run check:ui` was re-run with `URL=https://peterachss.github.io/maths-ia-explorer/`: no overflow, no page errors, all 44px targets, splitter, scatter keyboard, selection reveal, reduced motion and WebGL fallback pass. Output: `audit/live/ui-checks.json`.
-- The interaction sweep passed 27 desktop and 8 mobile steps against the live URL. `docs/interaction-report.json` records the run.
-- Live four-width evidence: `audit/live/github-checks.json` and `audit/live/github-1440.png`, `github-1024.png`, `github-768.png`, `github-375.png`. The `?c=THA%2CKEN` deep link restores Thailand and Kenya; an 80 px orbit drag leaves Zimbabwe and Singapore selected; 1440 page scroll stays at y=0 while the stage tabs remain visible.
-- Surge remains a mirror at `https://maths-ia-explorer.surge.sh/`.
-
-## Reproduce
-
-```bash
-npm run build
-npm test
-npm run data:anchor
-npm run data:cross
-npm run data:verify
-npm run data:verify-live
-npm run data:verify-stats
-npm run preview -- --host 127.0.0.1 --port 4173
-
-# In another shell:
-npx vite-node scripts/screenshot.ts audit/after
-npm run check:ui
-CHROME_PATH="$HOME/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing" \
-  npx vite-node scripts/audit.ts audit/after
-```
-
-`npm run data:fetch` and `npm run data:all` are intentionally omitted; they can overwrite the authoritative Appendix A values.
-
-## Closing status
-
-`main` contains the complete rebuild, the country-stats reveal, the globe surface pick and the release evidence. The canonical build is published at https://peterachss.github.io/maths-ia-explorer/; https://maths-ia-explorer.surge.sh/ is a verified mirror. The remaining gaps are listed above rather than hidden: KaTeX (B11), the design-system token cleanup (D1) and the shared chart-frame abstraction (F1). D2 is settled by R5, and D4 and F4 are no longer partial.
-
-Release complete. The published build passed the build, 46 unit tests, 11 data anchors, live data verification, 68 statistic checks, the 27/8 interaction sweep, UI checks at four widths, screenshots, axe and Lighthouse before publication. The live GitHub Pages URL, deep link, drag guard and page-scroll lock were checked again after upload.
-
-## Post-release fixes, 23 October 2026
-
-B18 removed the Contents rail footer: a two pixel reading-progress bar and an 11 pixel `2019` label that read as a red and blue glitch at the bottom of the rail. The rail now ends at Sources. E8 replaced the 1024/2048 day texture with 8K, 4K and 2K renders from NASA's 21,600 by 10,800 master, raised the border overlay to 4096 and the sphere and border to 128 by 84 segments. The 8K texture is requested at 1440 and the 2K at 375, with no rail footer, no failed requests and no console errors. The fixes were published to the same GitHub Pages URL and preserve the H4 base-path and surface-picking work. Run 39919923719 deployed `ef05eaa`; the live checks confirm the 8K and 2K selection, all five anchor values, the Thailand/Kenya deep link and the four-width UI pass.
+The release is a normal commit on `main`, pushed without force. GitHub Actions builds with `BASE_PATH=/maths-ia-explorer/` and deploys GitHub Pages. The Surge mirror is rebuilt from the normal root build. Live verification and the release run ID are recorded in `PROGRESS.md` and `audit/live/` after deployment.

@@ -20,8 +20,7 @@ const chapters = ['data', 'models', 'use', 'reliability'] as const;
 await mkdir(out, { recursive: true });
 
 async function axeSweep() {
-  // The CI image may not have Playwright's bundled Chromium; use installed Chrome.
-  const browser = await chromium.launch({ channel: 'chrome' });
+  const browser = await chromium.launch();
   const results: Record<string, unknown> = {};
   for (const size of widths) {
     const context = await browser.newContext({ viewport: { width: size.width, height: size.height } });
@@ -33,8 +32,12 @@ async function axeSweep() {
         const el = document.querySelector<HTMLElement>(sel);
         const panel = document.querySelector<HTMLElement>('.panel-scroll');
         if (!el) return;
-        if (panel && panel.scrollHeight > panel.clientHeight + 10) panel.scrollTop = el.offsetTop - 64;
-        else el.scrollIntoView({ block: 'start' });
+        if (panel && panel.scrollHeight > panel.clientHeight + 10) {
+          const panelTop = panel.getBoundingClientRect().top;
+          panel.scrollTop += el.getBoundingClientRect().top - panelTop - 96;
+        } else {
+          el.scrollIntoView({ block: 'start' });
+        }
       }, `[data-chapter="${chapter}"]`);
       await page.waitForTimeout(450);
       const audit = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
@@ -54,7 +57,12 @@ async function axeSweep() {
 }
 
 async function lighthouseRun(label: string, formFactor: 'desktop' | 'mobile') {
-  const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless=new', '--no-sandbox'] });
+  // Installed Chrome 150 stalls when automated on this machine. Use the
+  // bundled Playwright Chromium for Lighthouse, matching the other scripts.
+  const chrome = await chromeLauncher.launch({
+    chromePath: chromium.executablePath(),
+    chromeFlags: ['--headless=new', '--no-sandbox']
+  });
   try {
     const result = await lighthouse(base, {
       port: chrome.port,

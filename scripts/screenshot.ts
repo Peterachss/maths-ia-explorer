@@ -63,7 +63,9 @@ async function scrollPanelTo(page: Page, selector: string) {
     const panel = document.querySelector<HTMLElement>('.panel-scroll');
     if (!el) return;
     if (panel && panel.scrollHeight > panel.clientHeight + 10) {
-      panel.scrollTop = el.offsetTop - 76;
+      const panelTop = panel.getBoundingClientRect().top;
+      const elTop = el.getBoundingClientRect().top;
+      panel.scrollTop += elTop - panelTop - 76;
     } else {
       el.scrollIntoView({ block: 'start' });
     }
@@ -74,7 +76,7 @@ async function scrollPanelTo(page: Page, selector: string) {
 async function run() {
   await ensureServer();
   await mkdir(out, { recursive: true });
-  const browser = await chromium.launch({ channel: 'chrome' });
+  const browser = await chromium.launch();
   const consoleLog: { width: string; type: string; text: string }[] = [];
 
   for (const size of sizes) {

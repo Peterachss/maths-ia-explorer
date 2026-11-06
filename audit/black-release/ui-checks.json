@@ -1,0 +1,843 @@
+{
+  "base": "http://127.0.0.1:4181/",
+  "widths": {
+    "1440x900": {
+      "bodyWidth": 1440,
+      "viewportWidth": 1440,
+      "docHeight": 900,
+      "viewportHeight": 900,
+      "small": [],
+      "checkboxTargets": [
+        {
+          "width": 516,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        },
+        {
+          "width": 248,
+          "height": 44
+        }
+      ],
+      "charts": 7,
+      "mapGap": {
+        "top": 84,
+        "tabsBottom": 70,
+        "clearance": 14
+      },
+      "gapFont": "\"Instrument Sans Variable\", \"Segoe UI\", system-ui, sans-serif",
+      "gapText": "22.5\nyears apart\nZimbabwe to Singapore\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "panelBackground": "rgb(8, 10, 13)",
+      "panelText": "rgb(244, 241, 234)",
+      "copyViews": 2,
+      "fullscreenButtons": 7,
+      "pageScrollAfter500": 0,
+      "panelLuminance": 0.003,
+      "panelContrast": 17.6,
+      "errors": 0
+    },
+    "1024x768": {
+      "bodyWidth": 1024,
+      "viewportWidth": 1024,
+      "docHeight": 17703,
+      "viewportHeight": 768,
+      "small": [],
+      "checkboxTargets": [
+        {
+          "width": 614,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        }
+      ],
+      "charts": 7,
+      "mapGap": {
+        "top": 80,
+        "tabsBottom": 66,
+        "clearance": 14
+      },
+      "gapFont": "\"Instrument Sans Variable\", \"Segoe UI\", system-ui, sans-serif",
+      "gapText": "22.5\nyears apart\nZimbabwe to Singapore\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "panelBackground": "rgb(8, 10, 13)",
+      "panelText": "rgb(244, 241, 234)",
+      "copyViews": 2,
+      "fullscreenButtons": 7,
+      "pageScrollAfter500": 500,
+      "panelLuminance": 0.003,
+      "panelContrast": 17.6,
+      "sectionNav": {
+        "jumpBottom": 433,
+        "headingTop": 456,
+        "clearance": 24
+      },
+      "errors": 0
+    },
+    "768x1024": {
+      "bodyWidth": 768,
+      "viewportWidth": 768,
+      "docHeight": 17825,
+      "viewportHeight": 1024,
+      "small": [],
+      "checkboxTargets": [
+        {
+          "width": 614,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        },
+        {
+          "width": 297,
+          "height": 44
+        }
+      ],
+      "charts": 7,
+      "mapGap": {
+        "top": 80,
+        "tabsBottom": 66,
+        "clearance": 14
+      },
+      "gapFont": "\"Instrument Sans Variable\", \"Segoe UI\", system-ui, sans-serif",
+      "gapText": "22.5\nyears apart\nZimbabwe to Singapore\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "panelBackground": "rgb(8, 10, 13)",
+      "panelText": "rgb(244, 241, 234)",
+      "copyViews": 2,
+      "fullscreenButtons": 7,
+      "pageScrollAfter500": 500,
+      "panelLuminance": 0.003,
+      "panelContrast": 17.6,
+      "sectionNav": {
+        "jumpBottom": 556,
+        "headingTop": 579,
+        "clearance": 24
+      },
+      "errors": 0
+    },
+    "375x812": {
+      "bodyWidth": 375,
+      "viewportWidth": 375,
+      "docHeight": 18767,
+      "viewportHeight": 812,
+      "small": [],
+      "checkboxTargets": [
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        },
+        {
+          "width": 311,
+          "height": 44
+        }
+      ],
+      "charts": 7,
+      "mapGap": {
+        "top": 74,
+        "tabsBottom": 60,
+        "clearance": 14
+      },
+      "gapFont": "\"Instrument Sans Variable\", \"Segoe UI\", system-ui, sans-serif",
+      "gapText": "22.5\nyears apart\nIncome model\n18.9 yrs\n·\n83.8%\nof gap",
+      "panelBackground": "rgb(8, 10, 13)",
+      "panelText": "rgb(244, 241, 234)",
+      "copyViews": 2,
+      "fullscreenButtons": 7,
+      "pageScrollAfter500": 500,
+      "panelLuminance": 0.003,
+      "panelContrast": 17.6,
+      "sectionNav": {
+        "jumpBottom": 387,
+        "headingTop": 413,
+        "clearance": 26
+      },
+      "errors": 0
+    }
+  },
+  "keyboard": {
+    "first": {
+      "tag": "A",
+      "text": "Skip to the analysis"
+    },
+    "after": {
+      "tag": "DIV",
+      "id": "main-content"
+    }
+  },
+  "reducedMotion": {
+    "media": true,
+    "animation": "1e-05s",
+    "scroll": "auto"
+  },
+  "webglOff": {
+    "canvases": 0,
+    "fallback": "This browser could not start 3D graphics. The charts and tables below still work.",
+    "charts": 7,
+    "errors": 0
+  },
+  "splitter": {
+    "before": "763",
+    "after": "787"
+  },
+  "scatterKeyboard": {
+    "before": "BDI",
+    "after": "TCD",
+    "pressed": "true",
+    "preview": {
+      "label": "Chad",
+      "top": 388
+    }
+  },
+  "failures": []
+}

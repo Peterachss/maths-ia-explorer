@@ -1,30 +1,37 @@
-# Build transcript (ANSI colour codes removed; BASE_PATH=/maths-ia-explorer/)
+Life Expectancy Explorer — build record
+Release: all-black console (B19–B23)
+Date: 6 November 2026
+Command: BASE_PATH=/maths-ia-explorer/ npm run build
+Result: PASS
 
 > maths-ia-explorer@1.0.0 build
 > tsc --noEmit && vite build && node scripts/optimize-dist.mjs
 
 vite v5.4.21 building for production...
 transforming...
-OK 2423 modules transformed.
+textures/earth-poster.jpg referenced in textures/earth-poster.jpg didn't resolve at build time, it will remain unchanged to be resolved at runtime
+✓ 2426 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                                                     2.08 kB | gzip:   0.73 kB
+dist/index.html                                                     2.05 kB │ gzip:   0.72 kB
 dist/assets/instrument-sans-latin-ext-wght-normal-B5bTHO_g.woff2   11.14 kB
 dist/assets/instrument-sans-latin-wght-normal-BbzFLZTg.woff2       30.09 kB
-dist/assets/index-CfVf63ua.css                                     45.74 kB | gzip:   9.81 kB
-dist/assets/ModelStage-DYGfGPGw.js                                  2.23 kB | gzip:   1.09 kB | map:     6.01 kB
-dist/assets/Stage-C1OBPwio.js                                      12.53 kB | gzip:   4.85 kB | map:    45.89 kB
-dist/assets/vendor-d_OPeTbN.js                                     13.88 kB | gzip:   4.24 kB | map:    38.09 kB
-dist/assets/d3-Dbn3Qhaw.js                                         47.61 kB | gzip:  18.46 kB | map:   224.05 kB
-dist/assets/index-D3-3BVnS.js                                      93.92 kB | gzip:  28.42 kB | map:   230.27 kB
-dist/assets/geo-NurYNIKo.js                                       108.82 kB | gzip:  39.91 kB | map:    13.32 kB
-dist/assets/react-DCO4km40.js                                     145.99 kB | gzip:  47.15 kB | map:   357.22 kB
-dist/assets/r3f-D9Hbhefz.js                                       153.40 kB | gzip:  49.73 kB | map:   494.27 kB
-dist/assets/three-CUaW6Xg9.js                                     666.65 kB | gzip: 172.43 kB | map: 2,170.70 kB
-OK built in 10.99s
+dist/assets/index-Ck9jgkxf.css                                     83.18 kB │ gzip:  16.30 kB
+dist/assets/ModelStage-nODj3wvO.js                                  2.23 kB │ gzip:   1.09 kB │ map:     6.01 kB
+dist/assets/vendor-D6IQdEyd.js                                     10.92 kB │ gzip:   3.60 kB │ map:    30.56 kB
+dist/assets/Stage-BXkmhybT.js                                      12.78 kB │ gzip:   4.99 kB │ map:    47.28 kB
+dist/assets/d3-Dbn3Qhaw.js                                         47.61 kB │ gzip:  18.46 kB │ map:   224.05 kB
+dist/assets/geo-NurYNIKo.js                                       108.82 kB │ gzip:  39.91 kB │ map:    13.32 kB
+dist/assets/index-DHIJ7Ojy.js                                     114.67 kB │ gzip:  33.74 kB │ map:   277.77 kB
+dist/assets/react-DCO4km40.js                                     145.99 kB │ gzip:  47.15 kB │ map:   357.22 kB
+dist/assets/r3f-xXSP4MAt.js                                       153.40 kB │ gzip:  49.73 kB │ map:   494.27 kB
+dist/assets/three-CUaW6Xg9.js                                     666.65 kB │ gzip: 172.43 kB │ map: 2,170.70 kB
+✓ built in 3.57s
 optimised dist/index.html: CSS inlined, deferred 3D preloads removed
 
-textures/earth-poster.jpg referenced in textures/earth-poster.jpg didn't resolve at build time, it will remain unchanged to be resolved at runtime
-(Expected: the poster is a public asset resolved at runtime.)
-
-Built with no TypeScript errors.
+Notes:
+- The normal root build (`npm run build`) passes with CSS 83.14 kB / 16.29 kB gzipped.
+- The GitHub Pages build sets BASE_PATH=/maths-ia-explorer/; CSS is inlined and the deferred 3D preloads are removed by scripts/optimize-dist.mjs.
+- The 3D chunks (Stage, r3f, three) remain lazy-loaded.
+- No data files are generated or modified by the build.
+- The base-path run served every asset with no failed requests; evidence: audit/black-release/basepath-checks.json.

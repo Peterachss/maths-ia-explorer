@@ -6,7 +6,9 @@ Mirror: https://maths-ia-explorer.surge.sh/
 
 [![Deploy to GitHub Pages](https://github.com/Peterachss/maths-ia-explorer/actions/workflows/deploy.yml/badge.svg)](https://github.com/Peterachss/maths-ia-explorer/actions/workflows/deploy.yml)
 
-An interactive companion to a Mathematics AA SL Internal Assessment. It asks how well a straight line and a logarithmic curve describe the link between income and life expectancy across 42 countries in 2019. The interface is a photoreal globe beside a light reading panel: the map sets the scene, and the panel carries the argument.
+An interactive companion to a Mathematics AA SL Internal Assessment. It asks how well a straight line and a logarithmic curve describe the link between income and life expectancy across 42 countries in 2019. The interface is a photoreal globe beside an all-black reading console: the map sets the scene, and the panel carries the argument.
+
+Current release: 6 November 2026. The four-width UI and interaction evidence is in `audit/black-release/`.
 
 The app is built around the student's own 42 rows, not a demonstration dataset. Every number in the interface is recomputed in the browser from `data/sample42.csv` and checked against the values printed in the written IA.
 
@@ -14,11 +16,12 @@ The app is built around the student's own 42 rows, not a demonstration dataset. 
 
 ## What it does
 
-- **Globe stage.** A NASA Blue Marble globe carries forty two pillars at capital city coordinates. Height is life expectancy and colour is the same value on a single ramp. Singapore and Zimbabwe are joined by an arc labelled 22.5 years, the observed gap. The image is rendered from the 21,600 by 10,800 Blue Marble master at 8K on desktop, with 4K and 2K fallbacks, over a 4K Natural Earth border overlay. The basemap is illustrative, not a 2019 data layer.
+- **Globe stage.** A NASA Blue Marble globe carries forty two pillars at capital city coordinates. Height is life expectancy and colour is the same value on a single ramp. Singapore and Zimbabwe are joined by an arc labelled 22.5 years, the observed gap. The image is rendered from the 21,600 by 10,800 Blue Marble master at 4K on laptop-sized stages, 8K only on very large stages, and 2K on phones; smaller screens show a poster until the reader opens the globe. The border overlay is generated at 4096 on large stages and 2048 otherwise. The basemap is illustrative, not a 2019 data layer.
 - **Contents rail.** A vertical rail on desktop and one grouped native select on mobile follow the reading position through eleven destinations in four chapters.
-- **Country selection.** Click a pillar, click anywhere on the globe within 7 degrees of a country marker, search by name, or use the country list in the panel. Selecting a country flies the camera to it and updates every view; a drag orbits without changing the selection.
+- **Country selection.** Click a pillar, click anywhere on the globe within 7 degrees of a country marker, search by name, or use the country list in the panel. Selecting a country flies the camera to it and updates every view; a drag orbits without changing the selection. The keyboard combobox wraps with ArrowUp/ArrowDown, supports Home/End and Enter, marks already-selected countries, and announces a no-match state.
 - **Two models.** A straight line and a logarithmic curve can be shown on a linear or logarithmic income axis. The panel reports the equation, r, r squared, the residual standard error and the sum of squared errors for both.
-- **Seven SVG charts.** Scatter with both fits, residuals for each model, the gap, the derivative, the inverse and box plots by income group, plus the least squares bowl in 3D and the sensitivity table. Every chart exports to PNG or SVG, and charts with tabular data also export CSV.
+- **Seven SVG charts.** Scatter with both fits, residuals for each model, the gap, the derivative, the inverse and box plots by income group, plus the least squares bowl in 3D and the sensitivity table. Every chart exports to PNG or SVG with a dark export background, charts with tabular data also export CSV, and each chart has a full-screen control above 640 px. Export targets the chart SVG rather than the toolbar icon.
+- **Share a view.** The masthead and the mobile contents row include a copy-link control for the current selection, model and exclusions.
 - **Show working.** A drawer lists each calculation with its formula, inputs and result.
 - **Sensitivity.** Excluding Nigeria and Chad refits everything and shows how much of the gap survives.
 - **The 3D bowl.** Sum of squared errors drawn as a surface over slope and level, with sliders to move away from the least squares minimum.
@@ -63,7 +66,8 @@ npm run dev        # local development
 npm run build      # type check and production build
 npm run preview    # serve the built app
 npm test           # 46 tests
-npm run data:fetch # live World Bank pull and comparison
+npm run check:ui   # four-width UI, contrast and keyboard checks
+npm run audit      # axe sweep plus Lighthouse desktop and mobile
 npm run data:anchor
 ```
 
@@ -72,14 +76,15 @@ The app is a static site. The built output in `dist/` can be hosted anywhere. Th
 ## Accessibility and performance
 
 - One h1, no skipped heading levels, every SVG chart has a `role="img"` and an accessible name, and the whole 42 country table is available to screen readers.
-- Text contrast ranges from 4.51:1 on the primary button to 17.2:1 for primary text on the panel; body text is 6.3:1 or better, and every pair is above WCAG AA.
+- The reading panel is `rgb(8, 10, 13)` with 17.6:1 primary-text contrast, 11.3:1 body text, 6.8:1 secondary text and 4.8:1 for the smallest functional label. Light backgrounds appear only on selected/primary controls, where dark ink measures 17.2:1.
 - No horizontal overflow at 375, 768, 1024 or 1440 pixels.
 - The Contents rail follows the heading nearest the top of the reading area, and the mobile select mirrors it.
 - Reduced motion is respected in CSS and in the Three.js camera and rotation code.
-- The 3D stage is lazy loaded, so the charts and the text arrive before WebGL.
-- Measured bundle: about 94 kB of app code, 146 kB of React, 153 kB of React Three Fiber, 667 kB of Three.js, 109 kB of map geometry, 48 kB of d3 and 14 kB of shared vendor code before gzip, plus 46 kB of CSS. The 3D chunks are lazy loaded.
+- The 3D stage is lazy loaded, so the charts and the text arrive before WebGL. Phones keep the poster until the reader presses “Open the globe”.
+- The mobile gap badge clears the stage tabs by 14 px at all four verified widths and carries both the observed gap and the income-model prediction.
+- Measured bundle: about 115 kB of app code, 146 kB of React, 153 kB of React Three Fiber, 667 kB of Three.js, 109 kB of map geometry, 48 kB of d3 and 11 kB of shared vendor code before gzip, plus 83 kB of CSS (16.3 kB gzipped). The 3D chunks are lazy loaded.
 
-The full audit is in `docs/audit.json`, and the test transcript is in `docs/TEST_RUN.txt`. `scripts/interaction-test.mjs` exercises every control on desktop and mobile, checks the section index and fails on any console error, page error, failed request or HTTP error. `docs/interaction-report.json` records the last run.
+The full audit is in `docs/audit.json`, and the test transcript is in `docs/TEST_RUN.txt`. `scripts/interaction-test.mjs` exercises every control on desktop and mobile, checks the section index and fails on any console error, page error, failed request or HTTP error. `docs/interaction-report.json` records the last run: 31 desktop steps and 11 mobile steps, including the badge, copy-link, fullscreen and export checks. `audit/black-release/` holds the four-width screenshots, UI checks, axe scan and Lighthouse reports.
 
 ## Project layout
 
@@ -104,4 +109,4 @@ src/ui/          controls, tables, working panel, tools
 
 ## Credits
 
-Data: World Bank, World Development Indicators, 2019. Country outlines: Natural Earth, through `world-atlas`. Globe imagery: NASA Blue Marble Next Generation (December 2004), rendered from the 21,600 by 10,800 master at 8K, 4K or 2K; the imagery is illustrative. Typeface: Instrument Sans, through Fontsource. Built with React, Vite, Three.js and React Three Fiber.
+Data: World Bank, World Development Indicators, 2019. Country outlines: Natural Earth, through `world-atlas`. Globe imagery: NASA Blue Marble Next Generation (December 2004), rendered from the 21,600 by 10,800 master at 4K on laptop stages, 8K on very large stages and 2K on phones; the imagery is illustrative. Typeface: Instrument Sans, through Fontsource. Built with React, Vite, Three.js and React Three Fiber.

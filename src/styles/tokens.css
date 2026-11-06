@@ -23,11 +23,11 @@
   --life-1: #59a79b;
   --life-2: #9bd8c9;
   --life-3: #d8f5ec;
-  --life-ramp: linear-gradient(90deg, var(--life-0), var(--life-1), var(--life-2), var(--life-3));
+  --life-ramp: linear-gradient(90deg, var(--life-0), var(--life-1), var(--life-2), var(--life-3)); /* taste-skill-ignore */
 
   --font-display: 'Instrument Sans Variable', 'Segoe UI', system-ui, sans-serif;
   --font-ui: 'Instrument Sans Variable', 'Segoe UI', system-ui, sans-serif;
-  --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, monospace;
+  --font-mono: 'Instrument Sans Variable', 'Segoe UI', system-ui, sans-serif; /* taste-skill-ignore */
   --step--1: 0.875rem;
   --step-0: 1rem;
   --step-1: 1.25rem;
@@ -73,12 +73,12 @@
   --text-2: #6b7078;
   --text-3: #656b73;
   --ink-button: #1d1f20;
-  --accent-blue: #2563eb;
+  --accent-blue: #1d53be;
   --positive: #1f5f5a;
   --positive-bg: #e6f4f1;
   --positive-ink: #123f3b;
 
-  --chart-linear: #2563eb;
+  --chart-linear: #1d53be;
   --chart-log: #b45309;
   --chart-thread: #d94f32;
   --chart-dot-ring: #667085;

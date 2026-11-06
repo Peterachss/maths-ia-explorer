@@ -62,21 +62,22 @@ function Citation({ n }: { n: number }) {
 }
 
 function Question({ children }: { children: ReactNode }) {
-  return <p className="section-question"><span>Question</span> {children}</p>;
+  return <p className="section-question">{children}</p>;
 }
 
 function KeyResult({ value, unit, source = 'computed' }: { value: string; unit?: string; source?: string }) {
   return (
     <div className="key-result">
-      <span className="key-result-label">Key result</span>
-      <strong>{value}</strong>{unit && <span className="key-result-unit">{unit}</span>}
-      <span className="key-result-source">[{source}]</span>
+      <div className="key-result-value">
+        <strong>{value}</strong>{unit && <span className="key-result-unit"> {unit}</span>}
+      </div>
+      <span className="key-result-source">{source}</span>
     </div>
   );
 }
 
 function WhatThisMeans({ children }: { children: ReactNode }) {
-  return <div className="what-means"><span>What this means</span>{children}</div>;
+  return <div className="what-means">{children}</div>;
 }
 
 function Calc({ children }: { children: ReactNode }) {
@@ -181,7 +182,6 @@ function SectionRail() {
   return (
     <nav className="rail" aria-label="Report contents">
       <div className="rail-head">
-        <span className="rail-mark" aria-hidden="true">19</span>
         <div>
           <p className="rail-label">Contents</p>
           <p className="rail-sub">World Bank survey</p>
@@ -190,7 +190,7 @@ function SectionRail() {
       <div className="rail-nav">
         {copy.chapters.map((chapter) => (
           <Fragment key={chapter.id}>
-            <p className="rail-group"><span>{chapter.no}</span> {chapter.title}</p>
+            <p className="rail-group">{chapter.title}</p>
             {copy.nav.filter((item) => item.chapter === chapter.id).map((item) => (
               <button
                 key={item.id}
@@ -221,9 +221,9 @@ function SectionJump() {
       <label htmlFor="section-jump">Contents</label>
       <select id="section-jump" value={active} onChange={(e) => go(e.target.value)} aria-label="Section">
         {NAV_GROUPS.map((group) => (
-          <optgroup key={group.id} label={`${group.no} ${group.title}`}>
+          <optgroup key={group.id} label={group.title}>
             {copy.nav.filter((item) => item.chapter === group.id).map((item) => (
-              <option key={item.id} value={item.id}>{group.no} {group.title} · {item.label}</option>
+              <option key={item.id} value={item.id}>{group.title} · {item.label}</option>
             ))}
           </optgroup>
         ))}
@@ -280,24 +280,20 @@ function KpiStrip({ analysis }: { analysis: Analysis }) {
   return (
     <dl className="kpi-strip" aria-label="Summary of the sample and the fit">
       <div className="kpi">
-        <dt>Countries</dt>
         <dd className="kpi-value">{analysis.points.length}</dd>
-        <dd className="kpi-sub">2019 sample</dd>
+        <dt className="kpi-label">Countries in 2019 sample</dt>
       </div>
       <div className="kpi">
-        <dt>Median life expectancy</dt>
         <dd className="kpi-value">{num(analysis.ySummary.median, 1)}<span> yrs</span></dd>
-        <dd className="kpi-sub">Range {num(analysis.ySummary.min, 1)}–{num(analysis.ySummary.max, 1)}</dd>
+        <dt className="kpi-label">Median life expectancy ({num(analysis.ySummary.min, 1)}–{num(analysis.ySummary.max, 1)} range)</dt>
       </div>
       <div className="kpi">
-        <dt>{modelWord(analysis.model, true)} model</dt>
         <dd className="kpi-value">{num(fit.r2, 2)}<span> R²</span></dd>
-        <dd className="kpi-sub">{modelWord(other.kind, true)} {num(other.r2, 2)}</dd>
+        <dt className="kpi-label">{modelWord(analysis.model, true)} fit ({modelWord(other.kind, true)} {num(other.r2, 2)})</dt>
       </div>
       <div className="kpi">
-        <dt>Gap reproduced</dt>
-        <dd className="kpi-value">{g ? `${num(g.percentReproduced, 1)}` : 'n/a'}{g && <span>%</span>}</dd>
-        <dd className="kpi-sub">{g ? (over ? `${num(g.predictedGap, 1)} yrs predicted vs ${num(g.observedGap, 1)} observed` : `${num(g.predictedGap, 1)} of ${num(g.observedGap, 1)} yrs`) : 'Zimbabwe or Singapore excluded'}</dd>
+        <dd className="kpi-value">{g ? `${num(g.percentReproduced, 1)}%` : 'n/a'}</dd>
+        <dt className="kpi-label">{g ? (over ? `Gap reproduced (${num(g.predictedGap, 1)} yrs predicted)` : `Gap reproduced (${num(g.predictedGap, 1)} of ${num(g.observedGap, 1)} yrs)`) : 'Gap comparison'}</dt>
       </div>
     </dl>
   );
@@ -391,8 +387,8 @@ export function App() {
     return (
       <div className="boot" role="status">
         <span className="brand-mark"><EarthIcon size={20} strokeWidth={1.5} aria-hidden="true" /></span>
-        <p className="boot-kicker">Maths AA SL · Internal Assessment</p>
         <p className="boot-title">{copy.title}</p>
+        <p className="boot-sub">Maths AA SL · Internal Assessment</p>
         <i className="load-line" aria-hidden="true" />
         <p className="note">Loading the 2019 data</p>
       </div>
@@ -469,13 +465,14 @@ export function App() {
         <SectionRail />
         <div className="panel-main">
           <header className="masthead">
-            <div className="masthead-top">
-              <p className="masthead-kicker">Maths AA SL <span aria-hidden="true">/</span> Internal Assessment</p>
-              <p className="masthead-meta">World Bank WDI · 2019</p>
-            </div>
             <div className="masthead-main">
               <h1>{copy.title}</h1>
               <p className="masthead-sub">{copy.subtitle}</p>
+            </div>
+            <div className="masthead-meta">
+              <span>Maths AA SL Internal Assessment</span>
+              <span aria-hidden="true">·</span>
+              <span>World Bank WDI 2019</span>
             </div>
           </header>
 
@@ -490,8 +487,7 @@ export function App() {
             <div className="panel-content">
               <SectionJump />
 
-              <section className="finding" aria-labelledby="finding-heading">
-                <p className="finding-kicker" id="finding-heading">The answer</p>
+              <section className="finding" aria-label="Key finding">
                 <p className="finding-lede">{headline}</p>
                 <KpiStrip analysis={analysis} />
                 <p className="source-line">
@@ -502,9 +498,7 @@ export function App() {
               </section>
 
               <div className="chapter-intro" data-chapter-heading="data" data-nav-id="h-two">
-                <span className="chapter-no">01</span>
                 <div className="chapter-copy">
-                  <p className="chapter-kicker">Chapter one</p>
                   <h2>Data</h2>
                   <p>{CHAPTER_BY_ID.data?.purpose}</p>
                 </div>
@@ -513,7 +507,6 @@ export function App() {
               <section className="card" data-chapter="data" data-focus="ZWE,SGP" aria-labelledby="h-two">
                 <div className="card-head">
                   <h2 id="h-two">Singapore and Zimbabwe</h2>
-                  <p className="card-meta">2019 · observed</p>
                 </div>
                 <Question>Which two countries frame the comparison, and how far apart are they?</Question>
                 {g && <KeyResult value={`${num(g.observedGap, 2)}`} unit="years" />}
@@ -531,7 +524,6 @@ export function App() {
               <section className="card" data-chapter="data" data-focus="" aria-labelledby="h-sample">
                 <div className="card-head">
                   <h2 id="h-sample">A sample of {analysis.points.length}</h2>
-                  <p className="card-meta">World Bank groups</p>
                 </div>
                 <Question>What does the sample look like, and how is life expectancy distributed within income groups?</Question>
                 <KeyResult value={`${analysis.points.length}`} unit="countries" />
@@ -544,9 +536,7 @@ export function App() {
               </section>
 
               <div className="chapter-intro" data-chapter-heading="models" data-nav-id="h-models">
-                <span className="chapter-no">02</span>
                 <div className="chapter-copy">
-                  <p className="chapter-kicker">Chapter two</p>
                   <h2>Models</h2>
                   <p>{CHAPTER_BY_ID.models?.purpose}</p>
                 </div>
@@ -555,7 +545,6 @@ export function App() {
               <section className="card" data-chapter="models" data-focus="" aria-labelledby="h-models">
                 <div className="card-head">
                   <h2 id="h-models">Two models</h2>
-                  <p className="card-meta">Least squares</p>
                 </div>
                 <Question>Which model fits the observations better, and what does each one claim?</Question>
                 <KeyResult value={`r² = ${num(fit.r2, 3)}`} unit={`active ${activeWord}`} />
@@ -573,7 +562,6 @@ export function App() {
               <section className="card" data-chapter="models" data-focus="ZWE,SGP" aria-labelledby="h-gap">
                 <div className="card-head">
                   <h2 id="h-gap">The gap</h2>
-                  <p className="card-meta">Observed vs predicted</p>
                 </div>
                 <Question>How much of the Zimbabwe–Singapore gap does the model reproduce?</Question>
                 {g && <KeyResult value={`${num(g.percentReproduced, 1)}%`} unit="of the observed gap" />}
@@ -583,9 +571,7 @@ export function App() {
               </section>
 
               <div className="chapter-intro" data-chapter-heading="use" data-nav-id="h-rate">
-                <span className="chapter-no">03</span>
                 <div className="chapter-copy">
-                  <p className="chapter-kicker">Chapter three</p>
                   <h2>Using the model</h2>
                   <p>{CHAPTER_BY_ID.use?.purpose}</p>
                 </div>
@@ -594,7 +580,6 @@ export function App() {
               <section className="card" data-chapter="use" data-focus="ZWE,SGP,VNM" aria-labelledby="h-rate">
                 <div className="card-head">
                   <h2 id="h-rate">Rate of change</h2>
-                  <p className="card-meta">dy/dx</p>
                 </div>
                 <Question>What does the model say about the effect of an extra $1,000 at different incomes?</Question>
                 {g && <KeyResult value={`${num(g.per1000High, 3)}`} unit="years per $1,000 at Singapore" />}
@@ -609,7 +594,6 @@ export function App() {
               <section className="card" data-chapter="use" data-focus="ZWE,SGP" aria-labelledby="h-inv">
                 <div className="card-head">
                   <h2 id="h-inv">What income would match?</h2>
-                  <p className="card-meta">Model in reverse</p>
                 </div>
                 <Question>What income does the model associate with Singapore&rsquo;s life expectancy?</Question>
                 {analysis.inverse && <KeyResult value={dollars(analysis.inverse.requiredX)} source="computed" />}
@@ -620,9 +604,7 @@ export function App() {
               </section>
 
               <div className="chapter-intro" data-chapter-heading="reliability" data-nav-id="h-sens">
-                <span className="chapter-no">04</span>
                 <div className="chapter-copy">
-                  <p className="chapter-kicker">Chapter four</p>
                   <h2>Reliability</h2>
                   <p>{CHAPTER_BY_ID.reliability?.purpose}</p>
                 </div>
@@ -631,7 +613,6 @@ export function App() {
               <section className="card" data-chapter="reliability" data-focus="NGA,TCD" aria-labelledby="h-sens">
                 <div className="card-head">
                   <h2 id="h-sens">How sensitive is it?</h2>
-                  <p className="card-meta">Leave two out</p>
                 </div>
                 <Question>How much do the conclusions move if Nigeria and Chad are removed?</Question>
                 {withoutTwo.gap && <KeyResult value={`${num(withoutTwo.gap.percentReproduced, 1)}%`} unit="of the gap reproduced without them" />}
@@ -644,7 +625,6 @@ export function App() {
               <section className="card" data-chapter="reliability" data-focus="" aria-labelledby="h-limits">
                 <div className="card-head">
                   <h2 id="h-limits">{copy.limits.heading}</h2>
-                  <p className="card-meta">Reading the fit</p>
                 </div>
                 <Question>What are the limits of this comparison?</Question>
                 <KeyResult value="4" unit="countries changed income group since 2019" source="World Bank OGHIST" />
@@ -655,7 +635,6 @@ export function App() {
               <section className="card" data-chapter="reliability" data-focus="" aria-labelledby="h-glossary">
                 <div className="card-head">
                   <h2 id="h-glossary">Glossary</h2>
-                  <p className="card-meta">Terms used here</p>
                 </div>
                 <dl className="glossary">
                   {GLOSSARY.map(([term, definition]) => (
@@ -667,7 +646,6 @@ export function App() {
               <section className="card" data-chapter="reliability" data-focus="" aria-labelledby="h-work">
                 <div className="card-head">
                   <h2 id="h-work">Working</h2>
-                  <p className="card-meta">Formulas</p>
                 </div>
                 <Question>How is each number derived from the rows?</Question>
                 <KeyResult value="p < 0.001" unit="for the logarithmic correlation" />
@@ -681,7 +659,6 @@ export function App() {
               <section className="card card-sources" data-chapter="reliability" data-focus="" aria-labelledby="h-sources">
                 <div className="card-head">
                   <h2 id="h-sources">{copy.sources.heading}</h2>
-                  <p className="card-meta">Checked 22 Oct 2026</p>
                 </div>
                 <Question>Where does each number and sentence come from?</Question>
                 <p>{copy.sources.lede}</p>

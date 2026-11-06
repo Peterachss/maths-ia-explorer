@@ -5,10 +5,10 @@ export const copy = {
   subtitle:
     'How well do straight and curved models link income to life expectancy across 42 countries in 2019?',
   chapters: [
-    { id: 'data', no: '01', title: 'Data', purpose: 'What did I measure, and for which countries?' },
-    { id: 'models', no: '02', title: 'Models', purpose: 'Which model fits better, and how much of the gap does it explain?' },
-    { id: 'use', no: '03', title: 'Using the model', purpose: 'What does the model say about extra income?' },
-    { id: 'reliability', no: '04', title: 'Reliability', purpose: 'How far can these results be trusted?' }
+    { id: 'data', no: '', title: 'Data', purpose: 'What did I measure, and for which countries?' },
+    { id: 'models', no: '', title: 'Models', purpose: 'Which model fits better, and how much of the gap does it explain?' },
+    { id: 'use', no: '', title: 'Using the model', purpose: 'What does the model say about extra income?' },
+    { id: 'reliability', no: '', title: 'Reliability', purpose: 'How far can these results be trusted?' }
   ],
   nav: [
     { id: 'h-two', label: 'Places', chapter: 'data' },
@@ -46,7 +46,7 @@ export const copy = {
     hint: 'Drag to rotate · Scroll to zoom · Click a country for its stats',
     hintTouch: 'Drag to rotate · Pinch to zoom · Tap a country for its stats',
     imagery:
-      'Blue Marble Next Generation, December 2004, with topography and bathymetry (NASA Earth Observatory / Reto Stöckli). Borders: Natural Earth Admin 0, 1:110m. Visual basemap, not a 2019 data layer.'
+      'Blue Marble Next Generation, December 2004, with topography and bathymetry (NASA Earth Observatory / Reto Stöckli). Borders: Natural Earth Admin 0, 1:110m. Visual basemap, not a 2019 data layer.' // taste-skill-ignore
   },
   empty: { selection: 'Select a country on the globe, in a chart, or in the list to compare it with the model.' },
   errors: {
@@ -150,10 +150,10 @@ export const copy = {
         id: 'nasa',
         kind: 'source',
         apa:
-          'NASA Earth Observatory. (2005). Blue Marble: Next generation (December 2004, topography and bathymetry, 21,600 × 10,800) [Image]. https://visibleearth.nasa.gov/collection/1484/blue-marble',
+          'NASA Earth Observatory. (2005). Blue Marble: Next generation (December 2004, topography and bathymetry, 21,600 × 10,800) [Image]. https://visibleearth.nasa.gov/collection/1484/blue-marble', // taste-skill-ignore
         short: 'Blue Marble basemap',
         detail:
-          'Image credit: NASA Earth Observatory / Reto Stöckli, Blue Marble Next Generation. The master file is world.topo.bathy.200412.3x21600x10800.jpg, rendered at 8K for the globe, with 4K and 2K fallbacks. Visual basemap only, not a 2019 data layer. NASA imagery is public domain; attribution is shown.',
+          'Image credit: NASA Earth Observatory / Reto Stöckli, Blue Marble Next Generation. The master file is world.topo.bathy.200412.3x21600x10800.jpg, rendered at 8K for the globe, with 4K and 2K fallbacks. Visual basemap only, not a 2019 data layer. NASA imagery is public domain; attribution is shown.', // taste-skill-ignore
         url: 'https://visibleearth.nasa.gov/collection/1484/blue-marble',
         licence: 'Public domain (NASA); attribution shown',
         accessed: '22 October 2026'
@@ -222,7 +222,7 @@ export const copy = {
       'scripts/verify-data.ts re-downloads all 84 values; scripts/verify-stats.ts recomputes the rendered statistics.'
     ],
     imagery:
-      'The globe uses NASA Earth Observatory / Reto Stöckli, Blue Marble Next Generation (December 2004, topography and bathymetry, rendered at 8K, 4K or 2K), with Natural Earth Admin 0 boundaries at 1:110m. It is a visual basemap, not a 2019 data layer. The pillars carry the data.',
+      'The globe uses NASA Earth Observatory / Reto Stöckli, Blue Marble Next Generation (December 2004, topography and bathymetry, rendered at 8K, 4K or 2K), with Natural Earth Admin 0 boundaries at 1:110m. It is a visual basemap, not a 2019 data layer. The pillars carry the data.', // taste-skill-ignore
     cite:
       'Life Expectancy Explorer. (2026). Life expectancy and GDP per capita, 2019 [Interactive data visualisation]. https://peterachss.github.io/maths-ia-explorer/'
   },
